@@ -32,7 +32,7 @@ jobs:
 
       - name: Branch
         id: branch
-        run: | 
+        run: | # yamllint disable-line rule:quoted-strings
           echo "branch=${GITHUB_HEAD_REF}" >> $GITHUB_OUTPUT
 
       - name: Checkout
