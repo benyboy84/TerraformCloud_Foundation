@@ -31,7 +31,8 @@ jobs:
     steps:
 
       - name: Branch
-        run: echo "branch=${GITHUB_HEAD_REF}" >> $GITHUB_OUTPUT
+        id: branch 
+        run: echo "branch=${GITHUB_HEAD_REF}" >> "$GITHUB_OUTPUT"
 
       - name: Checkout
         uses: actions/checkout@v3
