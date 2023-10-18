@@ -69,8 +69,8 @@ locals {
 
   projects = {
     "Azure Landing Zone" = {}
-    "AWS Landing Zone" = {}
-    "Terraform Cloud" = {}
+    "AWS Landing Zone"   = {}
+    "Terraform Cloud"    = {}
   }
 
 }
