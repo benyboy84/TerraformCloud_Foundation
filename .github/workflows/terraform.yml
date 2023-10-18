@@ -31,9 +31,10 @@ jobs:
     steps:
 
       - name: Branch
-        id: "branch"
-        run: |
-          echo "branch=${GITHUB_HEAD_REF}" >> $GITHUB_OUTPUT
+        id: branch
+        # yamllint disable
+        run: echo "branch=${GITHUB_HEAD_REF}" >> $GITHUB_OUTPUT
+        # yamllint enable
 
       - name: Checkout
         uses: actions/checkout@v3
