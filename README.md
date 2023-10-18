@@ -1,5 +1,28 @@
 <!-- BEGIN_TF_DOCS -->
+# Terraform Cloud Foundation
 
+Code which manages configuration and life-cycle of all the Terraform Cloud
+foundation. It is designed to be used from a dedicated VCS-Driven Terraform
+Cloud workspace that would provision and manage the configuration using
+Terraform code (IaC).
+
+## Permissions
+
+To manage the resources from that code, provide a token from an account with
+`owner` permissions. Alternatively, you can use a token from the `owner` team
+instead of a user token.
+
+## Authentication
+
+The Terraform Cloud provider requires a Terraform Cloud/Enterprise API token in
+order to manage resources.
+
+- Set the `TFE_TOKEN` environment variable: The provider can read the TFE\_TOKEN environment variable and the token stored there
+to authenticate. Refer to [Managing Variables](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/variables/managing-variables) documentation for more details.
+
+## Features
+
+- Create teams at the organization level.
 
 ## Documentation
 
