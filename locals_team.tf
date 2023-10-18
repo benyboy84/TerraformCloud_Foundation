@@ -29,6 +29,7 @@ locals {
       ])
       if try(workspace.teams, null) != null
     ])
+    if try(project.workspaces, null) != null
   ])
   workspace_teams = { for row in local.workspace_teams_array : row.name => row }
 
