@@ -30,10 +30,13 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
 
+      - name: Branch
+        run: echo "branch=${GITHUB_HEAD_REF}" >> $GITHUB_OUTPUT
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: ${{ GITHUB_HEAD_REF }}
+          ref: ${{ steps.branch.outputs.branch }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -55,5 +58,5 @@ jobs:
           git config user.email "notifications@github.com"
           git add -A
           git commit -m "Automated Terraform Formatting"
-          git push -u origin ${{ GITHUB_HEAD_REF }}
+          git push -u origin ${{ steps.branch.outputs.branch }}
           echo "Terraform file(s) has been formatted and pushed to the repository."
