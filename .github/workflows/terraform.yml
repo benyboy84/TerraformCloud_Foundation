@@ -32,7 +32,8 @@ jobs:
 
       - name: Branch
         id: branch
-        run: echo "branch=${GITHUB_HEAD_REF}" >> $GITHUB_OUTPUT
+        run: | 
+          echo "branch=${GITHUB_HEAD_REF}" >> $GITHUB_OUTPUT
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -42,7 +43,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_wrapper: false        
+          terraform_wrapper: false
 
       - name: Terraform Format
         id: fmt
