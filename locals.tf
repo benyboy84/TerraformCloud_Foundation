@@ -67,4 +67,7 @@ locals {
     }
   }
 
+  projects = {
+  }
+
 }
