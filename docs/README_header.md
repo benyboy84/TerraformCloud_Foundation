@@ -22,3 +22,4 @@ to authenticate. Refer to [Managing Variables](https://developer.hashicorp.com/t
 ## Features
 
 - Create teams at the organization level.
+- Create projects.
