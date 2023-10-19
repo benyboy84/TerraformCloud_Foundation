@@ -35,7 +35,7 @@ jobs:
         run: echo "branch=${GITHUB_HEAD_REF}" >> "$GITHUB_OUTPUT"
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ steps.branch.outputs.branch }}
 
