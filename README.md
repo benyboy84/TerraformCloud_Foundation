@@ -45,6 +45,12 @@ Source: ./modules/team
 
 Version:
 
+### <a name="module_workspaces"></a> [workspaces](#module\_workspaces)
+
+Source: ./modules/workspace
+
+Version:
+
 ## Required Inputs
 
 No required inputs.
