@@ -78,8 +78,8 @@ locals {
     variable_set_global = {
       description = "description"
       global      = true
-      workspaces = [""]
-      projects = ["Terraform Cloud"]
+      workspaces  = [""]
+      projects    = ["Terraform Cloud"]
       variables = {
         variable1 = {
           value     = "value"
@@ -96,8 +96,8 @@ locals {
     variable_set = {
       description = "description"
       global      = false
-      workspaces = [""]
-      projects = ["Terraform Cloud"]
+      workspaces  = [""]
+      projects    = ["Terraform Cloud"]
       variables = {
         variable1 = {
           value     = "value"
@@ -116,7 +116,7 @@ locals {
   projects = {
     "Azure Landing Zone" = {}
     "AWS Landing Zone"   = {}
-    "Terraform Cloud"    = {
+    "Terraform Cloud" = {
       workspaces = {
         "TerraformCloud_ModulesRegistry" = {
           tag_names = ["managed_by_terraform"]
@@ -124,7 +124,7 @@ locals {
             identifier     = "benyboy84/TerraformCloud_ModulesRegistry"
             oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
           }
-        }      
+        }
       }
     }
   }
