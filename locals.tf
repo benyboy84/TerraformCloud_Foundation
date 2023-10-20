@@ -57,61 +57,61 @@ locals {
   }
 
   # This local is used to define variable_set at the organization level.
-  organization_variable_sets = {
-    # `organization_variable_sets` is a map of object where the key is the name of the variable_set.
-    # Refer to "./modules/variable_set/README.md" for more details.
-    # Here is an example of an object:
-    # "variable_set_name" = {
-    #   name        = ""
-    #   description = ""
-    #   global      = true or false *Cannot be set to true if `workspaces` or ``projects` are defined.*
-    #   projects    = [""]
-    #   variables = {
-    #     variable_name = {
-    #       value     = ""
-    #       category  = "terraform" or "env"
-    #       sensitive = true or false
-    #     }
-    #   }
-    #   workspaces  = [""]
-    # }
-    variable_set_global = {
-      description = "description"
-      global      = true
-      workspaces  = [""]
-      projects    = ["Terraform Cloud"]
-      variables = {
-        variable1 = {
-          value     = "value"
-          category  = "env"
-          sensitive = true
-        },
-        variable2 = {
-          value     = "value"
-          category  = "env"
-          sensitive = true
-        },
-      }
-    }
-    variable_set = {
-      description = "description"
-      global      = false
-      workspaces  = [""]
-      projects    = ["Terraform Cloud"]
-      variables = {
-        variable1 = {
-          value     = "value"
-          category  = "env"
-          sensitive = true
-        },
-        variable2 = {
-          value     = "value"
-          category  = "env"
-          sensitive = true
-        },
-      }
-    }
-  }
+  # organization_variable_sets = {
+  #   # `organization_variable_sets` is a map of object where the key is the name of the variable_set.
+  #   # Refer to "./modules/variable_set/README.md" for more details.
+  #   # Here is an example of an object:
+  #   # "variable_set_name" = {
+  #   #   name        = ""
+  #   #   description = ""
+  #   #   global      = true or false *Cannot be set to true if `workspaces` or ``projects` are defined.*
+  #   #   projects    = [""]
+  #   #   variables = {
+  #   #     variable_name = {
+  #   #       value     = ""
+  #   #       category  = "terraform" or "env"
+  #   #       sensitive = true or false
+  #   #     }
+  #   #   }
+  #   #   workspaces  = [""]
+  #   # }
+  #   variable_set_global = {
+  #     description = "description"
+  #     global      = true
+  #     workspaces  = [""]
+  #     projects    = ["Terraform Cloud"]
+  #     variables = {
+  #       variable1 = {
+  #         value     = "value"
+  #         category  = "env"
+  #         sensitive = true
+  #       },
+  #       variable2 = {
+  #         value     = "value"
+  #         category  = "env"
+  #         sensitive = true
+  #       },
+  #     }
+  #   }
+  #   variable_set = {
+  #     description = "description"
+  #     global      = false
+  #     workspaces  = [""]
+  #     projects    = ["Terraform Cloud"]
+  #     variables = {
+  #       variable1 = {
+  #         value     = "value"
+  #         category  = "env"
+  #         sensitive = true
+  #       },
+  #       variable2 = {
+  #         value     = "value"
+  #         category  = "env"
+  #         sensitive = true
+  #       },
+  #     }
+  #   }
+  # }
 
   projects = {
     "Azure Landing Zone" = {}
