@@ -45,6 +45,12 @@ Source: ./modules/team
 
 Version:
 
+### <a name="module_workspaces"></a> [workspaces](#module\_workspaces)
+
+Source: ./modules/workspace
+
+Version:
+
 ## Required Inputs
 
 No required inputs.
@@ -58,6 +64,7 @@ No optional inputs.
 The following resources are used by this module:
 
 - [tfe_project.project](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/resources/project) (resource)
+- [tfe_oauth_client.client](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/data-sources/oauth_client) (data source)
 - [tfe_organization.this](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/data-sources/organization) (data source)
 
 ## Outputs
