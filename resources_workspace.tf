@@ -7,7 +7,7 @@ module "workspaces" {
 
   name         = each.key
   organization = data.tfe_organization.this.name
-  project_id   = tfe_project.project["${each.value.project}"].id
+  project_id   = tfe_project.project[each.value.project].id
 
   description                   = try(each.value.description, null)
   agent_pool_id                 = try(each.value.agent_pool_id, null)
