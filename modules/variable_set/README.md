@@ -39,9 +39,9 @@ to authenticate.
 module "team" {
   source = "./modules/variable_set"
 
-  name                      = "Variable_set Name"
-  organization              = "Organization Name"
-  variable_set_project_name = ["Project Name"]
+  name         = "Variable_set Name"
+  organization = "Organization Name"
+  projects     = ["Project Name"]
 }
 ```
 
@@ -112,7 +112,7 @@ Type: `string`
 
 Default: `null`
 
-### <a name="input_project_name"></a> [project\_name](#input\_project\_name)
+### <a name="input_projects"></a> [projects](#input\_projects)
 
 Description: (Optional) Project name to add the variable set to.
 
@@ -120,7 +120,7 @@ Type: `list(string)`
 
 Default: `null`
 
-### <a name="input_workspace_name"></a> [workspace\_name](#input\_workspace\_name)
+### <a name="input_workspaces"></a> [workspaces](#input\_workspaces)
 
 Description: (Optional) Workspace name to add the variable set to.
 

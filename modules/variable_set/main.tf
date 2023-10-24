@@ -6,35 +6,35 @@ resource "tfe_variable_set" "this" {
 
   lifecycle {
     precondition {
-      condition     = var.global ? var.workspace_name == null && var.project_name == null ? true : false : true
-      error_message = "`global` cannot be set to true if `workspace_name` or `project_name` is defined."
+      condition     = var.global ? var.workspaces == null && var.projects == null ? true : false : true
+      error_message = "`global` cannot be set to true if `workspaces` or `projects` is defined."
     }
   }
 }
 
 data "tfe_workspace" "this" {
-  for_each = var.workspace_name != null ? toset(var.workspace_name) : []
+  for_each = var.workspaces != null ? toset(var.workspaces) : []
 
   name         = each.value
   organization = var.organization
 }
 
 resource "tfe_workspace_variable_set" "this" {
-  for_each = var.workspace_name != null ? toset(var.workspace_name) : []
+  for_each = var.workspaces != null ? toset(var.workspaces) : []
 
   variable_set_id = tfe_variable_set.this.id
   workspace_id    = data.tfe_workspace.this["${each.value}"].id
 }
 
 data "tfe_project" "this" {
-  for_each = var.project_name != null ? toset(var.project_name) : []
+  for_each = var.projects != null ? toset(var.projects) : []
 
   name         = each.value
   organization = var.organization
 }
 
 resource "tfe_project_variable_set" "this" {
-  for_each = var.project_name != null ? toset(var.project_name) : []
+  for_each = var.projects != null ? toset(var.projects) : []
 
   variable_set_id = tfe_variable_set.this.id
   project_id      = data.tfe_project.this["${each.value}"].id

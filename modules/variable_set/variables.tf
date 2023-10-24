@@ -22,13 +22,13 @@ variable "organization" {
   default     = null
 }
 
-variable "workspace_name" {
+variable "workspaces" {
   description = "(Optional) Workspace name to add the variable set to."
   type        = list(string)
   default     = null
 }
 
-variable "project_name" {
+variable "projects" {
   description = "(Optional) Project name to add the variable set to."
   type        = list(string)
   default     = null
