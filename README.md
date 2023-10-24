@@ -45,6 +45,12 @@ Source: ./modules/team
 
 Version:
 
+### <a name="module_variable_set"></a> [variable\_set](#module\_variable\_set)
+
+Source: ./modules/variable_set
+
+Version:
+
 ### <a name="module_workspaces"></a> [workspaces](#module\_workspaces)
 
 Source: ./modules/workspace
