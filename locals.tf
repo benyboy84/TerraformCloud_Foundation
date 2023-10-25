@@ -61,8 +61,7 @@ locals {
     # `organization_variable_sets` is a map of object where the key is the name of the variable_set.
     # Refer to "./modules/variable_set/README.md" for more details.
     # Here is an example of an object:
-    # "variable_set_name" = {
-    #   name        = ""
+    # "name" = {
     #   description = ""
     #   global      = true or false *Cannot be set to true if `workspaces` or ``projects` are defined.*
     #   projects    = [""]
@@ -122,6 +121,25 @@ locals {
           vcs_repo = {
             identifier     = "benyboy84/TerraformCloud_ModulesRegistry"
             oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
+          }
+        }
+      }
+      variable_sets = {
+        variable_set_project = {
+          description = "description"
+          global      = false
+          workspaces  = ["TerraformCloud_ModulesRegistry"]
+          variables = {
+            variable1 = {
+              value     = "value"
+              category  = "env"
+              sensitive = true
+            },
+            variable2 = {
+              value     = "value"
+              category  = "env"
+              sensitive = true
+            },
           }
         }
       }

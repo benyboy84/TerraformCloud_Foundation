@@ -1,7 +1,21 @@
 locals {
 
+  # The following locals use logic to determine the variable sets at project level.
+  project_variable_sets_tuple = flatten([for project_key, project in local.projects :
+    flatten([for variable_set_key, variable_set in project.variable_sets :
+      merge(
+        variable_set,
+        {
+          name    = variable_set_key
+          project = project_key
+        }
+      )
+    ])
+  ])
+  project_variable_sets = { for object in local.project_variable_sets_tuple : "${object.name} ${object.project}" => object }
+
   # This is to merge all variable_set.
-  variable_sets = merge(local.organization_variable_sets)
+  variable_sets = merge(local.organization_variable_sets, local.project_variable_sets)
 
   # The following locals use logic to determine the project associate with each variable sets at the organization level.
   organization_variable_sets_project = flatten([for key, variable_set in local.variable_sets :
