@@ -114,7 +114,7 @@ locals {
   projects = {
     "Azure Landing Zone" = {}
     "AWS Landing Zone"   = {}
-    "test"   = {}
+    "test"               = {}
     "Terraform Cloud" = {
       workspaces = {
         "TerraformCloud_ModulesRegistry" = {
