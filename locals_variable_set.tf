@@ -5,7 +5,7 @@ locals {
     merge(
       variable_set,
       {
-        name = "${key}"
+        name = key
       }
     )
   ])
@@ -17,7 +17,7 @@ locals {
         variable_set,
         {
           name     = "${project_key} ${variable_set_key}"
-          projects = ["${project_key}"]
+          projects = [project_key]
         }
       )
     ])
@@ -32,7 +32,7 @@ locals {
           variable_set,
           {
             name       = "${workspace_key} ${variable_set_key}"
-            workspaces = ["${workspace_key}"]
+            workspaces = [workspace_key]
           }
         )
       ])
