@@ -78,8 +78,6 @@ locals {
     variable_set_global = {
       description = "description"
       global      = true
-      workspaces  = [""]
-      projects    = ["Terraform Cloud"]
       variables = {
         variable1 = {
           value     = "value"
@@ -96,7 +94,6 @@ locals {
     variable_set = {
       description = "description"
       global      = false
-      workspaces  = [""]
       projects    = ["Terraform Cloud"]
       variables = {
         variable1 = {

@@ -12,30 +12,16 @@ resource "tfe_variable_set" "this" {
   }
 }
 
-data "tfe_workspace" "this" {
-  for_each = var.workspaces != null ? toset(var.workspaces) : []
-
-  name         = each.value
-  organization = var.organization
-}
-
 resource "tfe_workspace_variable_set" "this" {
-  for_each = var.workspaces != null ? toset(var.workspaces) : []
+  for_each = { for workspace in flatten(local.workspaces) : "${workspace.name}" => workspaces}
 
   variable_set_id = tfe_variable_set.this.id
-  workspace_id    = data.tfe_workspace.this["${each.value}"].id
-}
-
-data "tfe_project" "this" {
-  for_each = var.projects != null ? toset(var.projects) : []
-
-  name         = each.value
-  organization = var.organization
+  workspace_id    = each.value.id
 }
 
 resource "tfe_project_variable_set" "this" {
-  for_each = var.projects != null ? toset(var.projects) : []
+  for_each = { for project in flatten(local.projects) : "${project.name}" => projects}
 
   variable_set_id = tfe_variable_set.this.id
-  project_id      = data.tfe_project.this["${each.value}"].id
+  project_id      = each.value.id
 }
