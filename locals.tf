@@ -94,7 +94,7 @@ locals {
     variable_set = {
       description = "description"
       global      = false
-      projects    = ["Terraform Cloud"]
+      projects    = ["test"]
       variables = {
         variable1 = {
           value     = "value"
@@ -113,6 +113,7 @@ locals {
   projects = {
     "Azure Landing Zone" = {}
     "AWS Landing Zone"   = {}
+    "test"   = {}
     "Terraform Cloud" = {
       workspaces = {
         "TerraformCloud_ModulesRegistry" = {
