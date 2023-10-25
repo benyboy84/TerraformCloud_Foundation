@@ -11,7 +11,7 @@ locals {
         }
       )
     ])
-    if try(variable_set.variables,null) != null
+    if try(variable_set.variables, null) != null
   ])
 
   # The following locals use logic to determine the variable associated to a workspace.
