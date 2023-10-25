@@ -31,7 +31,7 @@ locals {
     ])
     if try(project.variable_sets, null) != null
   ])
-  project_level_workspace_variable_sets = { for object in local.project_level_workspace_variable_sets_tuple : "Project ${object.name} ${object.project} ${object.workspace}" => object }
+  project_level_workspace_variable_sets = { for object in local.project_level_workspace_variable_sets_tuple : "Project ${object.name} ${object.workspace}" => object }
 
   # The following locals use logic to determine the variable sets at workspace level.
   workspace_level_variable_sets_tuple = flatten([for project_key, project in local.projects :
