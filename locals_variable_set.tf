@@ -63,10 +63,10 @@ locals {
     ])
     if try(variable_set.projects, null) != null
   ])
-  organization_level_project_variable_sets_project = { for object in local.organization_level_project_variable_sets_project_tuple : "Organization ${object.name} ${object.project}" => object }
+  organization_level_project_variable_sets = { for object in local.organization_level_project_variable_sets_tuple : "Organization ${object.name} ${object.project}" => object }
 
   # The following locals use logic to determine the workspace associate with each variable sets at the organization level.
-  organization_level_variable_sets_workspace_tuple = flatten([for key, variable_set in local.variable_sets :
+  organization_level_workspace_variable_sets_tuple = flatten([for key, variable_set in local.variable_sets :
     flatten([for workspace in flatten(variable_set.workspaces) :
       merge(variable_set,
         {
@@ -77,7 +77,7 @@ locals {
     ])
     if try(variable_set.workspaces, null) != null
   ])
-  organization_level_variable_sets_workspace = { for object in local.organization_level_variable_sets_workspace_tuple : "Organization ${object.name} ${object.workspace}" => object }
+  organization_level_workspace_variable_sets = { for object in local.organization_level_workspace_variable_sets_tuple : "Organization ${object.name} ${object.workspace}" => object }
 
   # This is to merge all variable sets.
   variable_sets = merge(
@@ -95,7 +95,7 @@ locals {
 
   # This is to merge all variable sets associate with workspace.
   workspace_variable_sets = merge(
-    local.organization_level_variable_sets_workspace,
+    local.organization_level_workspace_variable_sets,
     local.workspace_level_variable_sets,
     local.project_level_workspace_variable_sets
   )
