@@ -16,6 +16,23 @@ resource "tfe_variable_set" "this" {
   }
 }
 
+resource "tfe_project_variable_set" "this" {
+  for_each = flatten([
+    for key, variable_set in local.variable_sets : {
+      for project in flatten(variable_set.projects) : 
+      "${key}_${project}" => merge(variable_set,
+        {
+          name    = key
+          project = project
+        }
+      )
+    }
+  ])
+
+  variable_set_id = tfe_variable_set.this["${each.name}"].id
+  project_id      = tfe_project.project["${project}"].id
+}
+
 # module "variable_set" {
 #   source = "./modules/variable_set"
 
