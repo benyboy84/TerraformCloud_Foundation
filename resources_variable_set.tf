@@ -1,11 +1,11 @@
 # The following code block is used to create variable sets resources.
 
 resource "tfe_variable_set" "this" {
-for_each = local.variable_sets
+  for_each = local.variable_sets
 
   name         = each.key
-  description  = try(each.value.description,null)
-  global       = try(each.value.global,null)
+  description  = try(each.value.description, null)
+  global       = try(each.value.global, null)
   organization = data.tfe_organization.this.name
 
   lifecycle {
