@@ -10,14 +10,14 @@ module "variable_set" {
   global       = try(each.value.global, null)
   organization = data.tfe_organization.this.name
   workspaces = try(
-    [for workspace in flatten(each.value.workspaces) : {
+    flatten([for workspace in flatten(each.value.workspaces) : {
       name = workspace
       id   = try(module.workspaces["${workspace}"].id, null)
-  }], null)
+  }]), null)
   projects = try(
-    [for project in flatten(each.value.projects) : {
+    flatten([for project in flatten(each.value.projects) : {
       name = project
       id   = try(module.workspaces["${project}"].id, null)
-  }], null)
+  }]), null)
 
 }
