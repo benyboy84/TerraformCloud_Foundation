@@ -10,7 +10,7 @@ for_each = local.variable_sets
 
   lifecycle {
     precondition {
-      condition     = var.global ? var.workspaces == null && var.projects == null ? true : false : true
+      condition     = each.value.global ? each.value.workspaces == null && each.value.projects == null ? true : false : true
       error_message = "`global` cannot be set to true if `workspaces` or `projects` is defined."
     }
   }
