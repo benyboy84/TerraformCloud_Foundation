@@ -140,6 +140,13 @@ locals {
               }
             }
           }
+          variables = {
+            credential = {
+              value     = "value"
+              category  = "env"
+              sensitive = true
+            }
+          }
         }
       }
       variable_sets = {
