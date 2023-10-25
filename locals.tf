@@ -89,7 +89,7 @@ locals {
           }
           variables = {
             TFE_TOKEN = {
-              value     = module.teams["org_private-registry"].token
+              value     = try(module.teams["org_private-registry"].token,null)
               category  = "env"
               sensitive = true
             }
