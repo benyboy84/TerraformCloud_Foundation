@@ -3,7 +3,7 @@
 resource "tfe_variable_set" "this" {
   for_each = local.variable_sets
 
-  name         = "${lower(replace(each.key, "/\\W|_|\\s/", "_"))}"
+  name         = lower(replace(each.key, "/\\W|_|\\s/", "_"))
   description  = try(each.value.description, null)
   global       = try(each.value.global, null)
   organization = data.tfe_organization.this.name
