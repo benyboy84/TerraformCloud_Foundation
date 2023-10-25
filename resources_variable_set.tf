@@ -3,7 +3,7 @@
 resource "tfe_variable_set" "this" {
   for_each = local.variable_sets
 
-  name         = each.key
+  name         = "${lower(replace(each.key, "/\\W|_|\\s/", "_"))}}"
   description  = try(each.value.description, null)
   global       = try(each.value.global, null)
   organization = data.tfe_organization.this.name
@@ -17,18 +17,7 @@ resource "tfe_variable_set" "this" {
 }
 
 resource "tfe_project_variable_set" "this" {
-  for_each = flatten([
-    for key, variable_set in local.variable_sets : {
-      for project in flatten(variable_set.projects) :
-      "${key}_${project}" => merge(variable_set,
-        {
-          name    = key
-          project = project
-        }
-      )
-    }
-    if try(variable_set.projects, null) != null
-  ])
+  for_each = {for object in local.organization_variable_sets_project : "${object.name} ${object.project}" => object}
 
   variable_set_id = tfe_variable_set.this["${each.value.name}"].id
   project_id      = tfe_project.project["${each.value.project}"].id
