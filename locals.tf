@@ -74,46 +74,11 @@ locals {
     #   }
     #   workspaces  = [""]
     # }
-    variable_set_global = {
-      description = "description"
-      global      = true
-      variables = {
-        variable1 = {
-          value     = "value"
-          category  = "env"
-          sensitive = true
-        },
-        variable2 = {
-          value     = "value"
-          category  = "env"
-          sensitive = true
-        },
-      }
-    }
-    variable_set = {
-      description = "description"
-      global      = false
-      projects    = ["test"]
-      workspaces  = ["TerraformCloud_ModulesRegistry"]
-      variables = {
-        variable1 = {
-          value     = "value"
-          category  = "env"
-          sensitive = true
-        },
-        variable2 = {
-          value     = "value"
-          category  = "env"
-          sensitive = true
-        },
-      }
-    }
   }
 
   projects = {
     "Azure Landing Zone" = {}
     "AWS Landing Zone"   = {}
-    "test"               = {}
     "Terraform Cloud" = {
       workspaces = {
         "TerraformCloud_ModulesRegistry" = {
@@ -122,49 +87,12 @@ locals {
             identifier     = "benyboy84/TerraformCloud_ModulesRegistry"
             oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
           }
-          variable_sets = {
-            variable_set_workspace = {
-              description = "description"
-              global      = false
-              variables = {
-                variable1 = {
-                  value     = "value"
-                  category  = "env"
-                  sensitive = true
-                },
-                variable2 = {
-                  value     = "value"
-                  category  = "env"
-                  sensitive = true
-                },
-              }
-            }
-          }
           variables = {
-            credential = {
-              value     = "value"
+            TFE_TOKEN = {
+              value     = module.teams["org_private-registry"].id
               category  = "env"
               sensitive = true
             }
-          }
-        }
-      }
-      variable_sets = {
-        variable_set_project = {
-          description = "description"
-          global      = false
-          workspaces  = ["TerraformCloud_ModulesRegistry"]
-          variables = {
-            variable1 = {
-              value     = "value"
-              category  = "env"
-              sensitive = true
-            },
-            variable2 = {
-              value     = "value"
-              category  = "env"
-              sensitive = true
-            },
           }
         }
       }
