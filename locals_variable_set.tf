@@ -11,6 +11,7 @@ locals {
         }
       )
     ])
+    if try(project.variable_sets, null) != null
   ])
   project_variable_sets = { for object in local.project_variable_sets_tuple : "${object.name} ${object.project}" => object }
 
