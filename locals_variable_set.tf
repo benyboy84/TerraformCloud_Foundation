@@ -36,7 +36,7 @@ locals {
     flatten([for workspace in flatten(variable_set.workspaces) :
       merge(variable_set,
         {
-          name    = key
+          name      = key
           workspace = workspace
         }
       )
