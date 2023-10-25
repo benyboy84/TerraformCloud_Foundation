@@ -30,8 +30,8 @@ resource "tfe_project_variable_set" "this" {
     if try(variable_set.projects, null) != null
   ])
 
-  variable_set_id = tfe_variable_set.this["${each.name}"].id
-  project_id      = tfe_project.project["${project}"].id
+  variable_set_id = tfe_variable_set.this["${each.value.name}"].id
+  project_id      = tfe_project.project["${each.value.project}"].id
 }
 
 # module "variable_set" {
