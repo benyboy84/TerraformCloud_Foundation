@@ -122,6 +122,24 @@ locals {
             identifier     = "benyboy84/TerraformCloud_ModulesRegistry"
             oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
           }
+          variable_sets = {
+            variable_set_workspace = {
+              description = "description"
+              global      = false
+              variables = {
+                variable1 = {
+                  value     = "value"
+                  category  = "env"
+                  sensitive = true
+                },
+                variable2 = {
+                  value     = "value"
+                  category  = "env"
+                  sensitive = true
+                },
+              }
+            }
+          }
         }
       }
       variable_sets = {
