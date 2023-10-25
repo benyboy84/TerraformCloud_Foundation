@@ -13,14 +13,14 @@ resource "tfe_variable_set" "this" {
 }
 
 resource "tfe_workspace_variable_set" "this" {
-  for_each = { for workspace in flatten(local.workspaces) : "${workspace.name}" => workspace }
+  for_each = { for workspace in flatten(var.workspaces) : "${workspace.name}" => workspace }
 
   variable_set_id = tfe_variable_set.this.id
   workspace_id    = each.value.id
 }
 
 resource "tfe_project_variable_set" "this" {
-  for_each = { for project in flatten(local.projects) : "${project.name}" => project }
+  for_each = { for project in flatten(var.projects) : "${project.name}" => project }
 
   variable_set_id = tfe_variable_set.this.id
   project_id      = each.value.id
