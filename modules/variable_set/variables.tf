@@ -24,12 +24,12 @@ variable "organization" {
 
 variable "workspaces" {
   description = "(Optional) Workspace name to add the variable set to."
-  type        = tuple([ string ])
+  type        = tuple([string])
   default     = null
 }
 
 variable "projects" {
   description = "(Optional) Project name to add the variable set to."
-  type        = tuple([ string ])
+  type        = tuple([string])
   default     = null
 }
