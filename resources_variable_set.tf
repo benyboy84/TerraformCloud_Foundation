@@ -27,6 +27,7 @@ resource "tfe_project_variable_set" "this" {
         }
       )
     }
+    if try(variable_set.projects, null) != null
   ])
 
   variable_set_id = tfe_variable_set.this["${each.name}"].id
