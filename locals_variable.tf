@@ -6,7 +6,7 @@ locals {
       merge(
         variable,
         {
-          name         = key
+          key          = key
           variable_set = variable_set.name
         }
       )
@@ -21,7 +21,7 @@ locals {
         merge(
           variable,
           {
-            name      = variable_key
+            key       = variable_key
             workspace = workspace_key
           }
         )
