@@ -95,6 +95,7 @@ locals {
       description = "description"
       global      = false
       projects    = ["test"]
+      workspaces  = ["TerraformCloud_ModulesRegistry"]
       variables = {
         variable1 = {
           value     = "value"
