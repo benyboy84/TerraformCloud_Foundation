@@ -25,7 +25,7 @@ resource "tfe_variable" "workspace" {
 
 }
 
-resource "tfe_variable" "workspace" {
+resource "tfe_variable" "workspace_tfe_token" {
   for_each = { for variable in local.workspace_variables_tfe_token : "${variable.workspace} ${variable.key}" => variable }
 
   key          = each.value.key
