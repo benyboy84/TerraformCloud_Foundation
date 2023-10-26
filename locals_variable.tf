@@ -2,11 +2,11 @@ locals {
 
   # The following locals use logic to determine the variable associated to a variable sets excluding any TFE_TOKEN variable.
   variable_sets_variables = flatten([for variable_set in local.variable_sets :
-    flatten([for key, variable in variable_set.variables :
+    flatten([for variable_key, variable in variable_set.variables :
       merge(
         variable,
         {
-          key          = key
+          key          = variable_key
           variable_set = variable_set.name
         }
       ) if variable_key != "TFE_TOKEN"
@@ -16,11 +16,11 @@ locals {
 
   # The following locals use logic to determine TFE_TOKEN variable associated to a variable sets.
   variable_sets_variables_tfe_token = flatten([for variable_set in local.variable_sets :
-    flatten([for key, variable in variable_set.variables :
+    flatten([for variable_key, variable in variable_set.variables :
       merge(
         variable,
         {
-          key          = key
+          key          = variable_key
           variable_set = variable_set.name
         }
       ) if variable_key == "TFE_TOKEN"
