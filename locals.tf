@@ -77,6 +77,27 @@ locals {
   }
 
   projects = {
+    # 
+    # "project_name" = {
+    #   teams = {}
+    #   variable_set = {
+    #     "name" = {
+    #       description = ""
+    #       global      = false *Cannot be set to true.*
+    #       variables = {
+    #         variable_name = {
+    #           value     = ""
+    #           category  = "terraform" or "env"
+    #           sensitive = true or false
+    #         }
+    #       }
+    #       workspaces  = [""]
+    #     }
+    #   }
+    #   workspaces = {
+    #     
+    #   }
+    # }
     "Azure Landing Zone" = {}
     "AWS Landing Zone"   = {}
     "Terraform Cloud" = {
@@ -91,7 +112,7 @@ locals {
             TFE_TOKEN = {
               value     = "org_private-registry"
               category  = "env"
-              sensitive = true
+              sensitive = false
             }
           }
         }
