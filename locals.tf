@@ -181,10 +181,10 @@ locals {
             TFE_TOKEN = {
               value     = "org_private-registry"
               category  = "env"
-              sensitive = false
+              sensitive = true
             }
           }
-          notofications = {
+          notifications = {
             MS_TEAM = {
               destination_type = "microsoft-teams"
               triggers         = ["run:created", "run:planning", "run:needs_attention", "run:applying", "run:completed", "run:errored", "assessment:check_failure", "assessment:drifted", "assessment:failed"]
