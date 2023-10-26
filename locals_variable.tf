@@ -42,10 +42,10 @@ locals {
       ])
       if try(workspace.variables, null) != null
     ])
-    if try(project.workspaces, null) != null 
+    if try(project.workspaces, null) != null
   ])
 
-   # The following locals use logic to determine TFE_TOKEN variable associated to a workspace.
+  # The following locals use logic to determine TFE_TOKEN variable associated to a workspace.
   workspace_variables_tfe_token = flatten([for project_key, project in local.projects :
     flatten([for workspace_key, workspace in project.workspaces :
       flatten([for variable_key, variable in workspace.variables :
@@ -59,7 +59,7 @@ locals {
       ])
       if try(workspace.variables, null) != null
     ])
-    if try(project.workspaces, null) != null 
+    if try(project.workspaces, null) != null
   ])
 
 }
