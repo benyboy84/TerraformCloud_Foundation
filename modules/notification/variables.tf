@@ -60,6 +60,3 @@ variable "url" {
   type        = string
   default     = null
 }
-
-
-
