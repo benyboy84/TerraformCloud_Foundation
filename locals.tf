@@ -112,7 +112,7 @@ locals {
             TFE_TOKEN = {
               value     = "org_private-registry"
               category  = "env"
-              sensitive = false
+              sensitive = true
             }
           }
         }
