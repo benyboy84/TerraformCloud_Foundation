@@ -15,5 +15,5 @@ locals {
     ])
     if try(project.workspaces, null) != null
   ])
- 
+
 }
