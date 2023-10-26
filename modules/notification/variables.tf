@@ -50,7 +50,7 @@ variable "triggers" {
   default     = null
 
   validation {
-    condition     = length([for trigger in var.triggers : true if contains(["`run:created", "`run:planning", "run:needs_attention", "run:applying", "run:completed", "run:errored", "assessment:check_failure", "assessment:drifted", "assessment:failed"], trigger)]) == length(var.triggers)
+    condition     = length([for trigger in var.triggers : trigger if contains(["run:created", "run:planning", "run:needs_attention", "run:applying", "run:completed", "run:errored", "assessment:check_failure", "assessment:drifted", "assessment:failed"], trigger)]) == length(var.triggers)
     error_message = "Valid values are `run:created`, `run:planning`, `run:needs_attention`, `run:applying`, `run:completed`, `run:errored`, `assessment:check_failure`, `assessment:drifted`, or `assessment:failed`"
   }
 }
