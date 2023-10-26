@@ -11,6 +11,6 @@ module "notifications" {
   email            = try(each.value.emails,null) 
   enabled          = try(each.value.enabled, true)
   token            = try(each.value.token, null)
-  triggers         = try(each.value.triggers,null)
+  triggers         = try(each.value.triggers, null)
   url              = try(each.value.url, null)
 }
