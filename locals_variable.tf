@@ -24,9 +24,9 @@ locals {
             key       = variable_key
             workspace = workspace_key
           }
-        )
+        ) if variable_key != "TFE_TOKEN"
       ])
-      if try(workspace.variables, null) != null && variable_key != "TFE_TOKEN"
+      if try(workspace.variables, null) != null
     ])
     if try(project.workspaces, null) != null 
   ])
@@ -41,9 +41,9 @@ locals {
             key       = variable_key
             workspace = workspace_key
           }
-        )
+        ) if variable_key == "TFE_TOKEN"
       ])
-      if try(workspace.variables, null) != null && variable_key == "TFE_TOKEN"
+      if try(workspace.variables, null) != null
     ])
     if try(project.workspaces, null) != null 
   ])
