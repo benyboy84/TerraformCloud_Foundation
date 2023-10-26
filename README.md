@@ -43,6 +43,12 @@ The following requirements are needed by this module:
 
 The following Modules are called:
 
+### <a name="module_notifications"></a> [notifications](#module\_notifications)
+
+Source: ./modules/notification
+
+Version:
+
 ### <a name="module_teams"></a> [teams](#module\_teams)
 
 Source: ./modules/team
