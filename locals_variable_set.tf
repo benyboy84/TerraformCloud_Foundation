@@ -40,7 +40,8 @@ locals {
     ])
     if try(project.workspaces, null) != null
   ])
-  # This is to merge all variable sets.
+
+  # This is to concat all variable sets.
   variable_sets = concat(
     local.organization_level_variable_sets,
     local.project_level_variable_sets,
