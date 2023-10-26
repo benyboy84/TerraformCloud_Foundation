@@ -22,8 +22,12 @@ to authenticate. Refer to [Managing Variables](https://developer.hashicorp.com/t
 
 ## Features
 
-- Create teams at the organization level.
-- Create projects.
+- Manages configuration and life-cycle of Terraform Cloud resources:
+   - projects
+   - workspaces
+   - teams
+   - variable sets
+   - variables
 
 ## Documentation
 
