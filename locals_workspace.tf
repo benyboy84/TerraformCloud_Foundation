@@ -1,7 +1,6 @@
-# The following locals use logic to determine the project associate with each workspace.
-
 locals {
 
+  # The following locals use logic to determine the project associate with each workspace.
   workspaces_array = flatten([for projects, project in local.projects :
     flatten([for workspaces, workspace in project.workspaces :
       merge(

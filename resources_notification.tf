@@ -1,6 +1,6 @@
 # The following code block is used to create workspace resources in project.
 
-module "workspaces" {
+module "notifications" {
   source = "./modules/notification"
 
   for_each = { for notification in local.workspace_notifications : "${notification.workspace} ${notification.name}" => notification }
