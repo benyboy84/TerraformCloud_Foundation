@@ -26,9 +26,9 @@ locals {
           }
         )
       ])
-      if try(workspace.variables, null) != null
+      if try(workspace.variables, null) != null && variable_key != "TFE_TOKEN"
     ])
-    if try(project.workspaces, null) != null
+    if try(project.workspaces, null) != null 
   ])
 
 }
