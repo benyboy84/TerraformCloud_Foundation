@@ -13,7 +13,7 @@ resource "tfe_variable" "variable_set" {
 }
 
 resource "tfe_variable" "variable_set_tfe_token" {
-  for_each = { for variable in variable_sets_variables_tfe_token : "${variable.workspace} ${variable.key}" => variable }
+  for_each = { for variable in local.variable_sets_variables_tfe_token : "${variable.workspace} ${variable.key}" => variable }
 
   key          = each.value.key
   value        = try(module.teams[each.value.value].token_id,each.value.value)
