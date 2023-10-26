@@ -24,3 +24,17 @@ resource "tfe_variable" "workspace" {
   workspace_id = module.workspaces[each.value.workspace].id
 
 }
+
+resource "tfe_variable" "workspace" {
+  for_each = { for variable in local.workspace_variables_tfe_token : "${variable.workspace} ${variable.key}" => variable }
+
+  key          = each.value.key
+  value        = module.teams[each.value.value].token_id
+  category     = each.value.category
+  description  = try(each.value.description, null)
+  hcl          = try(each.value.hcl, null)
+  sensitive    = try(each.value.sensitive, null)
+  workspace_id = module.workspaces[each.value.workspace].id
+
+}
+

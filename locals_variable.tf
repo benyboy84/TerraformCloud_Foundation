@@ -31,4 +31,21 @@ locals {
     if try(project.workspaces, null) != null 
   ])
 
+  # The following locals use logic to determine the variable associated to a workspace.
+  workspace_variables_tfe_token = flatten([for project_key, project in local.projects :
+    flatten([for workspace_key, workspace in project.workspaces :
+      flatten([for variable_key, variable in workspace.variables :
+        merge(
+          variable,
+          {
+            key       = variable_key
+            workspace = workspace_key
+          }
+        )
+      ])
+      if try(workspace.variables, null) != null && variable_key == "TFE_TOKEN"
+    ])
+    if try(project.workspaces, null) != null 
+  ])
+
 }
