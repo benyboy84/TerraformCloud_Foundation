@@ -31,8 +31,14 @@ to authenticate. Refer to [Managing Variables](https://developer.hashicorp.com/t
 
 ## Prerequisite
 
-In order to be able to deploy the configuration from that code, you must first [create an organization](https://app.terraform.io/app/organizations/new). Because this code is designed to be used from a dedicated VCS-Driven Terraform Cloud workspace, you must [create a workspace](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/creating) manually. To get authenticated in Terraform Cloud when deploying the configuration, an
-[API token](https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/api-tokens) must be created. This token needs to come from an account with `owner` permissions, or from the `owner` team. A `TFE_TOKEN` environment [variable](https://developer.hashicorp.com/terraform/cloud-docs/workspaces/variables/managing-variables) must be created in the previously created workspace with the value of the generated token.
+In order to deploy the configuration from this code, you must first create
+an organization. You must then manually create a dedicated VCS-driven
+Terraform Cloud workspace in the UI.
+
+To authenticate into Terraform Cloud during configuration deployment, an
+API token must be created. This token must come from an account with `owner`
+permission or the `owner` team. An environment variable `TFE_TOKEN` must be
+created in the previously created workspace with the value of the generated token.
 
 ## Documentation
 
