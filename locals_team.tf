@@ -5,19 +5,18 @@ locals {
     merge(
       team,
       {
-        name = team_key
+        name = lower(replace(team_key, "/\\W|_|\\s/", "_"))
       }
     )
   ])
 
   # The following locals use logic to determine the project associate with each team.
-  project_level_teams = flatten([for projects, project in local.projects :
-    flatten([for teams, team in project.teams :
+  project_level_teams = flatten([for project_key, project in local.projects :
+    flatten([for team_key, team in project.teams :
       merge(
         team,
-        { name           = "${lower(replace(projects, "/\\W|_|\\s/", "_"))}_${lower(teams)}"
-          project        = projects
-          project_access = lower(team.project_access)
+        { name    = "${lower(replace(project_key, "/\\W|_|\\s/", "_"))}_${lower(replace(team_key, "/\\W|_|\\s/", "_"))}"
+          project = project_key
         }
       )
     ])
@@ -25,14 +24,13 @@ locals {
   ])
 
   # The following locals use logic to determine the workspace associate with each team.
-  workspace_level_teams = flatten([for projects, project in local.projects :
-    flatten([for workspaces, workspace in project.workspaces :
-      flatten([for teams, team in workspace.teams :
+  workspace_level_teams = flatten([for project_key, project in local.projects :
+    flatten([for workspace_key, workspace in project.workspaces :
+      flatten([for team_key, team in workspace.teams :
         merge(
           team,
-          { name             = "${lower(replace(workspaces, "/\\W|_|\\s/", "_"))}_${lower(teams)}"
-            workspace        = workspaces
-            workspace_access = lower(team.workspace_access)
+          { name      = "${lower(replace(workspace_key, "/\\W|_|\\s/", "_"))}_${lower(replace(team_key, "/\\W|_|\\s/", "_"))}"
+            workspace = workspace_key
           }
         )
       ])
