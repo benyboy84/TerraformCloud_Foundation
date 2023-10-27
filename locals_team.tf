@@ -15,7 +15,7 @@ locals {
     flatten([for team_key, team in project.teams :
       merge(
         team,
-        { name    = "${lower(replace(projects, "/\\W|_|\\s/", "_"))}_${lower(replace(team_key, "/\\W|_|\\s/", "_"))}"
+        { name    = "${lower(replace(project_key, "/\\W|_|\\s/", "_"))}_${lower(replace(team_key, "/\\W|_|\\s/", "_"))}"
           project = project_key
         }
       )
