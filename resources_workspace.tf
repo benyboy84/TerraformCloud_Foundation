@@ -3,9 +3,9 @@
 module "workspaces" {
   source = "./modules/workspace"
 
-  for_each = local.workspaces
+  for_each = { for workspace in local.workspaces : workspace.name => workspace }
 
-  name         = each.key
+  name         = each.value.name
   organization = data.tfe_organization.this.name
   project_id   = tfe_project.project[each.value.project].id
 

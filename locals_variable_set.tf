@@ -1,11 +1,11 @@
 locals {
 
   # The following locals use logic to determine the variable sets at organization level.
-  organization_level_variable_sets = flatten([for key, variable_set in local.organization_variable_sets :
+  organization_level_variable_sets = flatten([for variable_set_key, variable_set in local.organization_variable_sets :
     merge(
       variable_set,
       {
-        name = key
+        name = variable_set_key
       }
     )
   ])

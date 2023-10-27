@@ -21,5 +21,20 @@ to authenticate. Refer to [Managing Variables](https://developer.hashicorp.com/t
 
 ## Features
 
-- Create teams at the organization level.
-- Create projects.
+- Manages configuration and life-cycle of Terraform Cloud resources:
+  - projects
+  - workspaces
+  - teams
+  - variable sets
+  - variables
+
+## Prerequisite
+
+In order to deploy the configuration from this code, you must first create
+an organization. You must then manually create a dedicated VCS-driven
+Terraform Cloud workspace in the UI.
+
+To authenticate into Terraform Cloud during configuration deployment, an
+API token must be created. This token must come from an account with `owner`
+permission or the `owner` team. An environment variable `TFE_TOKEN` must be
+created in the previously created workspace with the value of the generated token.
