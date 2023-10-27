@@ -122,7 +122,7 @@ locals {
     #   workspaces = {
     #     "workspace_name" = {
     #       notifications = {
-    #         MS_TEAM = {
+    #         "notification_name" = {
     #           destination_type = "generic", "email", "email", or "microsoft-teams"
     #           triggers         = ["run:created", "run:planning", "run:needs_attention", "run:applying", "run:completed", "run:errored", "assessment:check_failure", "assessment:drifted", "assessment:failed"]
     #           url              = "Url
@@ -147,18 +147,18 @@ locals {
     #         }
     #       }
     #       variables = {
-    #         variable_name = {
+    #         "variable_name" = {
     #           value     = ""
     #           category  = "terraform" or "env"
     #           sensitive = true or false
     #         }
     #       }
     #       variable_set = {
-    #         "name" = {
+    #         "variable_set_name" = {
     #           description = ""
     #           global      = false *Cannot be set to true.*
     #           variables = {
-    #             variable_name = {
+    #             "variable_name" = {
     #               value     = ""
     #               category  = "terraform" or "env"
     #               sensitive = true or false
@@ -181,7 +181,7 @@ locals {
       workspaces = {
         "TerraformCloud_ModulesRegistry" = {
           notifications = {
-            MS_TEAM = {
+            "MS_TEAM" = {
               destination_type = "microsoft-teams"
               triggers         = ["run:created", "run:planning", "run:needs_attention", "run:applying", "run:completed", "run:errored", "assessment:check_failure", "assessment:drifted", "assessment:failed"]
               url              = "https://conseilsti.webhook.office.com/webhookb2/b1967add-a0bb-4f55-9508-280cefef4403@0f9829d3-a628-4f2b-a3ac-58e0740d27ae/IncomingWebhook/bd56b2570de84870b0529487428b9ccb/4c88f00c-bcb7-4867-823f-ce6d94fb1c06"
@@ -193,7 +193,7 @@ locals {
             oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
           }
           variables = {
-            TFE_TOKEN = {
+            "TFE_TOKEN" = {
               value     = "org_private-registry"
               category  = "env"
               sensitive = true
