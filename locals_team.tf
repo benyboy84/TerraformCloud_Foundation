@@ -5,7 +5,7 @@ locals {
     merge(
       team,
       {
-        name = "${lower(replace(team_key, "/\\W|_|\\s/", "_"))}"
+        name = lower(replace(team_key, "/\\W|_|\\s/", "_"))
       }
     )
   ])
