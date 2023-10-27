@@ -3,9 +3,9 @@
 module "teams" {
   source = "./modules/team"
 
-  for_each = local.teams
+  for_each = { for team in local.teams : team.name => team }
 
-  name                    = each.key
+  name                    = each.value.name
   organization            = data.tfe_organization.this.name
   visibility              = try(each.value.visibility, "organization")
   sso_team_id             = try(each.value.sso_team_id, null)
