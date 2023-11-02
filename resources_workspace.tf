@@ -3,7 +3,7 @@
 module "workspaces" {
   source = "./modules/workspace"
 
-  for_each = { for workspace in local.workspaces : workspace.name => workspace }
+  for_each = nonsensitive({ for workspace in local.workspaces : workspace.name => workspace })
 
   name         = each.value.name
   organization = data.tfe_organization.this.name

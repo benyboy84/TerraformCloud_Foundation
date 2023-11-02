@@ -3,7 +3,7 @@
 module "notifications" {
   source = "./modules/notification"
 
-  for_each = { for notification in local.workspace_notifications : "${notification.workspace} ${notification.name}" => notification }
+  for_each = nonsensitive({ for notification in local.workspace_notifications : "${notification.workspace} ${notification.name}" => notification })
 
   name             = each.value.name
   destination_type = each.value.destination_type
