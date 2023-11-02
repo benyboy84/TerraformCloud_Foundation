@@ -47,13 +47,6 @@ locals {
         manage_providers        = true
       }
     },
-    "org_private-registry" = {
-      sso_team_id = "a1f6c183-1350-4298-9266-b1ba00c66372"
-      token       = true
-      organization_access = {
-        manage_modules = true
-      }
-    }
   }
 
   # This local is used to define variable_set at the organization level.
@@ -188,13 +181,22 @@ locals {
             }
           }
           tag_names = ["managed_by_terraform"]
+          teams = {
+            "private-registry" = {
+              sso_team_id = "a1f6c183-1350-4298-9266-b1ba00c66372"
+              token       = true
+              organization_access = {
+                manage_modules = true
+              }
+            }          
+          }
           vcs_repo = {
             identifier     = "benyboy84/TerraformCloud_ModulesRegistry"
             oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
           }
           variables = {
             "TFE_TOKEN" = {
-              value     = "org_private-registry"
+              value     = "terraformcloud_modulesregistry_private_registry"
               category  = "env"
               sensitive = true
             }
