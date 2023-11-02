@@ -7,6 +7,10 @@ terraform {
       source  = "hashicorp/tfe"
       version = "0.48.0"
     }
+    hcp = {
+      source = "hashicorp/hcp"
+      version = "0.76.0"
+    }
   }
 
   required_version = "> 1.3.1"
