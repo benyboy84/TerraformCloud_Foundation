@@ -189,9 +189,9 @@ locals {
                 manage_modules = true
               }
               workspace_permission = {
-                runs              = "apply"
+                runs = "apply"
               }
-            }          
+            }
           }
           vcs_repo = {
             identifier     = "benyboy84/TerraformCloud_ModulesRegistry"
