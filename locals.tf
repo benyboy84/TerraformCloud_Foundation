@@ -186,12 +186,12 @@ locals {
           }
           variables = {
             "AWS_ACCESS_KEY_ID" = {
-              value     = data.hcp_vault_secrets_secret.Aws_Access_Key_Id.secret_value
+              value     = data.hcp_vault_secrets_secret.aws_access_key_id.secret_value
               category  = "env"
               sensitive = true
             }
             "AWS_SECRET_ACCESS_KEY" = {
-              value     = data.hcp_vault_secrets_secret.Aws_Secret_Access_Key.secret_value
+              value     = data.hcp_vault_secrets_secret.aws_secret_access_key.secret_value
               category  = "env"
               sensitive = true
             }
