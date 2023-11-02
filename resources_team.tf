@@ -3,7 +3,7 @@
 module "teams" {
   source = "./modules/team"
 
-  for_each = { for team in local.teams : team.name => team }
+  for_each = local.teams
 
   name                    = each.value.name
   organization            = data.tfe_organization.this.name
