@@ -3,7 +3,7 @@ locals {
   # The following locals use logic to determine the teams at organization level.
   organization_level_teams = flatten([for team_key, team in local.organization_teams :
     merge(
-      nonsensitive(team),
+      team,
       {
         name = lower(replace(team_key, "/\\W|_|\\s/", "_"))
       }
@@ -14,7 +14,7 @@ locals {
   project_level_teams = flatten([for project_key, project in local.projects :
     flatten([for team_key, team in project.teams :
       merge(
-        nonsensitive(team),
+        team,
         { name    = "${lower(replace(project_key, "/\\W|_|\\s/", "_"))}_${lower(replace(team_key, "/\\W|_|\\s/", "_"))}"
           project = project_key
         }
@@ -28,7 +28,7 @@ locals {
     flatten([for workspace_key, workspace in project.workspaces :
       flatten([for team_key, team in workspace.teams :
         merge(
-          nonsensitive(team),
+          team,
           { name      = "${lower(replace(workspace_key, "/\\W|_|\\s/", "_"))}_${lower(replace(team_key, "/\\W|_|\\s/", "_"))}"
             workspace = workspace_key
           }
@@ -46,7 +46,4 @@ locals {
     local.workspace_level_teams
   )
 
-}
-output "test" {
-  value = local.teams
 }
