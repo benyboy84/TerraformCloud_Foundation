@@ -188,6 +188,9 @@ locals {
               organization_access = {
                 manage_modules = true
               }
+              workspace_permission = {
+                runs              = "apply"
+              }
             }          
           }
           vcs_repo = {
