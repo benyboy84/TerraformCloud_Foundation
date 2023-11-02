@@ -188,7 +188,7 @@ locals {
               organization_access = {
                 manage_modules = true
               }
-            }          
+            }
           }
           vcs_repo = {
             identifier     = "benyboy84/TerraformCloud_ModulesRegistry"
