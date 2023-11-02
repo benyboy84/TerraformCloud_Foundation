@@ -40,13 +40,13 @@ locals {
   ])
 
   # This is to concat organization teams with project teams.
-  teams_tuple = concat(
+  teams = concat(
     local.organization_level_teams,
     local.project_level_teams,
     local.workspace_level_teams
   )
 
-  # Convert tuple to map og object.
-  teams = { for team in local.teams_tuple : team.name => team }
-
+}
+output "test" {
+  value = local.teams
 }
