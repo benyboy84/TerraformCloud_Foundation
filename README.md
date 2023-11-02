@@ -48,6 +48,8 @@ The following requirements are needed by this module:
 
 - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (> 1.3.1)
 
+- <a name="requirement_hcp"></a> [hcp](#requirement\_hcp) (0.76.0)
+
 - <a name="requirement_tfe"></a> [tfe](#requirement\_tfe) (0.48.0)
 
 ## Modules
@@ -92,7 +94,8 @@ The following resources are used by this module:
 - [tfe_variable.workspace_tfe_token](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/resources/variable) (resource)
 - [tfe_variable_set.this](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/resources/variable_set) (resource)
 - [tfe_workspace_variable_set.this](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/resources/workspace_variable_set) (resource)
-- [hcp_vault_secrets_app.aws](https://registry.terraform.io/providers/hashicorp/hcp/latest/docs/data-sources/vault_secrets_app) (data source)
+- [hcp_vault_secrets_secret.AWS_ACCESS_KEY_ID](https://registry.terraform.io/providers/hashicorp/hcp/0.76.0/docs/data-sources/vault_secrets_secret) (data source)
+- [hcp_vault_secrets_secret.AWS_SECRET_ACCESS_KEY](https://registry.terraform.io/providers/hashicorp/hcp/0.76.0/docs/data-sources/vault_secrets_secret) (data source)
 - [tfe_oauth_client.client](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/data-sources/oauth_client) (data source)
 - [tfe_organization.this](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/data-sources/organization) (data source)
 
