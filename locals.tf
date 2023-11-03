@@ -5,6 +5,15 @@ locals {
   # This local is used to define Oauth_client name.
   oauth_client_name = "GitHub.com"
 
+  secrets = {
+    aws_access_key_id = {
+      project = "AWS"
+    }
+    aws_secret_access_key = {
+      project = "AWS"
+    }
+  }
+
   # This local is used to define teams at the organization level.
   organization_teams = {
     # `organization_teams` is a map of object where the key is the name of the team.
@@ -186,12 +195,12 @@ locals {
           }
           variables = {
             "AWS_ACCESS_KEY_ID" = {
-              value     = data.hcp_vault_secrets_secret.aws_access_key_id.secret_value
+              value     = data.hcp_vault_secrets_secret.this["aws_access_key_id"].secret_value
               category  = "env"
               sensitive = true
             }
             "AWS_SECRET_ACCESS_KEY" = {
-              value     = data.hcp_vault_secrets_secret.aws_secret_access_key.secret_value
+              value     = data.hcp_vault_secrets_secret.this["aws_secret_access_key"].secret_value
               category  = "env"
               sensitive = true
             }
