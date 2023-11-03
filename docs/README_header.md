@@ -37,6 +37,7 @@ a key in order to manage resources.
   - teams
   - variable sets
   - variables
+  - notifications
 - Read secrets from Hashicorp Vault Secrets
 
 ## Prerequisite
