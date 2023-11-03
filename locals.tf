@@ -181,6 +181,7 @@ locals {
     "AWS Landing Zone" = {
       workspaces = {
         "AWS_OIDC_TerraformCloud" = {
+          remote_state_consumer_ids = ["ws-igXekzgees7Nt4QB"]
           notifications = {
             "MS_TEAM" = {
               destination_type = "microsoft-teams"
@@ -208,6 +209,9 @@ locals {
           }
         }
       }
+    }
+    "AWS Workloads" = {
+
     }
     "Terraform Cloud" = {
       workspaces = {
