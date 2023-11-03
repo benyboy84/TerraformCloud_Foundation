@@ -223,6 +223,10 @@ locals {
           }
           tag_names        = ["managed_by_terraform"]
           trigger_patterns = ["*.tf"]
+          vcs_repo = {
+            identifier     = "benyboy84/AWS_S3"
+            oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
+          }
           variables = {
             "TFC_AWS_PROVIDER_AUTH" = {
               value     = "true"
