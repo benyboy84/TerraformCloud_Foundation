@@ -189,6 +189,7 @@ locals {
             }
           }
           tag_names = ["managed_by_terraform"]
+          trigger_patterns = ["*.tf"]
           vcs_repo = {
             identifier     = "benyboy84/AWS_OIDC_TerraformCloud"
             oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
@@ -231,6 +232,7 @@ locals {
               }
             }
           }
+          trigger_patterns = ["*.tf"]
           vcs_repo = {
             identifier     = "benyboy84/TerraformCloud_ModulesRegistry"
             oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
