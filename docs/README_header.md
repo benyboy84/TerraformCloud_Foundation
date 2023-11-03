@@ -3,7 +3,7 @@
 Code which manages configuration and life-cycle of all the Terraform Cloud
 foundation. It is designed to be used from a dedicated VCS-Driven Terraform
 Cloud workspace that would provision and manage the configuration using
-Terraform code (IaC). It uses Hashicorp Vault Secrets to manage secrets. 
+Terraform code (IaC). It uses Hashicorp Vault Secrets to manage secrets.
 
 ## Permissions
 
