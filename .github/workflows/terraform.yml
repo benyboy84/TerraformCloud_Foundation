@@ -19,7 +19,6 @@ on:  # yamllint disable-line rule:truthy
       - '**'                     # matches every branch
     paths:
       - '**.tf'
-    types: [closed]
 
 permissions:
   contents: write
