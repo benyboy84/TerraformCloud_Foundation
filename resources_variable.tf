@@ -16,7 +16,7 @@ resource "tfe_variable" "variable_set_tfe_token" {
   for_each = nonsensitive({ for variable in local.variable_sets_variables : "${variable.workspace} ${variable.key}" => variable if variable.key == "TFE_TOKEN" })
 
   key             = each.value.key
-  value           = try(module.teams[each.value.value].token_id, each.value.value)
+  value           = try(module.teams[each.value.value].token, each.value.value)
   category        = each.value.category
   description     = try(each.value.description, null)
   hcl             = try(each.value.hcl, null)
@@ -40,7 +40,7 @@ resource "tfe_variable" "workspace_tfe_token" {
   for_each = nonsensitive({ for variable in local.workspace_variables : "${variable.workspace} ${variable.key}" => variable if variable.key == "TFE_TOKEN" })
 
   key          = each.value.key
-  value        = try(module.teams[each.value.value].token_id, each.value.value)
+  value        = try(module.teams[each.value.value].token, each.value.value)
   category     = each.value.category
   description  = try(each.value.description, null)
   hcl          = try(each.value.hcl, null)
