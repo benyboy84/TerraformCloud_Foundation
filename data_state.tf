@@ -1,5 +1,5 @@
 # The following block are used to retrieve information from state file.
-data "terraform_remote_state" "AWS_OIDC_TerraformCloud" {
+data "terraform_remote_state" "aws_oidc_terraformcloud" {
   backend = "remote"
 
   config = {

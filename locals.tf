@@ -230,7 +230,7 @@ locals {
               sensitive = false
             }
             "TFC_AWS_RUN_ROLE_ARN" = {
-              value     = data.terraform_remote_state.AWS_OIDC_TerraformCloud.outputs.arn
+              value     = data.terraform_remote_state.aws_oidc_terraformcloud.outputs.arn
               category  = "env"
               sensitive = true
             }
