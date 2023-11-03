@@ -116,6 +116,7 @@ The following resources are used by this module:
 - [tfe_variable_set.this](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/resources/variable_set) (resource)
 - [tfe_workspace_variable_set.this](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/resources/workspace_variable_set) (resource)
 - [hcp_vault_secrets_secret.this](https://registry.terraform.io/providers/hashicorp/hcp/0.76.0/docs/data-sources/vault_secrets_secret) (data source)
+- [terraform_remote_state.AWS_OIDC_TerraformCloud](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) (data source)
 - [tfe_oauth_client.client](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/data-sources/oauth_client) (data source)
 - [tfe_organization.this](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/data-sources/organization) (data source)
 
