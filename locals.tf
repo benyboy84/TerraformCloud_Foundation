@@ -5,6 +5,7 @@ locals {
   # This local is used to define Oauth_client name.
   oauth_client_name = "GitHub.com"
 
+  # This local is used to define all required secrets that we have to read from Hashicorp Vault Secrets.
   secrets = {
     aws_access_key_id = {
       project = "AWS"
@@ -211,7 +212,31 @@ locals {
       }
     }
     "AWS Workloads" = {
-
+      workspaces = {
+        "AWS_S3" = {
+          notifications = {
+            "MS_TEAM" = {
+              destination_type = "microsoft-teams"
+              triggers         = ["run:created", "run:planning", "run:needs_attention", "run:applying", "run:completed", "run:errored", "assessment:check_failure", "assessment:drifted", "assessment:failed"]
+              url              = "https://conseilsti.webhook.office.com/webhookb2/b1967add-a0bb-4f55-9508-280cefef4403@0f9829d3-a628-4f2b-a3ac-58e0740d27ae/IncomingWebhook/bd56b2570de84870b0529487428b9ccb/4c88f00c-bcb7-4867-823f-ce6d94fb1c06"
+            }
+          }
+          tag_names        = ["managed_by_terraform"]
+          trigger_patterns = ["*.tf"]
+          variables = {
+            "TFC_AWS_PROVIDER_AUTH" = {
+              value     = "true"
+              category  = "env"
+              sensitive = false
+            }
+            "TFC_AWS_RUN_ROLE_ARN" = {
+              value     = data.terraform_remote_state.AWS_OIDC_TerraformCloud.outputs.arn
+              category  = "env"
+              sensitive = true
+            }
+          }
+        }
+      }
     }
     "Terraform Cloud" = {
       workspaces = {
