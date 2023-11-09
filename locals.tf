@@ -238,7 +238,6 @@ locals {
               sensitive = true
             }
           }
-          workspaces = [""]
         }
       }
       workspaces = {
