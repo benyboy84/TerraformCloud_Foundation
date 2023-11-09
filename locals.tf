@@ -222,7 +222,7 @@ locals {
           visibility     = "organization"
         }
       }
-      variable_set = {
+      variable_sets = {
         "AWS_Workload" = {
           description = "Dynamic credentials for AWS workload"
           global      = false
