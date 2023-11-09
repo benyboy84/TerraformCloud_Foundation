@@ -213,11 +213,10 @@ locals {
     }
     "AWS Workloads" = {
       teams = {
-        "team_name" = {
+        "plan" = {
           custom_workspace_access = {
             runs = "plan"
           }
-          members        = []
           project_access = "custom"
           token          = true
           visibility     = "organization"
