@@ -291,6 +291,18 @@ locals {
         }
       }
     }
+    "Client" = {
+      teams = {
+        "read" = {
+          custom_workspace_access = {
+            runs = "read"
+          }
+          project_access = "custom"
+          token          = true
+          visibility     = "organization"
+        }
+      }
+    }
   }
 
 }
