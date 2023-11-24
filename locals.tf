@@ -13,6 +13,12 @@ locals {
     aws_secret_access_key = {
       project = "AWS"
     }
+    arm_client_id = {
+      project = "Azure"
+    }
+    arm_client_secret = {
+      project = "Azure"
+    }
   }
 
   # This local is used to define teams at the organization level.
@@ -178,13 +184,12 @@ locals {
     #     }
     #   }
     # }
-    "Azure Landing Zone" = {}
-    "AWS Landing Zone" = {
+    "Azure Landing Zone" = {
       workspaces = {
-        "AWS_OIDC_TerraformCloud" = {
+        "Azure-OIDC-TerraformCloud" = {
           remote_state_consumer_ids = ["ws-igXekzgees7Nt4QB"]
           notifications = {
-            "MS_TEAM" = {
+            "Microsoft Teams" = {
               destination_type = "microsoft-teams"
               triggers         = ["run:created", "run:planning", "run:needs_attention", "run:applying", "run:completed", "run:errored", "assessment:check_failure", "assessment:drifted", "assessment:failed"]
               url              = "https://conseilsti.webhook.office.com/webhookb2/b1967add-a0bb-4f55-9508-280cefef4403@0f9829d3-a628-4f2b-a3ac-58e0740d27ae/IncomingWebhook/bd56b2570de84870b0529487428b9ccb/4c88f00c-bcb7-4867-823f-ce6d94fb1c06"
@@ -193,7 +198,39 @@ locals {
           tag_names        = ["managed_by_terraform"]
           trigger_patterns = ["*.tf"]
           vcs_repo = {
-            identifier     = "benyboy84/AWS_OIDC_TerraformCloud"
+            identifier     = "benyboy84/Azure-OIDC-TerraformCloud"
+            oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
+          }
+          variables = {
+            "ARM_CLIENT_ID" = {
+              value     = data.hcp_vault_secrets_secret.this["arm_client_id"].secret_value
+              category  = "env"
+              sensitive = true
+            }
+            "ARM_CLIENT_SECRET" = {
+              value     = data.hcp_vault_secrets_secret.this["arm_client_secret"].secret_value
+              category  = "env"
+              sensitive = true
+            }
+          }
+        }
+      }
+    }
+    "AWS Landing Zone" = {
+      workspaces = {
+        "AWS-OIDC-TerraformCloud" = {
+          remote_state_consumer_ids = ["ws-igXekzgees7Nt4QB"]
+          notifications = {
+            "Microsoft Teams" = {
+              destination_type = "microsoft-teams"
+              triggers         = ["run:created", "run:planning", "run:needs_attention", "run:applying", "run:completed", "run:errored", "assessment:check_failure", "assessment:drifted", "assessment:failed"]
+              url              = "https://conseilsti.webhook.office.com/webhookb2/b1967add-a0bb-4f55-9508-280cefef4403@0f9829d3-a628-4f2b-a3ac-58e0740d27ae/IncomingWebhook/bd56b2570de84870b0529487428b9ccb/4c88f00c-bcb7-4867-823f-ce6d94fb1c06"
+            }
+          }
+          tag_names        = ["managed_by_terraform"]
+          trigger_patterns = ["*.tf"]
+          vcs_repo = {
+            identifier     = "benyboy84/AWS-OIDC-TerraformCloud"
             oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
           }
           variables = {

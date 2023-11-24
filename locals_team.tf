@@ -5,7 +5,7 @@ locals {
     merge(
       team,
       {
-        name = lower(replace(team_key, "/\\W|_|\\s/", "_"))
+        name = team_key
       }
     )
   ])
@@ -15,7 +15,7 @@ locals {
     flatten([for team_key, team in project.teams :
       merge(
         team,
-        { name    = "${lower(replace(project_key, "/\\W|_|\\s/", "_"))}_${lower(replace(team_key, "/\\W|_|\\s/", "_"))}"
+        { name    = "${project_key} - ${team_key}"
           project = project_key
         }
       )
@@ -29,7 +29,7 @@ locals {
       flatten([for team_key, team in workspace.teams :
         merge(
           team,
-          { name      = "${lower(replace(workspace_key, "/\\W|_|\\s/", "_"))}_${lower(replace(team_key, "/\\W|_|\\s/", "_"))}"
+          { name      = "${workspace_key} - ${team_key}"
             workspace = workspace_key
           }
         )
