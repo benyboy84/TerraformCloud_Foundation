@@ -6,7 +6,7 @@ locals {
       flatten([for notification_key, notification in workspace.notifications :
         merge(
           notification,
-          { name      = notification_key
+          { name      = lower(notification_key)
             workspace = workspace_key
           }
         )
