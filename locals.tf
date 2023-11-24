@@ -13,6 +13,12 @@ locals {
     aws_secret_access_key = {
       project = "AWS"
     }
+    arm_client_id = {
+      project = "Azure"
+    }
+    arm_client_secret = {
+      project = "Azure"
+    }
   }
 
   # This local is used to define teams at the organization level.
@@ -197,12 +203,12 @@ locals {
           }
           variables = {
             "ARM_CLIENT_ID" = {
-              value     = data.hcp_vault_secrets_secret.this["aws_access_key_id"].secret_value
+              value     = data.hcp_vault_secrets_secret.this["arm_client_id"].secret_value
               category  = "env"
               sensitive = true
             }
             "ARM_CLIENT_SECRET" = {
-              value     = data.hcp_vault_secrets_secret.this["aws_secret_access_key"].secret_value
+              value     = data.hcp_vault_secrets_secret.this["arm_client_secret"].secret_value
               category  = "env"
               sensitive = true
             }
