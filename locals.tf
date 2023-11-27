@@ -231,7 +231,7 @@ locals {
           }
           variables = {
             "TFC_AZURE_RUN_CLIENT_ID" = {
-              value     = data.hcp_vault_secrets_secret.this["aws_access_key_id"].secret_value
+              value     = data.hcp_vault_secrets_secret.this["arm_client_id"].secret_value
               category  = "env"
               sensitive = true
             }
