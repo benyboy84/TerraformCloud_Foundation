@@ -3,7 +3,7 @@
 resource "tfe_variable_set" "this" {
   for_each = nonsensitive({ for variable_set in local.variable_sets : variable_set.name => variable_set })
 
-  name         = lower(replace(each.key, "/\\W|_|\\s/", "_"))
+  name         = each.key
   description  = try(each.value.description, null)
   global       = try(each.value.global, null)
   organization = data.tfe_organization.this.name
