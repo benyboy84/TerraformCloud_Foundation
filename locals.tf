@@ -247,7 +247,7 @@ locals {
     "AWS Landing Zone" = {
       workspaces = {
         "AWS-OIDC-TerraformCloud" = {
-          remote_state_consumer_ids = ["ws-igXekzgees7Nt4QB"]
+          remote_state_consumer_ids = ["TerraformCloud-Foundation"]
           notifications = {
             "Microsoft Teams" = {
               destination_type = "microsoft-teams"
