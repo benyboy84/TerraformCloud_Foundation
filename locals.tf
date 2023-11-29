@@ -48,7 +48,7 @@ locals {
     #   token_force_regenerate = true or false
     #   visibility             = "secret" or "organization"
     # }
-    "org_admin" = {
+    "admins" = {
       sso_team_id = "a2f4919a-4c3c-436a-a010-fde47b98d0fd"
       token       = true
       organization_access = {

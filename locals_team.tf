@@ -5,7 +5,7 @@ locals {
     merge(
       team,
       {
-        name = team_key
+        name = lower(team_key)
       }
     )
   ])
@@ -15,7 +15,7 @@ locals {
     flatten([for team_key, team in project.teams :
       merge(
         team,
-        { name    = "${project_key} - ${team_key}"
+        { name    = lower("${project_key} - ${team_key}")
           project = project_key
         }
       )
@@ -29,7 +29,7 @@ locals {
       flatten([for team_key, team in workspace.teams :
         merge(
           team,
-          { name      = "${workspace_key} - ${team_key}"
+          { name      = lower("${workspace_key} - ${team_key}")
             workspace = workspace_key
           }
         )
