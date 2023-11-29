@@ -287,7 +287,7 @@ locals {
         }
       }
       variable_sets = {
-        "AWS_Workload" = {
+        "Authentication" = {
           description = "Dynamic credentials for AWS workload"
           global      = false
           variables = {
