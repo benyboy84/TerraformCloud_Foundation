@@ -17,7 +17,7 @@ module "workspaces" {
   assessments_enabled           = try(each.value.assessments_enabled, null)
   file_triggers_enabled         = try(each.value.file_triggers_enabled, null)
   global_remote_state           = try(each.value.global_remote_state, null)
-  remote_state_consumer_ids     = try(each.value.remote_state_consumer_ids, null)
+  remote_state_consumer_ids     = try([for value in each.value.remote_state_consumer_ids : data.tfe_workspace.this[value].id], null)
   queue_all_runs                = try(each.value.queue_all_runs, null)
   source_name                   = try(each.value.source_name, null)
   source_url                    = try(each.value.source_url, null)
