@@ -347,7 +347,7 @@ locals {
           }
           variables = {
             "TFE_TOKEN" = {
-              value     = "terraformcloud_modulesregistry_private_registry"
+              value     = "terraformcloud-modulesregistry_private-registry"
               category  = "env"
               sensitive = true
             }
@@ -357,39 +357,4 @@ locals {
     }
   }
 
-}
-
-moved {
-  from = module.notifications["AWS_S3 ms_team"].tfe_notification_configuration.this
-  to   = module.notifications["AWS_S3 microsoft teams"].tfe_notification_configuration.this
-}
-
-moved {
-  from = module.notifications["TerraformCloud_ModulesRegistry ms_team"].tfe_notification_configuration.this
-  to   = module.notifications["TerraformCloud-ModulesRegistry microsoft teams"].tfe_notification_configuration.this
-}
-
-moved {
-  from = module.teams["terraformcloud_modulesregistry - private-registry"].tfe_team_access.this[0]
-  to   = module.teams["terraformcloud-modulesregistry - private-registry"].tfe_team_access.this[0]
-}
-
-moved {
-  from = module.teams["terraformcloud_modulesregistry - private-registry"].tfe_team_token.this[0]
-  to   = module.teams["terraformcloud-modulesregistry - private-registry"].tfe_team_token.this[0]
-}
-
-moved {
-  from = module.teams["terraformcloud_modulesregistry - private-registry"].tfe_team.this
-  to   = module.teams["terraformcloud-modulesregistry - private-registry"].tfe_team.this
-}
-
-moved {
-  from = module.workspaces["TerraformCloud_ModulesRegistry"].tfe_workspace.this
-  to   = module.workspaces["TerraformCloud-ModulesRegistry"].tfe_workspace.this
-}
-
-moved {
-  from = tfe_variable.workspace_tfe_token["TerraformCloud_ModulesRegistry TFE_TOKEN"]
-  to   = tfe_variable.workspace_tfe_token["TerraformCloud-ModulesRegistry TFE_TOKEN"]
 }
