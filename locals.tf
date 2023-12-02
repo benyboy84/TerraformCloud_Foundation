@@ -347,7 +347,7 @@ locals {
           }
           variables = {
             "TFE_TOKEN" = {
-              value     = "terraformcloud-modulesregistry_private-registry"
+              value     = "terraformcloud-modulesregistry - private-registry"
               category  = "env"
               sensitive = true
             }
