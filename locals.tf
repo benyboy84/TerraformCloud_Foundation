@@ -359,32 +359,32 @@ locals {
 
 }
 
-moved = {
+moved {
   from = module.notifications["AWS_S3 ms_team"].tfe_notification_configuration.this
   to   = module.notifications["AWS_S3 microsoft teams"].tfe_notification_configuration.this
 }
 
-moved = {
+moved {
   from = module.notifications["TerraformCloud_ModulesRegistry ms_team"].tfe_notification_configuration.this
   to   = module.notifications["TerraformCloud-ModulesRegistry microsoft teams"].tfe_notification_configuration.this
 }
 
-moved = {
+moved {
   from = module.teams["terraformcloud_modulesregistry - private-registry"].tfe_team_access.this[0]
   to   = module.teams["terraformcloud-modulesregistry - private-registry"].tfe_team_access.this[0]
 }
 
-moved = {
+moved {
   from = module.teams["terraformcloud_modulesregistry - private-registry"].tfe_team_token.this[0]
   to   = module.teams["terraformcloud-modulesregistry - private-registry"].tfe_team_token.this[0]
 }
 
-moved = {
+moved {
   from = module.teams["terraformcloud_modulesregistry - private-registry"].tfe_team.this
   to   = module.teams["terraformcloud-modulesregistry - private-registry"].tfe_team.this
 }
 
-moved = {
+moved {
   from = module.workspaces["TerraformCloud_ModulesRegistry"].tfe_workspace.this
   to   = module.workspaces["TerraformCloud-ModulesRegistry"].tfe_workspace.this
 }
