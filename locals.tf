@@ -389,7 +389,7 @@ moved {
   to   = module.workspaces["TerraformCloud-ModulesRegistry"].tfe_workspace.this
 }
 
-moved = {
+moved {
   from = tfe_variable.workspace_tfe_token["TerraformCloud_ModulesRegistry TFE_TOKEN"]
   to   = tfe_variable.workspace_tfe_token["TerraformCloud-ModulesRegistry TFE_TOKEN"]
 }
