@@ -307,7 +307,7 @@ locals {
       workspaces = {
         "AWS_S3" = {
           notifications = {
-            "MS_TEAM" = {
+            "Microsoft Teams" = {
               destination_type = "microsoft-teams"
               triggers         = ["run:created", "run:planning", "run:needs_attention", "run:applying", "run:completed", "run:errored", "assessment:check_failure", "assessment:drifted", "assessment:failed"]
               url              = "https://conseilsti.webhook.office.com/webhookb2/b1967add-a0bb-4f55-9508-280cefef4403@0f9829d3-a628-4f2b-a3ac-58e0740d27ae/IncomingWebhook/bd56b2570de84870b0529487428b9ccb/4c88f00c-bcb7-4867-823f-ce6d94fb1c06"
@@ -319,9 +319,9 @@ locals {
     }
     "Terraform Cloud" = {
       workspaces = {
-        "TerraformCloud_ModulesRegistry" = {
+        "TerraformCloud-ModulesRegistry" = {
           notifications = {
-            "MS_TEAM" = {
+            "Microsoft Teams" = {
               destination_type = "microsoft-teams"
               triggers         = ["run:created", "run:planning", "run:needs_attention", "run:applying", "run:completed", "run:errored", "assessment:check_failure", "assessment:drifted", "assessment:failed"]
               url              = "https://conseilsti.webhook.office.com/webhookb2/b1967add-a0bb-4f55-9508-280cefef4403@0f9829d3-a628-4f2b-a3ac-58e0740d27ae/IncomingWebhook/bd56b2570de84870b0529487428b9ccb/4c88f00c-bcb7-4867-823f-ce6d94fb1c06"
@@ -342,7 +342,7 @@ locals {
           }
           trigger_patterns = ["*.tf"]
           vcs_repo = {
-            identifier     = "benyboy84/TerraformCloud_ModulesRegistry"
+            identifier     = "benyboy84/TerraformCloud-ModulesRegistry"
             oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
           }
           variables = {
@@ -357,4 +357,39 @@ locals {
     }
   }
 
+}
+
+moved {
+  from = module.notifications["AWS_S3 ms_team"].tfe_notification_configuration.this
+  to   = module.notifications["AWS_S3 microsoft teams"].tfe_notification_configuration.this
+}
+
+moved {
+  from = module.notifications["TerraformCloud_ModulesRegistry ms_team"].tfe_notification_configuration.this
+  to   = module.notifications["TerraformCloud-ModulesRegistry microsoft teams"].tfe_notification_configuration.this
+}
+
+moved {
+  from = module.teams["terraformcloud_modulesregistry - private-registry"].tfe_team_access.this[0]
+  to   = module.teams["terraformcloud-modulesregistry - private-registry"].tfe_team_access.this[0]
+}
+
+moved {
+  from = module.teams["terraformcloud_modulesregistry - private-registry"].tfe_team_token.this[0]
+  to   = module.teams["terraformcloud-modulesregistry - private-registry"].tfe_team_token.this[0]
+}
+
+moved {
+  from = module.teams["terraformcloud_modulesregistry - private-registry"].tfe_team.this
+  to   = module.teams["terraformcloud-modulesregistry - private-registry"].tfe_team.this
+}
+
+moved {
+  from = module.workspaces["TerraformCloud_ModulesRegistry"].tfe_workspace.this
+  to   = module.workspaces["TerraformCloud-ModulesRegistry"].tfe_workspace.this
+}
+
+moved {
+  from = tfe_variable.workspace_tfe_token["TerraformCloud_ModulesRegistry TFE_TOKEN"]
+  to   = tfe_variable.workspace_tfe_token["TerraformCloud-ModulesRegistry TFE_TOKEN"]
 }
