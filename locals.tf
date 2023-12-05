@@ -353,8 +353,6 @@ locals {
             }
           }
         }
-      }
-      workspaces = {
         "TerraformCloud-Policies" = {
           notifications = {
             "Microsoft Teams" = {
