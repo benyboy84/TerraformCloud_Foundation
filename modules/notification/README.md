@@ -9,7 +9,8 @@ and manage rest of your teams using Terraform code (IaC).
 
 To manage the notification resources, provide a user token from an account with 
 appropriate permissions. This user should belong to the `admin` team of the workspace. 
-Alternatively, you can use a token from the owners team instead of a user token.
+Alternatively, you can use a token from a team with `admin` permission instead of a
+user token.
 
 ## Authentication
 
