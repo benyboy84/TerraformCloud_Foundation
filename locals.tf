@@ -93,6 +93,7 @@ locals {
     # Refer to "./modules/notification/README.md" for more details on the notification configuration.
     # Here is an example of an object:
     # "project_name" = {
+    #   agent_pools = [""]
     #   teams = {
     #     "team_name" = {
     #       custom_workspace_access = {
@@ -185,6 +186,7 @@ locals {
     #   }
     # }
     "Azure Landing Zone" = {
+      agent_pools = ["azure"]
       workspaces = {
         "Azure-OIDC-TerraformCloud" = {
           remote_state_consumer_ids = ["TerraformCloud-Foundation"]
