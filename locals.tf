@@ -376,7 +376,7 @@ locals {
               }
             }
           }
-          trigger_patterns = ["*.tf"]
+          trigger_patterns = ["*.tf", "*.sentinel"]
           vcs_repo = {
             identifier     = "benyboy84/TerraformCloud-Policies"
             oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
