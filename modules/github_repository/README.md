@@ -29,8 +29,9 @@ in the provider configuration. The owner parameter is also required in this situ
 - Set the `GITHUB_APP_ID`, `GITHUB_APP_INSTALLATION_ID` and `GITHUB_APP_PEM_FILE` environment variables. The provider can read the GITHUB_APP_ID,
 GITHUB_APP_INSTALLATION_ID and GITHUB_APP_PEM_FILE environment variables to authenticate.
 
-> Because strings with new lines is not support, you must use "\\n" within the `GITHUB_APP_PEM_FILE` environment variables or `pem_file`
-> argument to replace new line.
+> Because strings with new lines is not support:</br>
+> use "\\\n" within the `pem_file` argument to replace new line</br>
+> use "\n" within the `GITHUB_APP_PEM_FILE` environment variables to replace new line</br>
 
 ## Features
 
@@ -396,7 +397,7 @@ list(object({
   }))
 ```
 
-Default: `null`
+Default: `[]`
 
 ### <a name="input_security_and_analysis"></a> [security\_and\_analysis](#input\_security\_and\_analysis)
 

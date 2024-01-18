@@ -359,5 +359,5 @@ variable "secrets" {
     secret_name     = string
     plaintext_value = string
   }))
-  default = null
+  default = []
 }
