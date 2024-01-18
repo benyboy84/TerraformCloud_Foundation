@@ -54,7 +54,7 @@ module "repository" {
     dismissal_teams                 = try(each.value.github_repository.required_pull_request_reviews.dismissal_teams, null)
     dismissal_apps                  = try(each.value.github_repository.required_pull_request_reviews.dismissal_apps, null)
     require_code_owner_reviews      = try(each.value.github_repository.required_pull_request_reviews.require_code_owner_reviews, true)
-    required_approving_review_count = try(each.value.github_repository.required_pull_request_reviews.required_approving_review_count, "1")
+    required_approving_review_count = try(each.value.github_repository.required_pull_request_reviews.required_approving_review_count, "0")
     bypass_pull_request_allowances  = try(each.value.github_repository.required_pull_request_reviews.bypass_pull_request_allowances, null)
   }
   restrictions = try(each.value.github_repository.restrictions, null)
