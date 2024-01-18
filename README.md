@@ -70,6 +70,8 @@ The following requirements are needed by this module:
 
 - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (> 1.3.1)
 
+- <a name="requirement_github"></a> [github](#requirement\_github) (5.44.0)
+
 - <a name="requirement_hcp"></a> [hcp](#requirement\_hcp) (0.76.0)
 
 - <a name="requirement_tfe"></a> [tfe](#requirement\_tfe) (0.48.0)
@@ -80,25 +82,31 @@ The following Modules are called:
 
 ### <a name="module_agent"></a> [agent](#module\_agent)
 
-Source: ./modules/agent
+Source: ./modules/tfe_agent
 
 Version:
 
 ### <a name="module_notifications"></a> [notifications](#module\_notifications)
 
-Source: ./modules/notification
+Source: ./modules/tfe_notification
+
+Version:
+
+### <a name="module_repository"></a> [repository](#module\_repository)
+
+Source: ./modules/github_repository
 
 Version:
 
 ### <a name="module_teams"></a> [teams](#module\_teams)
 
-Source: ./modules/team
+Source: ./modules/tfe_team
 
 Version:
 
 ### <a name="module_workspaces"></a> [workspaces](#module\_workspaces)
 
-Source: ./modules/workspace
+Source: ./modules/tfe_workspace
 
 Version:
 
