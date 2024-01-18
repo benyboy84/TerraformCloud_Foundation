@@ -29,6 +29,9 @@ in the provider configuration. The owner parameter is also required in this situ
 - Set the `GITHUB_APP_ID`, `GITHUB_APP_INSTALLATION_ID` and `GITHUB_APP_PEM_FILE` environment variables. The provider can read the GITHUB_APP_ID,
 GITHUB_APP_INSTALLATION_ID and GITHUB_APP_PEM_FILE environment variables to authenticate.
 
+> Because strings with new lines is not support, you must use "\\n" within the `GITHUB_APP_PEM_FILE` environment variables or `pem_file`
+> argument to replace new line.
+
 ## Features
 
 - Create and manage GitHub repositories.
@@ -292,14 +295,6 @@ object({
 
 Default: `null`
 
-### <a name="input_plaintext_value"></a> [plaintext\_value](#input\_plaintext\_value)
-
-Description: (Optional) Plaintext value of the secret to be encrypted.
-
-Type: `string`
-
-Default: `null`
-
 ### <a name="input_require_conversation_resolution"></a> [require\_conversation\_resolution](#input\_require\_conversation\_resolution)
 
 Description: (Optional) Boolean, setting this to true requires all conversations on code must be resolved before a pull request can be merged.
@@ -386,11 +381,20 @@ object({
 
 Default: `null`
 
-### <a name="input_secret_name"></a> [secret\_name](#input\_secret\_name)
+### <a name="input_secrets"></a> [secrets](#input\_secrets)
 
-Description: (Optional) Name of the secret.
+Description:   (Optional) The secrets block supports the following:  
+    secret\_name     : (Optional) Name of the secret.  
+    plaintext\_value : (Optional) Plaintext value of the secret to be encrypted.
 
-Type: `string`
+Type:
+
+```hcl
+list(object({
+    secret_name     = string
+    plaintext_value = string
+  }))
+```
 
 Default: `null`
 
@@ -512,9 +516,9 @@ Description: GraphQL global node id for use with v4 API.
 ### <a name="output_pages"></a> [pages](#output\_pages)
 
 Description:   The block consisting of the repository's GitHub Pages configuration with the following additional attributes:  
-    custom\_404 = Whether the rendered GitHub Pages site has a custom 404 page.  
-    html\_url   = The absolute URL (including scheme) of the rendered GitHub Pages site e.g. https://username.github.io.  
-    status     = The GitHub Pages site's build status e.g. building or built.
+    custom\_404 : Whether the rendered GitHub Pages site has a custom 404 page.  
+    html\_url   : The absolute URL (including scheme) of the rendered GitHub Pages site e.g. https://username.github.io.  
+    status     : The GitHub Pages site's build status e.g. building or built.
 
 ### <a name="output_primary_language"></a> [primary\_language](#output\_primary\_language)
 

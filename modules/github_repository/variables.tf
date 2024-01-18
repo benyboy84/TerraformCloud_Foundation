@@ -349,14 +349,15 @@ variable "restrictions" {
 
 # The following variables are used to create branch protection resources (`github_branch_protection_v3`).
 
-variable "secret_name" {
-  description = "(Optional) Name of the secret."
-  type        = string
-  default     = null
-}
-
-variable "plaintext_value" {
-  description = "(Optional) Plaintext value of the secret to be encrypted."
-  type        = string
+variable "secrets" {
+  description = <<DESCRIPTION
+  (Optional) The secrets block supports the following:
+    secret_name     : (Optional) Name of the secret.
+    plaintext_value : (Optional) Plaintext value of the secret to be encrypted.
+  DESCRIPTION
+  type = list(object({
+    secret_name     = string
+    plaintext_value = string
+  }))
   default     = null
 }
