@@ -29,7 +29,7 @@ to authenticate.
 ## Usage example
 ```hcl
 module "agent" {
-  source = "./modules/agent"
+  source = "./modules/tfe_agent"
 
   name              = "Agent Name"
   organization      = "Organization Name"
