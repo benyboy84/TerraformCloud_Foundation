@@ -147,7 +147,7 @@ resource "github_branch_protection_v3" "this" {
 }
 
 resource "github_actions_secret" "this" {
-  repository       = github_repository.this.name
-  secret_name      = var.secret_name
-  plaintext_value  = var.plaintext_value
+  repository      = github_repository.this.name
+  secret_name     = var.secret_name
+  plaintext_value = var.plaintext_value
 }
