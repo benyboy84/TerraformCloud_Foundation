@@ -1,9 +1,7 @@
 # TFC agent Terraform module
 
 Terraform agent module which manages configuration and life-cycle 
-of all your Terraform Cloud agent configuration. It is designed to 
-be used from a dedicated Terraform Cloud workspace that would provision 
-and manage rest of your teams using Terraform code (IaC).
+of all your Terraform Cloud agent configuration.
 
 ## Permissions
 
@@ -20,18 +18,18 @@ There are several ways to provide the required token:
 
 - Set the `token` argument in the provider configuration. You can set the token argument in the provider configuration. Use an
 input variable for the token.
-- Set the `TFE_TOKEN` environment variable: The provider can read the TFE_TOKEN environment variable and the token stored there
+- Set the `TFE_TOKEN` environment variable. The provider can read the TFE_TOKEN environment variable and the token stored there
 to authenticate.
 
 ## Features
 
-- Configuration agent pool.
-- Generate agent pool token.
+- Create and manage agent pool.
+- Generate and manage agent pool token.
 
 ## Usage example
 ```hcl
 module "agent" {
-  source = "./modules/agent"
+  source = "./modules/tfe_agent"
 
   name              = "Agent Name"
   organization      = "Organization Name"

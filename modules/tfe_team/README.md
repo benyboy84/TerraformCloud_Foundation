@@ -1,9 +1,7 @@
 # TFC teams Terraform module
 
 Terraform teams module which manages configuration and life-cycle of all
-your Terraform Cloud teams. It is designed to be used from a dedicated 
-Terraform Cloud workspace that would provision and manage rest of your 
-teams using Terraform code (IaC).
+your Terraform Cloud teams.
 
 ## Permissions
 
@@ -20,17 +18,17 @@ There are several ways to provide the required token:
 
 - Set the `token` argument in the provider configuration. You can set the token argument in the provider configuration. Use an
 input variable for the token.
-- Set the `TFE_TOKEN` environment variable: The provider can read the TFE_TOKEN environment variable and the token stored there
+- Set the `TFE_TOKEN` environment variable. The provider can read the TFE_TOKEN environment variable and the token stored there
 to authenticate.
 
 ## Features
 
-- Create teams.
-- Set team's organization access.
+- Create and manage Terraform Cloud teams.
+- Manage team's organization access.
+- Manage team's members.
 - Generates a new team token and overrides existing token if one exists.
-- Add or remove one or more team members.
-- Associate a team to permissions on a project.
-- Associate a team to permissions on a workspace.
+- Manage team's permissions on a project.
+- Manage team's permissions on a workspace.
 
 ## Usage example
 ```hcl
@@ -97,8 +95,8 @@ The following input variables are optional (have default values):
 ### <a name="input_custom_project_access"></a> [custom\_project\_access](#input\_custom\_project\_access)
 
 Description:   (Optional) Settings for the team's project access.  
-    settings = (Optional) The permission to grant for the project's settings. Valid strings: `read`, `update`, or `delete`.  
-    teams	   = (Optional) The permission to grant for the project's teams. Valid strings: `none`, `read`, or `manage`.
+    settings : (Optional) The permission to grant for the project's settings. Valid strings: `read`, `update`, or `delete`.  
+    teams	   : (Optional) The permission to grant for the project's teams. Valid strings: `none`, `read`, or `manage`.
 
 Type:
 
@@ -113,15 +111,15 @@ Default: `null`
 
 ### <a name="input_custom_workspace_access"></a> [custom\_workspace\_access](#input\_custom\_workspace\_access)
 
-Description:     runs	         = (Optional) The permission to grant project's workspaces' runs. Valid strings: `read`, `plan`, or `apply`.  
-    sentinel\_mocks = (Optional) The permission to grant project's workspaces' Sentinel mocks. Valid strings: `none`, or `read`.  
-    state\_versions = (Optional) The permission to grant project's workspaces' state versions. Valid strings: `none`, `read-outputs`, `read`, or `write`.  
-    variables      = (Optional) The permission to grant project's workspaces' variables. Valid strings: `none`, `read`, or `write`.  
-    create         = (Optional) The permission to create project's workspaces in the project.  
-    locking        = (Optional) The permission to manually lock or unlock the project's workspaces.  
-    delete	       = (Optional) The permission to delete the project's workspaces.  
-    move           = (Optional) This permission to move workspaces into and out of the project. The team must also have permissions to the project(s) receiving the the workspace(s).  
-    run\_tasks      = (Optional) The permission to manage run tasks within the project's workspaces.
+Description:     runs	         : (Optional) The permission to grant project's workspaces' runs. Valid strings: `read`, `plan`, or `apply`.  
+    sentinel\_mocks : (Optional) The permission to grant project's workspaces' Sentinel mocks. Valid strings: `none`, or `read`.  
+    state\_versions : (Optional) The permission to grant project's workspaces' state versions. Valid strings: `none`, `read-outputs`, `read`, or `write`.  
+    variables      : (Optional) The permission to grant project's workspaces' variables. Valid strings: `none`, `read`, or `write`.  
+    create         : (Optional) The permission to create project's workspaces in the project.  
+    locking        : (Optional) The permission to manually lock or unlock the project's workspaces.  
+    delete	       : (Optional) The permission to delete the project's workspaces.  
+    move           : (Optional) This permission to move workspaces into and out of the project. The team must also have permissions to the project(s) receiving the the workspace(s).  
+    run\_tasks      : (Optional) The permission to manage run tasks within the project's workspaces.
 
 Type:
 
@@ -152,17 +150,17 @@ Default: `null`
 ### <a name="input_organization_access"></a> [organization\_access](#input\_organization\_access)
 
 Description:   (Optional) Settings for the team's organization access.  
-    read\_projects           = (Optional) Allow members to view all projects within the organization. Requires read\_workspaces to be set to true.  
-    manage\_projects         = (Optional) Allow members to create and administrate all projects within the organization.  
-    read\_workspaces         = (Optional) Allow members to view all workspaces in this organization.  
-    manage\_workspaces       = (Optional) Allows members to create and administrate all workspaces within the organization.  
-    manage\_policies         = (Optional) Allows members to create, edit, and delete the organization's Sentinel policies.  
-    manage\_policy\_overrides = (Optional) Allows members to override soft-mandatory policy checks.  
-    manage\_run\_tasks        = (Optional) Allow members to create, edit, and delete the organization's run tasks.  
-    manage\_vcs\_settings     = (Optional) Allows members to manage the organization's VCS Providers and SSH keys.  
-    manage\_membership       = (Optional) Allow members to add/remove users from the organization, and to add/remove users from visible teams.  
-    manage\_modules          = (Optional) Allow members to publish and delete modules in the organization's private registry.  
-    manage\_providers        = (Optional) Allow members to publish and delete providers in the organization's private registry.
+    read\_projects           : (Optional) Allow members to view all projects within the organization. Requires read\_workspaces to be set to true.  
+    manage\_projects         : (Optional) Allow members to create and administrate all projects within the organization.  
+    read\_workspaces         : (Optional) Allow members to view all workspaces in this organization.  
+    manage\_workspaces       : (Optional) Allows members to create and administrate all workspaces within the organization.  
+    manage\_policies         : (Optional) Allows members to create, edit, and delete the organization's Sentinel policies.  
+    manage\_policy\_overrides : (Optional) Allows members to override soft-mandatory policy checks.  
+    manage\_run\_tasks        : (Optional) Allow members to create, edit, and delete the organization's run tasks.  
+    manage\_vcs\_settings     : (Optional) Allows members to manage the organization's VCS Providers and SSH keys.  
+    manage\_membership       : (Optional) Allow members to add/remove users from the organization, and to add/remove users from visible teams.  
+    manage\_modules          : (Optional) Allow members to publish and delete modules in the organization's private registry.  
+    manage\_providers        : (Optional) Allow members to publish and delete providers in the organization's private registry.
 
 Type:
 
@@ -275,12 +273,12 @@ Default: `null`
 ### <a name="input_workspace_permission"></a> [workspace\_permission](#input\_workspace\_permission)
 
 Description:   (Optional) Settings for the team's workspace access.  
-      runs              = (Optional) The permission to grant the team on the workspace's runs. Valid values are `read`, `plan`, or `apply`.  
-      variables         = (Optional) The permission to grant the team on the workspace's variables. Valid values are `none`, `read`, or `write`.  
-      state\_versions    = (Optional) The permission to grant the team on the workspace's state versions. Valid values are `none`, `read`, `read-outputs`, or `write`.  
-      sentinel\_mocks    = (Optional) The permission to grant the team on the workspace's generated Sentinel mocks, Valid values are `none` or `read`.  
-      workspace\_locking = (Optional) Boolean determining whether or not to grant the team permission to manually lock/unlock the workspace.  
-      run\_tasks         = (Optional) Boolean determining whether or not to grant the team permission to manage workspace run tasks.
+      runs              : (Optional) The permission to grant the team on the workspace's runs. Valid values are `read`, `plan`, or `apply`.  
+      variables         : (Optional) The permission to grant the team on the workspace's variables. Valid values are `none`, `read`, or `write`.  
+      state\_versions    : (Optional) The permission to grant the team on the workspace's state versions. Valid values are `none`, `read`, `read-outputs`, or `write`.  
+      sentinel\_mocks    : (Optional) The permission to grant the team on the workspace's generated Sentinel mocks, Valid values are `none` or `read`.  
+      workspace\_locking : (Optional) Boolean determining whether or not to grant the team permission to manually lock/unlock the workspace.  
+      run\_tasks         : (Optional) Boolean determining whether or not to grant the team permission to manage workspace run tasks.
 
 Type:
 
