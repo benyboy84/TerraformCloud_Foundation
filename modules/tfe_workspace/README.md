@@ -1,9 +1,7 @@
 # TFC workspaces Terraform module
 
 Terraform workspaces module which manages configuration and life-cycle of all
-your Terraform Cloud workspaces. It is designed to be used from a dedicated
-Terraform Cloud workspace that would provision and manage rest of your
-workspaces using Terraform code (IaC).
+your Terraform Cloud workspaces.
 
 ## Permissions
 
@@ -29,18 +27,17 @@ There are several ways to provide the required token:
 
 - Set the `token` argument in the provider configuration. You can set the token argument in the provider configuration. Use an
 input variable for the token.
-- Set the `TFE_TOKEN` environment variable: The provider can read the TFE_TOKEN environment variable and the token stored there
+- Set the `TFE_TOKEN` environment variable. The provider can read the TFE_TOKEN environment variable and the token stored there
 to authenticate.
 
 ## Features
 
-- Create a Terraform Cloud workspace
-- Set configuration settings
+- Create and manage Terraform Cloud workspace
 
 ## Usage example
 ```hcl
 module "workspace" {
-  source = "./modules/workspace"
+  source = "./modules/tfe_workspace"
 
   name         = "Workspace Nane"
   organization = "Organization Name"
@@ -255,12 +252,12 @@ Default: `null`
 ### <a name="input_vcs_repo"></a> [vcs\_repo](#input\_vcs\_repo)
 
 Description:   (Optional) Settings for the workspace's VCS repository, enabling the UI/VCS-driven run workflow. Omit this argument to utilize the CLI-driven and API-driven workflows, where runs are not driven by webhooks on your VCS provider.  
-    identifier                 = (Required) A reference to your VCS repository in the format '<vcs organization>/<repository>' where '<vcs organization>' and '<repository>' refer to the organization and repository in your VCS provider. The format for Azure DevOps is '<ado organization>/<ado project>/\_git/<ado repository>'.  
-    branch                     = (Optional) The repository branch that Terraform will execute from. This defaults to the repository's default branch (e.g. main).  
-    ingress\_submodules         = (Optional) Whether submodules should be fetched when cloning the VCS repository.  
-    oauth\_token\_id             = (Optional) The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from a 'tfe\_oauth\_client' resource. This conflicts with 'github\_app\_installation\_id' and can only be used if 'github\_app\_installation\_id' is not used.  
-    github\_app\_installation\_id = (Optional) The installation id of the Github App. This conflicts with 'oauth\_token\_id' and can only be used if 'oauth\_token\_id' is not used.  
-    tags\_regex                 = (Optional) A regular expression used to trigger a Workspace run for matching Git tags. This option conflicts with 'trigger\_patterns' and 'trigger\_prefixes'. Should only set this value if the former is not being used.
+    identifier                 : (Required) A reference to your VCS repository in the format '<vcs organization>/<repository>' where '<vcs organization>' and '<repository>' refer to the organization and repository in your VCS provider. The format for Azure DevOps is '<ado organization>/<ado project>/\_git/<ado repository>'.  
+    branch                     : (Optional) The repository branch that Terraform will execute from. This defaults to the repository's default branch (e.g. main).  
+    ingress\_submodules         : (Optional) Whether submodules should be fetched when cloning the VCS repository.  
+    oauth\_token\_id             : (Optional) The VCS Connection (OAuth Connection + Token) to use. This ID can be obtained from a 'tfe\_oauth\_client' resource. This conflicts with 'github\_app\_installation\_id' and can only be used if 'github\_app\_installation\_id' is not used.  
+    github\_app\_installation\_id : (Optional) The installation id of the Github App. This conflicts with 'oauth\_token\_id' and can only be used if 'oauth\_token\_id' is not used.  
+    tags\_regex                 : (Optional) A regular expression used to trigger a Workspace run for matching Git tags. This option conflicts with 'trigger\_patterns' and 'trigger\_prefixes'. Should only set this value if the former is not being used.
 
 Type:
 
