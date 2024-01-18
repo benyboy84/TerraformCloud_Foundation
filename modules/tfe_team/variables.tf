@@ -30,17 +30,17 @@ variable "sso_team_id" {
 variable "organization_access" {
   description = <<DESCRIPTION
   (Optional) Settings for the team's organization access.
-    read_projects           = (Optional) Allow members to view all projects within the organization. Requires read_workspaces to be set to true.
-    manage_projects         = (Optional) Allow members to create and administrate all projects within the organization.
-    read_workspaces         = (Optional) Allow members to view all workspaces in this organization.
-    manage_workspaces       = (Optional) Allows members to create and administrate all workspaces within the organization.
-    manage_policies         = (Optional) Allows members to create, edit, and delete the organization's Sentinel policies.
-    manage_policy_overrides = (Optional) Allows members to override soft-mandatory policy checks.
-    manage_run_tasks        = (Optional) Allow members to create, edit, and delete the organization's run tasks.
-    manage_vcs_settings     = (Optional) Allows members to manage the organization's VCS Providers and SSH keys.
-    manage_membership       = (Optional) Allow members to add/remove users from the organization, and to add/remove users from visible teams.
-    manage_modules          = (Optional) Allow members to publish and delete modules in the organization's private registry.
-    manage_providers        = (Optional) Allow members to publish and delete providers in the organization's private registry.
+    read_projects           : (Optional) Allow members to view all projects within the organization. Requires read_workspaces to be set to true.
+    manage_projects         : (Optional) Allow members to create and administrate all projects within the organization.
+    read_workspaces         : (Optional) Allow members to view all workspaces in this organization.
+    manage_workspaces       : (Optional) Allows members to create and administrate all workspaces within the organization.
+    manage_policies         : (Optional) Allows members to create, edit, and delete the organization's Sentinel policies.
+    manage_policy_overrides : (Optional) Allows members to override soft-mandatory policy checks.
+    manage_run_tasks        : (Optional) Allow members to create, edit, and delete the organization's run tasks.
+    manage_vcs_settings     : (Optional) Allows members to manage the organization's VCS Providers and SSH keys.
+    manage_membership       : (Optional) Allow members to add/remove users from the organization, and to add/remove users from visible teams.
+    manage_modules          : (Optional) Allow members to publish and delete modules in the organization's private registry.
+    manage_providers        : (Optional) Allow members to publish and delete providers in the organization's private registry.
   DESCRIPTION
   type = object({
     read_projects           = optional(bool, false)
@@ -139,8 +139,8 @@ variable "project_access" {
 variable "custom_project_access" {
   description = <<DESCRIPTION
   (Optional) Settings for the team's project access.
-    settings = (Optional) The permission to grant for the project's settings. Valid strings: `read`, `update`, or `delete`.
-    teams	   = (Optional) The permission to grant for the project's teams. Valid strings: `none`, `read`, or `manage`.
+    settings : (Optional) The permission to grant for the project's settings. Valid strings: `read`, `update`, or `delete`.
+    teams	   : (Optional) The permission to grant for the project's teams. Valid strings: `none`, `read`, or `manage`.
   DESCRIPTION
   type = object({
     settings = optional(string, "read")
@@ -161,15 +161,15 @@ variable "custom_project_access" {
 
 variable "custom_workspace_access" {
   description = <<DESCRIPTION
-    runs	         = (Optional) The permission to grant project's workspaces' runs. Valid strings: `read`, `plan`, or `apply`.
-    sentinel_mocks = (Optional) The permission to grant project's workspaces' Sentinel mocks. Valid strings: `none`, or `read`.
-    state_versions = (Optional) The permission to grant project's workspaces' state versions. Valid strings: `none`, `read-outputs`, `read`, or `write`.
-    variables      = (Optional) The permission to grant project's workspaces' variables. Valid strings: `none`, `read`, or `write`.
-    create         = (Optional) The permission to create project's workspaces in the project.
-    locking        = (Optional) The permission to manually lock or unlock the project's workspaces.
-    delete	       = (Optional) The permission to delete the project's workspaces.
-    move           = (Optional) This permission to move workspaces into and out of the project. The team must also have permissions to the project(s) receiving the the workspace(s).
-    run_tasks      = (Optional) The permission to manage run tasks within the project's workspaces.
+    runs	         : (Optional) The permission to grant project's workspaces' runs. Valid strings: `read`, `plan`, or `apply`.
+    sentinel_mocks : (Optional) The permission to grant project's workspaces' Sentinel mocks. Valid strings: `none`, or `read`.
+    state_versions : (Optional) The permission to grant project's workspaces' state versions. Valid strings: `none`, `read-outputs`, `read`, or `write`.
+    variables      : (Optional) The permission to grant project's workspaces' variables. Valid strings: `none`, `read`, or `write`.
+    create         : (Optional) The permission to create project's workspaces in the project.
+    locking        : (Optional) The permission to manually lock or unlock the project's workspaces.
+    delete	       : (Optional) The permission to delete the project's workspaces.
+    move           : (Optional) This permission to move workspaces into and out of the project. The team must also have permissions to the project(s) receiving the the workspace(s).
+    run_tasks      : (Optional) The permission to manage run tasks within the project's workspaces.
   DESCRIPTION
   type = object({
     runs           = optional(string, "read")
@@ -233,12 +233,12 @@ variable "workspace_access" {
 variable "workspace_permission" {
   description = <<DESCRIPTION
   (Optional) Settings for the team's workspace access.
-      runs              = (Optional) The permission to grant the team on the workspace's runs. Valid values are `read`, `plan`, or `apply`.
-      variables         = (Optional) The permission to grant the team on the workspace's variables. Valid values are `none`, `read`, or `write`.
-      state_versions    = (Optional) The permission to grant the team on the workspace's state versions. Valid values are `none`, `read`, `read-outputs`, or `write`.
-      sentinel_mocks    = (Optional) The permission to grant the team on the workspace's generated Sentinel mocks, Valid values are `none` or `read`.
-      workspace_locking = (Optional) Boolean determining whether or not to grant the team permission to manually lock/unlock the workspace.
-      run_tasks         = (Optional) Boolean determining whether or not to grant the team permission to manage workspace run tasks.
+      runs              : (Optional) The permission to grant the team on the workspace's runs. Valid values are `read`, `plan`, or `apply`.
+      variables         : (Optional) The permission to grant the team on the workspace's variables. Valid values are `none`, `read`, or `write`.
+      state_versions    : (Optional) The permission to grant the team on the workspace's state versions. Valid values are `none`, `read`, `read-outputs`, or `write`.
+      sentinel_mocks    : (Optional) The permission to grant the team on the workspace's generated Sentinel mocks, Valid values are `none` or `read`.
+      workspace_locking : (Optional) Boolean determining whether or not to grant the team permission to manually lock/unlock the workspace.
+      run_tasks         : (Optional) Boolean determining whether or not to grant the team permission to manage workspace run tasks.
   DESCRIPTION
   type = object({
     runs              = optional(string, "read")

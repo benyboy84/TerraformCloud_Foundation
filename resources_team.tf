@@ -1,7 +1,7 @@
 # The following resource block is used to create team resources.
 
 module "teams" {
-  source = "./modules/team"
+  source = "./modules/tfe_team"
 
   for_each = nonsensitive({ for team in local.teams : team.name => team })
 
