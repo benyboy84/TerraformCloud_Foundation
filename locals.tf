@@ -308,6 +308,7 @@ locals {
       }
       workspaces = {
         "AWS_S3" = {
+          description = "Repository to provision and manage AWS S3 configuration through Terraform code (IaC)."
           notifications = {
             "Microsoft Teams" = {
               destination_type = "microsoft-teams"

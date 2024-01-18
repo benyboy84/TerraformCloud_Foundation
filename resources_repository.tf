@@ -4,7 +4,7 @@ module "repository" {
   for_each = nonsensitive({ for workspace in local.workspaces : workspace.name => workspace })
 
   name                        = each.value.name
-  description                 = try(each.value.github_repository.description, null)
+  description                 = try(each.value.description, null)
   homepage_url                = try(each.value.github_repository.homepage_url, null)
   visibility                  = try(each.value.github_repository.visibility, "public")
   has_issues                  = try(each.value.github_repository.has_issues, true)
