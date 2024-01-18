@@ -90,11 +90,6 @@ Version:
 
 Source: ./modules/tfe_notification
 
-Version:
-
-### <a name="module_repository"></a> [repository](#module\_repository)
-
-Source: ./modules/github_repository
 
 Version:
 
