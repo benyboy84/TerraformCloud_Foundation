@@ -1,7 +1,7 @@
 # The following code block is used to create workspace resources in project.
 
 module "notifications" {
-  source = "./modules/notification"
+  source = "./modules/tfe_notification"
 
   for_each = nonsensitive({ for notification in local.workspace_notifications : "${notification.workspace} ${notification.name}" => notification })
 
