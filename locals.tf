@@ -189,6 +189,7 @@ locals {
       agent_pools = ["azure"]
       workspaces = {
         "Azure-OIDC-TerraformCloud" = {
+          description               = "Repository to provision and manage Azure OIDC configuration through Terraform code (IaC)."
           remote_state_consumer_ids = ["TerraformCloud-Foundation"]
           notifications = {
             "Microsoft Teams" = {
@@ -248,6 +249,7 @@ locals {
     "AWS Landing Zone" = {
       workspaces = {
         "AWS-OIDC-TerraformCloud" = {
+          description               = "Repository to provision and manage AWS OIDC configuration through Terraform code (IaC)."
           remote_state_consumer_ids = ["TerraformCloud-Foundation"]
           notifications = {
             "Microsoft Teams" = {
@@ -323,6 +325,7 @@ locals {
     "Terraform Cloud" = {
       workspaces = {
         "TerraformCloud-ModulesRegistry" = {
+          description = "Repository to provision and manage Terraform Cloud modules registry using Terraform code (IaC)."
           notifications = {
             "Microsoft Teams" = {
               destination_type = "microsoft-teams"
@@ -357,6 +360,7 @@ locals {
           }
         }
         "TerraformCloud-Policies" = {
+          description = "Repository to provision and manage Terraform Cloud policies using Terraform code (IaC)."
           notifications = {
             "Microsoft Teams" = {
               destination_type = "microsoft-teams"
