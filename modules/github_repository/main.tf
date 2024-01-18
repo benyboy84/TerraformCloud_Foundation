@@ -147,14 +147,8 @@ resource "github_branch_protection_v3" "this" {
 }
 
 resource "github_actions_secret" "this" {
-<<<<<<< HEAD
   for_each = { for secret in var.secrets : "${secret.secret_name}" => secret }
   repository       = github_repository.this.name
   secret_name      = each.value.secret_name
   plaintext_value  = each.value.plaintext_value
-=======
-  repository      = github_repository.this.name
-  secret_name     = var.secret_name
-  plaintext_value = var.plaintext_value
->>>>>>> 4b4ba7b71c3d3b13c68c4b3e399fb7399e077f32
 }
