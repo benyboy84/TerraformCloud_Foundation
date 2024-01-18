@@ -18,7 +18,7 @@ There are several ways to provide the required token:
 
 - Set the `token` argument in the provider configuration. You can set the token argument in the provider configuration. Use an
 input variable for the token.
-- Set the `TFE_TOKEN` environment variable: The provider can read the TFE_TOKEN environment variable and the token stored there
+- Set the `TFE_TOKEN` environment variable. The provider can read the TFE_TOKEN environment variable and the token stored there
 to authenticate.
 
 ## Features
