@@ -25,7 +25,7 @@ module "repository" {
   gitignore_template          = try(each.value.github_repository.gitignore_template, null)
   license_template            = try(each.value.github_repository.license_template, null)
   archived                    = try(each.value.github_repository.archived, false)
-  archive_on_destroy          = try(each.value.github_repository.archive_on_destroy, true)
+  archive_on_destroy          = try(each.value.github_repository.archive_on_destroy, false)
   pages                       = try(each.value.github_repository.pages, null)
   security_and_analysis = {
     advanced_security = {
