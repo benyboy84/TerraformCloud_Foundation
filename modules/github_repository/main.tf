@@ -78,22 +78,22 @@ resource "github_repository" "this" {
 
   lifecycle {
     precondition {
-      condition     = var.squash_merge_commit_title != null && var.allow_squash_merge ? true : false
+      condition     = var.squash_merge_commit_title != null ? var.allow_squash_merge ? true : false : true
       error_message = "`squash_merge_commit_title` is only applicable if `allow_squash_merge` is true."
     }
 
     precondition {
-      condition     = var.squash_merge_commit_message != null && var.allow_squash_merge ? true : false
+      condition     = var.squash_merge_commit_message != null ? var.allow_squash_merge ? true : false : true
       error_message = "`squash_merge_commit_message` is only applicable if `allow_squash_merge` is true."
     }
 
     precondition {
-      condition     = var.merge_commit_title != null && var.allow_merge_commit ? true : false
+      condition     = var.merge_commit_title != null ? var.allow_merge_commit ? true : false : true
       error_message = "`merge_commit_title` is only applicable if `allow_merge_commit` is true."
     }
 
     precondition {
-      condition     = var.merge_commit_message != null && var.allow_merge_commit ? true : false
+      condition     = var.merge_commit_message != null ? var.allow_merge_commit ? true : false : true
       error_message = "`merge_commit_message` is only applicable if `allow_merge_commit` is true."
     }
   }
