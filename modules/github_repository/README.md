@@ -303,7 +303,7 @@ Description: Can be PR\_BODY, PR\_TITLE, or BLANK for a default merge commit mes
 
 Type: `string`
 
-Default: `"PR_TITLE"`
+Default: `null`
 
 ### <a name="input_merge_commit_title"></a> [merge\_commit\_title](#input\_merge\_commit\_title)
 
@@ -311,7 +311,7 @@ Description: Can be PR\_TITLE or MERGE\_MESSAGE for a default merge commit title
 
 Type: `string`
 
-Default: `"MERGE_MESSAGE"`
+Default: `null`
 
 ### <a name="input_pages"></a> [pages](#input\_pages)
 
@@ -472,7 +472,7 @@ Description: (Optional) Can be PR\_BODY, COMMIT\_MESSAGES, or BLANK for a defaul
 
 Type: `string`
 
-Default: `"COMMIT_MESSAGES"`
+Default: `null`
 
 ### <a name="input_squash_merge_commit_title"></a> [squash\_merge\_commit\_title](#input\_squash\_merge\_commit\_title)
 
@@ -480,7 +480,7 @@ Description: (Optional) Can be PR\_TITLE or COMMIT\_OR\_PR\_TITLE for a default 
 
 Type: `string`
 
-Default: `"COMMIT_OR_PR_TITLE"`
+Default: `null`
 
 ### <a name="input_template"></a> [template](#input\_template)
 
