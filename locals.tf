@@ -360,7 +360,7 @@ locals {
           github_repository = {
             secrets = [
               {
-                secret_name     = "TFC_API_TOKEN"
+                secret_name     = "Test"
                 plaintext_value = "terraformcloud-policies-manage-policies"
               }
             ]
