@@ -49,12 +49,12 @@ output "primary_language" {
 }
 
 output "pages" {
-  description = <<DESCRIPTION
+  description = <<EOT
   The block consisting of the repository's GitHub Pages configuration with the following additional attributes:
     custom_404 : Whether the rendered GitHub Pages site has a custom 404 page.
     html_url   : The absolute URL (including scheme) of the rendered GitHub Pages site e.g. https://username.github.io.
     status     : The GitHub Pages site's build status e.g. building or built.
-DESCRIPTION
+EOT
   value = var.pages != null ? {
     custom_404 = github_repository.this.pages.0.custom_404
     html_url   = github_repository.this.pages.0.html_url

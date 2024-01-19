@@ -71,7 +71,7 @@ No modules.
 The following resources are used by this module:
 
 - [github_actions_secret.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/actions_secret) (resource)
-- [github_branch_protection_v3.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/branch_protection_v3) (resource)
+- [github_branch_protection.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/branch_protection) (resource)
 - [github_repository.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/repository) (resource)
 
 ## Required Inputs
@@ -128,6 +128,22 @@ Type: `bool`
 
 Default: `true`
 
+### <a name="input_allows_deletions"></a> [allows\_deletions](#input\_allows\_deletions)
+
+Description: (Optional) Boolean, setting this to `true` to allow the branch to be deleted.
+
+Type: `bool`
+
+Default: `false`
+
+### <a name="input_allows_force_pushes"></a> [allows\_force\_pushes](#input\_allows\_force\_pushes)
+
+Description: (Optional) Boolean, setting this to `true` to allow force pushes on the branch.
+
+Type: `bool`
+
+Default: `false`
+
 ### <a name="input_archive_on_destroy"></a> [archive\_on\_destroy](#input\_archive\_on\_destroy)
 
 Description: (Optional) Set to true to archive the repository instead of deleting on destroy.
@@ -152,13 +168,13 @@ Type: `bool`
 
 Default: `false`
 
-### <a name="input_branch"></a> [branch](#input\_branch)
+### <a name="input_blocks_creations"></a> [blocks\_creations](#input\_blocks\_creations)
 
-Description: (optional) The Git branch to protect.
+Description: (Optional) Boolean, setting this to `true` to block creating the branch.
 
-Type: `string`
+Type: `bool`
 
-Default: `null`
+Default: `false`
 
 ### <a name="input_delete_branch_on_merge"></a> [delete\_branch\_on\_merge](#input\_delete\_branch\_on\_merge)
 
@@ -178,11 +194,19 @@ Default: `null`
 
 ### <a name="input_enforce_admins"></a> [enforce\_admins](#input\_enforce\_admins)
 
-Description: (Optional) Boolean, setting this to true enforces status checks for repository administrators.
+Description: (Optional) Boolean, setting this to `true` enforces status checks for repository administrators.
 
 Type: `bool`
 
 Default: `false`
+
+### <a name="input_force_push_bypassers"></a> [force\_push\_bypassers](#input\_force\_push\_bypassers)
+
+Description: (Optional) The list of actor Names/IDs that are allowed to bypass force push restrictions. Actor names must either begin with a "/" for users or the organization name followed by a "/" for teams.
+
+Type: `list(string)`
+
+Default: `null`
 
 ### <a name="input_gitignore_template"></a> [gitignore\_template](#input\_gitignore\_template)
 
@@ -256,13 +280,21 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_lock_branch"></a> [lock\_branch](#input\_lock\_branch)
+
+Description: (Optional) Boolean, Setting this to `true` will make the branch read-only and preventing any pushes to it.
+
+Type: `bool`
+
+Default: `false`
+
 ### <a name="input_merge_commit_message"></a> [merge\_commit\_message](#input\_merge\_commit\_message)
 
 Description: Can be PR\_BODY, PR\_TITLE, or BLANK for a default merge commit message. Applicable only if allow\_merge\_commit is true.
 
 Type: `string`
 
-Default: `"PR_BODY"`
+Default: `"PR_TITLE"`
 
 ### <a name="input_merge_commit_title"></a> [merge\_commit\_title](#input\_merge\_commit\_title)
 
@@ -270,7 +302,7 @@ Description: Can be PR\_TITLE or MERGE\_MESSAGE for a default merge commit title
 
 Type: `string`
 
-Default: `"PR_TITLE"`
+Default: `"MERGE_MESSAGE"`
 
 ### <a name="input_pages"></a> [pages](#input\_pages)
 
@@ -296,6 +328,22 @@ object({
 
 Default: `null`
 
+### <a name="input_pattern"></a> [pattern](#input\_pattern)
+
+Description: (optional) Identifies the protection rule pattern.
+
+Type: `string`
+
+Default: `null`
+
+### <a name="input_push_restrictions"></a> [push\_restrictions](#input\_push\_restrictions)
+
+Description: (Optional) The list of actor Names/IDs that may push to the branch. Actor names must either begin with a "/" for users or the organization name followed by a "/" for teams.
+
+Type: `list(string)`
+
+Default: `null`
+
 ### <a name="input_require_conversation_resolution"></a> [require\_conversation\_resolution](#input\_require\_conversation\_resolution)
 
 Description: (Optional) Boolean, setting this to true requires all conversations on code must be resolved before a pull request can be merged.
@@ -306,7 +354,15 @@ Default: `false`
 
 ### <a name="input_require_signed_commits"></a> [require\_signed\_commits](#input\_require\_signed\_commits)
 
-Description: (Optional) Boolean, setting this to true requires all commits to be signed with GPG.
+Description: (Optional) Boolean, setting this to `true` requires all commits to be signed with GPG.
+
+Type: `bool`
+
+Default: `false`
+
+### <a name="input_required_linear_history"></a> [required\_linear\_history](#input\_required\_linear\_history)
+
+Description: (Optional) Boolean, setting this to true enforces a linear commit Git history, which prevents anyone from pushing merge commits to a branch.
 
 Type: `bool`
 
@@ -315,32 +371,25 @@ Default: `false`
 ### <a name="input_required_pull_request_reviews"></a> [required\_pull\_request\_reviews](#input\_required\_pull\_request\_reviews)
 
 Description:   (Optional) The required\_pull\_request\_reviews block supports the following:  
-    dismiss\_stale\_reviews           : (Optional) Dismiss approved reviews automatically when a new commit is pushed. Defaults to false.  
-    dismissal\_users                 : (Optional) The list of user logins with dismissal access  
-    dismissal\_teams                 : (Optional) The list of team slugs with dismissal access. Always use slug of the team, not its name. Each team already has to have access to the repository.  
-    dismissal\_apps                  : (Optional) The list of app slugs with dismissal access.  
-    require\_code\_owner\_reviews      : (Optional) Require an approved review in pull requests including files with a designated code owner. Defaults to false.  
-    required\_approving\_review\_count : (Optional) Require x number of approvals to satisfy branch protection requirements. If this is specified it must be a number between 0-6. This requirement matches GitHub's API, see the upstream documentation for more information.  
-    bypass\_pull\_request\_allowances  : (Optional) The bypass\_pull\_request\_allowances block supports the following:  
-      users                         : (Optional) The list of user logins allowed to bypass pull request requirements.  
-      teams                         : (Optional) The list of team slugs allowed to bypass pull request requirements.  
-      apps                          : (Optional) The list of app slugs allowed to bypass pull request requirements.
+    dismiss\_stale\_reviews           : (Optional) Dismiss approved reviews automatically when a new commit is pushed.  
+    restrict\_dismissals             : (Optional) Restrict pull request review dismissals.  
+    dismissal\_restrictions          : (Optional) The list of actor Names/IDs with dismissal access. If not empty, restrict\_dismissals is ignored. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
+    pull\_request\_bypassers          : (Optional) The list of actor Names/IDs that are allowed to bypass pull request requirements. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
+    require\_code\_owner\_reviews      : (Optional) Require an approved review in pull requests including files with a designated code owner.  
+    required\_approving\_review\_count : (Optional) Require x number of approvals to satisfy branch protection requirements. If this is specified it must be a number between 0-6.  
+    require\_last\_push\_approval      : (Optional) Require that The most recent push must be approved by someone other than the last pusher.
 
 Type:
 
 ```hcl
 object({
     dismiss_stale_reviews           = optional(bool, false)
-    dismissal_users                 = optional(list(string), [])
-    dismissal_teams                 = optional(list(string), [])
-    dismissal_apps                  = optional(list(string), [])
+    restrict_dismissals             = optional(bool, false)
+    dismissal_restrictions          = optional(list(string), [])
+    pull_request_bypassers          = optional(list(string), [])
     require_code_owner_reviews      = optional(bool, false)
-    required_approving_review_count = optional(number, 0)
-    bypass_pull_request_allowances = optional(object({
-      users = optional(list(string), [])
-      teams = optional(list(string), [])
-      apps  = optional(list(string), [])
-    }), null)
+    required_approving_review_count = optional(string, null)
+    require_last_push_approval      = optional(bool, false)
   })
 ```
 
@@ -349,34 +398,15 @@ Default: `null`
 ### <a name="input_required_status_checks"></a> [required\_status\_checks](#input\_required\_status\_checks)
 
 Description:   (Optional) The required\_status\_checks block supports the following:  
-    strict : (Optional) Require branches to be up to date before merging. Defaults to false.  
-    checks : (Optional) The list of status checks to require in order to merge into this branch. No status checks are required by default. Checks should be strings containing the context and app\_id like so "context:app\_id".
+    strict   : (Optional) Require branches to be up to date before merging.  
+    contexts : (Optional) The list of status checks to require in order to merge into this branch. No status checks are required by default.
 
 Type:
 
 ```hcl
 object({
-    strict = optional(bool, false)
-    checks = optional(list(string), [])
-  })
-```
-
-Default: `null`
-
-### <a name="input_restrictions"></a> [restrictions](#input\_restrictions)
-
-Description:   (Optional) The restrictions block supports the following:  
-    users : (Optional) The list of user logins with push access.  
-    teams : (Optional) The list of team slugs with push access. Always use slug of the team, not its name. Each team already has to have access to the repository.  
-    apps  : (Optional) The list of app slugs with push access.
-
-Type:
-
-```hcl
-object({
-    users = optional(list(string), [])
-    teams = optional(list(string), [])
-    apps  = optional(list(string), [])
+    strict   = optional(bool, false)
+    contexts = optional(list(string), [])
   })
 ```
 
@@ -433,7 +463,7 @@ Description: (Optional) Can be PR\_BODY, COMMIT\_MESSAGES, or BLANK for a defaul
 
 Type: `string`
 
-Default: `"PR_BODY"`
+Default: `"COMMIT_MESSAGES"`
 
 ### <a name="input_squash_merge_commit_title"></a> [squash\_merge\_commit\_title](#input\_squash\_merge\_commit\_title)
 
@@ -441,7 +471,7 @@ Description: (Optional) Can be PR\_TITLE or COMMIT\_OR\_PR\_TITLE for a default 
 
 Type: `string`
 
-Default: `"PR_TITLE"`
+Default: `"COMMIT_OR_PR_TITLE"`
 
 ### <a name="input_template"></a> [template](#input\_template)
 
