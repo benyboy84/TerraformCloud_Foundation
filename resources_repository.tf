@@ -65,6 +65,6 @@ module "repository" {
   allows_force_pushes  = try(each.value.github_repository.allows_force_pushes, false)
   blocks_creations     = try(each.value.github_repository.blocks_creations, false)
   lock_branch          = try(each.value.github_repository.lock_branch, false)
-  restrictions = try(each.value.github_repository.restrictions, null)
-  secrets      = try(each.value.github_repository.secrets, [])
+  restrictions         = try(each.value.github_repository.restrictions, null)
+  secrets              = try(each.value.github_repository.secrets, [])
 }
