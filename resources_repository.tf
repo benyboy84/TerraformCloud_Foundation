@@ -49,7 +49,7 @@ module "repository" {
   require_signed_commits          = try(each.value.github_repository.require_signed_commits, false)
   required_linear_history         = try(each.value.github_repository.required_linear_history, false)
   require_conversation_resolution = try(each.value.github_repository.require_conversation_resolution, true)
-  required_status_checks          = try(each.value.github_repository.required_status_checks, false)
+  required_status_checks          = try(each.value.github_repository.required_status_checks, null)
   required_pull_request_reviews = {
     dismiss_stale_reviews           = try(each.value.github_repository.required_pull_request_reviews.dismiss_stale_reviews, true)
     restrict_dismissals             = try(each.value.github_repository.required_pull_request_reviews.restrict_dismissals, null)
