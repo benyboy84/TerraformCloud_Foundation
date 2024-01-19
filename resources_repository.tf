@@ -16,10 +16,10 @@ module "repository" {
   allow_squash_merge          = try(each.value.github_repository.allow_squash_merge, true)
   allow_rebase_merge          = try(each.value.github_repository.allow_rebase_merge, true)
   allow_auto_merge            = try(each.value.github_repository.allow_auto_merge, false)
-  squash_merge_commit_title   = try(each.value.github_repository.squash_merge_commit_title, "COMMIT_OR_PR_TITLE")
-  squash_merge_commit_message = try(each.value.github_repository.squash_merge_commit_message, "COMMIT_MESSAGES")
-  merge_commit_title          = try(each.value.github_repository.merge_commit_title, "MERGE_MESSAGE")
-  merge_commit_message        = try(each.value.github_repository.merge_commit_message, "PR_TITLE")
+  squash_merge_commit_title   = try(each.value.github_repository.squash_merge_commit_title, null)
+  squash_merge_commit_message = try(each.value.github_repository.squash_merge_commit_message, null)
+  merge_commit_title          = try(each.value.github_repository.merge_commit_title, null)
+  merge_commit_message        = try(each.value.github_repository.merge_commit_message, null)
   delete_branch_on_merge      = try(each.value.github_repository.delete_branch_on_merge, true)
   auto_init                   = try(each.value.github_repository.auto_init, false)
   gitignore_template          = try(each.value.github_repository.gitignore_template, null)
@@ -44,6 +44,8 @@ module "repository" {
   ignore_vulnerability_alerts_during_read = try(each.value.github_repository.ignore_vulnerability_alerts_during_read, false)
   allow_update_branch                     = try(each.value.github_repository.allow_update_branch, false)
 
+  default_branch = try(each.value.github_repository.default_branch, "master")
+
   pattern                         = try(each.value.github_repository.pattern, "main")
   enforce_admins                  = try(each.value.github_repository.enforce_admins, true)
   require_signed_commits          = try(each.value.github_repository.require_signed_commits, false)
@@ -57,7 +59,7 @@ module "repository" {
     pull_request_bypassers          = try(each.value.github_repository.required_pull_request_reviews.pull_request_bypassers, null)
     require_code_owner_reviews      = try(each.value.github_repository.required_pull_request_reviews.require_code_owner_reviews, true)
     required_approving_review_count = try(each.value.github_repository.required_pull_request_reviews.required_approving_review_count, "0")
-    require_last_push_approval      = try(each.value.github_repository.required_pull_request_reviews.require_last_push_approval, true)
+    require_last_push_approval      = try(each.value.github_repository.required_pull_request_reviews.require_last_push_approval, false)
   }
   push_restrictions    = try(each.value.github_repository.push_restrictions, null)
   force_push_bypassers = try(each.value.github_repository.force_push_bypassers, null)
@@ -65,5 +67,6 @@ module "repository" {
   allows_force_pushes  = try(each.value.github_repository.allows_force_pushes, false)
   blocks_creations     = try(each.value.github_repository.blocks_creations, false)
   lock_branch          = try(each.value.github_repository.lock_branch, false)
-  secrets              = try(each.value.github_repository.secrets, [])
+
+  secrets = try(each.value.github_repository.secrets, [])
 }
