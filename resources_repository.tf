@@ -70,7 +70,7 @@ module "repository" {
 
   allowed_actions = try(each.value.github_repository.allowed_actions, "selected")
   enabled         = try(each.value.github_repository.enabled, true)
-  allowed_actions_config =  {
+  allowed_actions_config = {
     github_owned_allowed = try(each.value.github_repository.allowed_actions_config.github_owned_allowed, true)
     patterns_allowed     = try(each.value.github_repository.allowed_actions_config.patterns_allowed, ["terraform-docs/gh-actions@", "super-linter/super-linter@", "rymndhng/release-on-push-action@", "hashicorp/setup-terraform@"])
     verified_allowed     = try(each.value.github_repository.allowed_actions_config.verified_allowed, false)
