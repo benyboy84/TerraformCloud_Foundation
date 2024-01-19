@@ -66,7 +66,7 @@ module "repository" {
   blocks_creations     = try(each.value.github_repository.blocks_creations, false)
   lock_branch          = try(each.value.github_repository.lock_branch, false)
 
-  secrets = try(each.value.github_repository.secrets, [])
+  secrets = try(each.value.github_repository.secrets, null) != null ? each.value.github_repository.secrets == "TCP_API_TOKEN" ? try(module.teams[each.value.github_repository.secrets].token, each.value.github_repository.secrets) : each.value.github_repository.secrets : []
 
   allowed_actions = try(each.value.github_repository.allowed_actions, "selected")
   enabled         = try(each.value.github_repository.enabled, true)
