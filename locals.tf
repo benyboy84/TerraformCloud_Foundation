@@ -131,6 +131,15 @@ locals {
     #   }
     #   workspaces = {
     #     "workspace_name" = {
+    #       description       = ""
+    #       github_repository = {
+    #         secrets = [
+    #           {
+    #             secret_name     = ""
+    #             plaintext_value = ""
+    #           }
+    #         ]
+    #       }
     #       notifications = {
     #         "notification_name" = {
     #           destination_type = "generic", "email", "email", or "microsoft-teams"
@@ -138,6 +147,7 @@ locals {
     #           url              = "Url
     #         }
     #       }
+    #       tag_names = [""]
     #       teams = {
     #         "team_name" = {
     #           workspace_permission = {
@@ -156,6 +166,7 @@ locals {
     #           visibility             = "secret" or "organization"
     #         }
     #       }
+    #       trigger_patterns = [""]
     #       variables = {
     #         "variable_name" = {
     #           value     = ""
@@ -163,25 +174,10 @@ locals {
     #           sensitive = true or false
     #         }
     #       }
-    #       variable_set = {
-    #         "variable_set_name" = {
-    #           description = ""
-    #           global      = false *Cannot be set to true.*
-    #           variables = {
-    #             "variable_name" = {
-    #               value     = ""
-    #               category  = "terraform" or "env"
-    #               sensitive = true or false
-    #             }
-    #           }
-    #         }
     #       vcs_repo = {
     #         identifier     = "GitHub repository"
     #         oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
-    #       }  
-    #     }
-    #     "workspace_name" = {
-    #       execution_mode = "local"
+    #       }
     #     }
     #   }
     # }
@@ -347,10 +343,6 @@ locals {
             }
           }
           trigger_patterns = ["*.tf"]
-          vcs_repo = {
-            identifier     = "benyboy84/TerraformCloud-ModulesRegistry"
-            oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
-          }
           variables = {
             "TFE_TOKEN" = {
               value     = "terraformcloud-modulesregistry-manage-modules"
@@ -358,9 +350,21 @@ locals {
               sensitive = true
             }
           }
+          vcs_repo = {
+            identifier     = "benyboy84/TerraformCloud-ModulesRegistry"
+            oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
+          }
         }
         "TerraformCloud-Policies" = {
           description = "Repository to provision and manage Terraform Cloud policies using Terraform code (IaC)."
+          github_repository = {
+            secrets = [
+              {
+                secret_name     = "TFC_API_TOKEN"
+                plaintext_value = "terraformcloud-policies-manage-policies"
+              }
+            ]
+          }
           notifications = {
             "Microsoft Teams" = {
               destination_type = "microsoft-teams"
@@ -382,16 +386,16 @@ locals {
             }
           }
           trigger_patterns = ["*.tf", "*.sentinel"]
-          vcs_repo = {
-            identifier     = "benyboy84/TerraformCloud-Policies"
-            oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
-          }
           variables = {
             "TFE_TOKEN" = {
               value     = "terraformcloud-policies-manage-policies"
               category  = "env"
               sensitive = true
             }
+          }
+          vcs_repo = {
+            identifier     = "benyboy84/TerraformCloud-Policies"
+            oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
           }
         }
       }

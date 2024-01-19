@@ -347,7 +347,7 @@ variable "restrictions" {
   default = null
 }
 
-# The following variables are used to create branch protection resources (`github_branch_protection_v3`).
+# The following variables are used to create actions secret resources (`github_actions_secret`).
 
 variable "secrets" {
   description = <<DESCRIPTION
