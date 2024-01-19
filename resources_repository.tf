@@ -28,9 +28,9 @@ module "repository" {
   archive_on_destroy          = try(each.value.github_repository.archive_on_destroy, false)
   pages                       = try(each.value.github_repository.pages, null)
   security_and_analysis = {
-    advanced_security = try(each.value.github_repository.security_and_analysis.advanced_security, {
-      status = try(each.value.github_repository.security_and_analysis.advanced_security.status, null)
-    }, null)
+    # advanced_security = {
+    #   status = try(each.value.github_repository.security_and_analysis.advanced_security.status, null)
+    # }
     secret_scanning = {
       status = try(each.value.github_repository.security_and_analysis.secret_scanning.status, "enabled")
     }
