@@ -163,14 +163,14 @@ variable "archive_on_destroy" {
 }
 
 variable "pages" {
-  description = <<DESCRIPTION
+  description = <<EOT
   (Optional) The pages block supports the following:
     source     : (Optional) The source block supports the following:
       branch   : (Required) The repository branch used to publish the site's source files. (i.e. main or gh-pages.
       path     : (Optional) The repository directory from which the site publishes (Default: /).
     build_type : (Optional) The type of GitHub Pages site to build. Can be legacy or workflow. If you use legacy as build type you need to set the option source.
     cname      : (Optional) The custom domain for the repository. This can only be set after the repository has been created.
-  DESCRIPTION
+  EOT
   type = object({
     source = optional(object({
       branch = string
@@ -188,7 +188,7 @@ variable "pages" {
 }
 
 variable "security_and_analysis" {
-  description = <<DESCRIPTION
+  description = <<EOT
   (Optional) The security_and_analysis block supports the following:
     advanced_security               : (Optional) The advanced_security block supports the following:
       status                        : (Required) Set to enabled to enable advanced security features on the repository. Can be enabled or disabled.
@@ -196,7 +196,7 @@ variable "security_and_analysis" {
       status                        : (Required) Set to enabled to enable secret scanning on the repository. Can be enabled or disabled. If set to enabled, the repository's visibility must be public or security_and_analysis[0].advanced_security[0].status must also be set to enabled.
     secret_scanning_push_protection : (Optional) The secret_scanning block supports the following:
       status                        : (Required) Set to enabled to enable secret scanning push protection on the repository. Can be enabled or disabled. If set to enabled, the repository's visibility must be public or security_and_analysis[0].advanced_security[0].status must also be set to enabled.
-  DESCRIPTION
+  EOT
   type = object({
     advanced_security = optional(object({
       status = string
@@ -231,12 +231,12 @@ variable "topics" {
 }
 
 variable "template" {
-  description = <<DESCRIPTION
+  description = <<EOT
   (Optional) The template block supports the following:
     owner                : The GitHub organization or user the template repository is owned by.
     repository           : The name of the template repository.
     include_all_branches : Whether the new repository should include all the branches from the template repository (defaults to false, which includes only the default branch from the template).
-  DESCRIPTION
+  EOT
   type = object({
     owner                = string
     repository           = string
@@ -263,22 +263,28 @@ variable "allow_update_branch" {
   default     = true
 }
 
-# The following variables are used to create branch protection resources (`github_branch_protection_v3`).
+# The following variables are used to create branch protection resources (`github_branch_protection`).
 
-variable "branch" {
-  description = "(optional) The Git branch to protect."
+variable "pattern" {
+  description = "(optional) Identifies the protection rule pattern."
   type        = string
   default     = null
 }
 
 variable "enforce_admins" {
-  description = "(Optional) Boolean, setting this to true enforces status checks for repository administrators."
+  description = "(Optional) Boolean, setting this to `true` enforces status checks for repository administrators."
   type        = bool
   default     = false
 }
 
 variable "require_signed_commits" {
-  description = "(Optional) Boolean, setting this to true requires all commits to be signed with GPG."
+  description = "(Optional) Boolean, setting this to `true` requires all commits to be signed with GPG."
+  type        = bool
+  default     = false
+}
+
+variable "required_linear_history" {
+  description = "(Optional) Boolean, setting this to true enforces a linear commit Git history, which prevents anyone from pushing merge commits to a branch."
   type        = bool
   default     = false
 }
@@ -290,71 +296,85 @@ variable "require_conversation_resolution" {
 }
 
 variable "required_status_checks" {
-  description = <<DESCRIPTION
+  description = <<EOT
   (Optional) The required_status_checks block supports the following:
-    strict : (Optional) Require branches to be up to date before merging. Defaults to false.
-    checks : (Optional) The list of status checks to require in order to merge into this branch. No status checks are required by default. Checks should be strings containing the context and app_id like so "context:app_id".
-  DESCRIPTION
+    strict   : (Optional) Require branches to be up to date before merging.
+    contexts : (Optional) The list of status checks to require in order to merge into this branch. No status checks are required by default.
+  EOT
   type = object({
-    strict = optional(bool, false)
-    checks = optional(list(string), [])
+    strict   = optional(bool, false)
+    contexts = optional(list(string), [])
   })
   default = null
 }
 
 variable "required_pull_request_reviews" {
-  description = <<DESCRIPTION
+  description = <<EOT
   (Optional) The required_pull_request_reviews block supports the following:
-    dismiss_stale_reviews           : (Optional) Dismiss approved reviews automatically when a new commit is pushed. Defaults to false.
-    dismissal_users                 : (Optional) The list of user logins with dismissal access
-    dismissal_teams                 : (Optional) The list of team slugs with dismissal access. Always use slug of the team, not its name. Each team already has to have access to the repository.
-    dismissal_apps                  : (Optional) The list of app slugs with dismissal access.
-    require_code_owner_reviews      : (Optional) Require an approved review in pull requests including files with a designated code owner. Defaults to false.
-    required_approving_review_count : (Optional) Require x number of approvals to satisfy branch protection requirements. If this is specified it must be a number between 0-6. This requirement matches GitHub's API, see the upstream documentation for more information.
-    bypass_pull_request_allowances  : (Optional) The bypass_pull_request_allowances block supports the following:
-      users                         : (Optional) The list of user logins allowed to bypass pull request requirements.
-      teams                         : (Optional) The list of team slugs allowed to bypass pull request requirements.
-      apps                          : (Optional) The list of app slugs allowed to bypass pull request requirements.
-  DESCRIPTION
+    dismiss_stale_reviews           : (Optional) Dismiss approved reviews automatically when a new commit is pushed.
+    restrict_dismissals             : (Optional) Restrict pull request review dismissals.
+    dismissal_restrictions          : (Optional) The list of actor Names/IDs with dismissal access. If not empty, restrict_dismissals is ignored. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.
+    pull_request_bypassers          : (Optional) The list of actor Names/IDs that are allowed to bypass pull request requirements. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.
+    require_code_owner_reviews      : (Optional) Require an approved review in pull requests including files with a designated code owner.
+    required_approving_review_count : (Optional) Require x number of approvals to satisfy branch protection requirements. If this is specified it must be a number between 0-6.
+    require_last_push_approval      : (Optional) Require that The most recent push must be approved by someone other than the last pusher.
+  EOT
   type = object({
     dismiss_stale_reviews           = optional(bool, false)
-    dismissal_users                 = optional(list(string), [])
-    dismissal_teams                 = optional(list(string), [])
-    dismissal_apps                  = optional(list(string), [])
+    restrict_dismissals             = optional(bool, false)
+    dismissal_restrictions          = optional(list(string), [])
+    pull_request_bypassers          = optional(list(string), [])
     require_code_owner_reviews      = optional(bool, false)
-    required_approving_review_count = optional(number, 0)
-    bypass_pull_request_allowances = optional(object({
-      users = optional(list(string), [])
-      teams = optional(list(string), [])
-      apps  = optional(list(string), [])
-    }), null)
+    required_approving_review_count = optional(string, null)
+    require_last_push_approval      = optional(bool, false)
   })
   default = null
 }
 
-variable "restrictions" {
-  description = <<DESCRIPTION
-  (Optional) The restrictions block supports the following:
-    users : (Optional) The list of user logins with push access.
-    teams : (Optional) The list of team slugs with push access. Always use slug of the team, not its name. Each team already has to have access to the repository.
-    apps  : (Optional) The list of app slugs with push access.
-  DESCRIPTION
-  type = object({
-    users = optional(list(string), [])
-    teams = optional(list(string), [])
-    apps  = optional(list(string), [])
-  })
-  default = null
+variable "push_restrictions" {
+  description = "(Optional) The list of actor Names/IDs that may push to the branch. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams."
+  type        = list(string)
+  default     = null
+}
+
+variable "force_push_bypassers" {
+  description = "(Optional) The list of actor Names/IDs that are allowed to bypass force push restrictions. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams."
+  type        = list(string)
+  default     = null
+}
+
+variable "allows_deletions" {
+  description = "(Optional) Boolean, setting this to `true` to allow the branch to be deleted."
+  type        = bool
+  default     = false
+}
+
+variable "allows_force_pushes" {
+  description = "(Optional) Boolean, setting this to `true` to allow force pushes on the branch."
+  type        = bool
+  default     = false
+}
+
+variable "blocks_creations" {
+  description = "(Optional) Boolean, setting this to `true` to block creating the branch."
+  type        = bool
+  default     = false
+}
+
+variable "lock_branch" {
+  description = "(Optional) Boolean, Setting this to `true` will make the branch read-only and preventing any pushes to it."
+  type        = bool
+  default     = false
 }
 
 # The following variables are used to create actions secret resources (`github_actions_secret`).
 
 variable "secrets" {
-  description = <<DESCRIPTION
+  description = <<EOT
   (Optional) The secrets block supports the following:
     secret_name     : (Optional) Name of the secret.
     plaintext_value : (Optional) Plaintext value of the secret to be encrypted.
-  DESCRIPTION
+  EOT
   type = list(object({
     secret_name     = string
     plaintext_value = string
