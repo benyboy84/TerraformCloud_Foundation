@@ -58,5 +58,5 @@ module "repository" {
     bypass_pull_request_allowances  = try(each.value.github_repository.required_pull_request_reviews.bypass_pull_request_allowances, null)
   }
   restrictions = try(each.value.github_repository.restrictions, null)
-
+  secrets      = try(each.value.github_repository.secrets, null)
 }
