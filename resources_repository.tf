@@ -43,7 +43,9 @@ module "repository" {
   vulnerability_alerts                    = try(each.value.github_repository.vulnerability_alerts, true)
   ignore_vulnerability_alerts_during_read = try(each.value.github_repository.ignore_vulnerability_alerts_during_read, false)
   allow_update_branch                     = try(each.value.github_repository.allow_update_branch, false)
-
+  
+  default_branch = try(each.value.github_repository.default_branch, "master")
+  
   pattern                         = try(each.value.github_repository.pattern, "main")
   enforce_admins                  = try(each.value.github_repository.enforce_admins, true)
   require_signed_commits          = try(each.value.github_repository.require_signed_commits, false)
@@ -65,5 +67,6 @@ module "repository" {
   allows_force_pushes  = try(each.value.github_repository.allows_force_pushes, false)
   blocks_creations     = try(each.value.github_repository.blocks_creations, false)
   lock_branch          = try(each.value.github_repository.lock_branch, false)
+  
   secrets              = try(each.value.github_repository.secrets, [])
 }
