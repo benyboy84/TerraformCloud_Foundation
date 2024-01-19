@@ -88,7 +88,7 @@ variable "squash_merge_commit_title" {
   default     = "COMMIT_OR_PR_TITLE"
 
   validation {
-    condition     = var.squash_merge_commit_title != null ? contains(["PR_TITLE", "COMMIT_OR_PR_TITLE"], var.squash_merge_commit_title) ? true : false : true
+    condition     = var.squash_merge_commit_title != null ? contains(["PR_TITLE", "COMMIT_OR_PR_TITLE", ""], var.squash_merge_commit_title) ? true : false : true
     error_message = "Valid values are `PR_TITLE` or `COMMIT_OR_PR_TITLE`."
   }
 }
@@ -99,7 +99,7 @@ variable "squash_merge_commit_message" {
   default     = "COMMIT_MESSAGES"
 
   validation {
-    condition     = var.squash_merge_commit_message != null ? contains(["PR_BODY", "COMMIT_MESSAGES", "BLANK"], var.squash_merge_commit_message) ? true : false : true
+    condition     = var.squash_merge_commit_message != null ? contains(["PR_BODY", "COMMIT_MESSAGES", "BLANK", ""], var.squash_merge_commit_message) ? true : false : true
     error_message = "Valid values are `PR_BODY`, `COMMIT_MESSAGES` or `BLANK`."
   }
 }
@@ -110,7 +110,7 @@ variable "merge_commit_title" {
   default     = "MERGE_MESSAGE"
 
   validation {
-    condition     = var.merge_commit_title != null ? contains(["PR_TITLE", "MERGE_MESSAGE"], var.merge_commit_title) ? true : false : true
+    condition     = var.merge_commit_title != null ? contains(["PR_TITLE", "MERGE_MESSAGE", ""], var.merge_commit_title) ? true : false : true
     error_message = "Valid values are `PR_TITLE` or `MERGE_MESSAGE`."
   }
 }
@@ -121,7 +121,7 @@ variable "merge_commit_message" {
   default     = "PR_TITLE"
 
   validation {
-    condition     = var.merge_commit_message != null ? contains(["PR_BODY", "PR_TITLE", "BLANK"], var.merge_commit_message) ? true : false : true
+    condition     = var.merge_commit_message != null ? contains(["PR_BODY", "PR_TITLE", "BLANK", ""], var.merge_commit_message) ? true : false : true
     error_message = "Valid values are `PR_BODY`, `PR_TITLE` or `BLANK`."
   }
 }
@@ -211,15 +211,15 @@ variable "security_and_analysis" {
   default = null
 
   validation {
-    condition     = var.security_and_analysis != null ? var.security_and_analysis.advanced_security != null ? contains(["enabled", "disabled"], var.security_and_analysis.advanced_security.status) ? true : true : false : true
+    condition     = var.security_and_analysis != null ? var.security_and_analysis.advanced_security != null ? contains(["enabled", "disabled"], var.security_and_analysis.advanced_security.status) ? true : false : true : true
     error_message = "Valid values are `enabled` or `disabled`."
   }
   validation {
-    condition     = var.security_and_analysis != null ? var.security_and_analysis.secret_scanning != null ? contains(["enabled", "disabled"], var.security_and_analysis.secret_scanning.status) ? true : true : false : true
+    condition     = var.security_and_analysis != null ? var.security_and_analysis.secret_scanning != null ? contains(["enabled", "disabled"], var.security_and_analysis.secret_scanning.status) ? true : false : true : true
     error_message = "Valid values are `enabled` or `disabled`."
   }
   validation {
-    condition     = var.security_and_analysis != null ? var.security_and_analysis.secret_scanning_push_protection != null ? contains(["enabled", "disabled"], var.security_and_analysis.secret_scanning_push_protection.status) ? true : true : false : true
+    condition     = var.security_and_analysis != null ? var.security_and_analysis.secret_scanning_push_protection != null ? contains(["enabled", "disabled"], var.security_and_analysis.secret_scanning_push_protection.status) ? true : false : true : true
     error_message = "Valid values are `enabled` or `disabled`."
   }
 }
