@@ -16,10 +16,10 @@ module "repository" {
   allow_squash_merge          = try(each.value.github_repository.allow_squash_merge, true)
   allow_rebase_merge          = try(each.value.github_repository.allow_rebase_merge, true)
   allow_auto_merge            = try(each.value.github_repository.allow_auto_merge, false)
-  squash_merge_commit_title   = try(each.value.github_repository.squash_merge_commit_title, "COMMIT_OR_PR_TITLE")
-  squash_merge_commit_message = try(each.value.github_repository.squash_merge_commit_message, "COMMIT_MESSAGES")
-  merge_commit_title          = try(each.value.github_repository.merge_commit_title, "MERGE_MESSAGE")
-  merge_commit_message        = try(each.value.github_repository.merge_commit_message, "PR_TITLE")
+  squash_merge_commit_title   = try(each.value.github_repository.squash_merge_commit_title, "")
+  squash_merge_commit_message = try(each.value.github_repository.squash_merge_commit_message, "")
+  merge_commit_title          = try(each.value.github_repository.merge_commit_title, "")
+  merge_commit_message        = try(each.value.github_repository.merge_commit_message, "")
   delete_branch_on_merge      = try(each.value.github_repository.delete_branch_on_merge, true)
   auto_init                   = try(each.value.github_repository.auto_init, false)
   gitignore_template          = try(each.value.github_repository.gitignore_template, null)
@@ -29,7 +29,7 @@ module "repository" {
   pages                       = try(each.value.github_repository.pages, null)
   security_and_analysis = {
     advanced_security = {
-      status = try(each.value.github_repository.security_and_analysis.advanced_security.status, "enabled")
+      status = try(each.value.github_repository.security_and_analysis.advanced_security.status, null)
     }
     secret_scanning = {
       status = try(each.value.github_repository.security_and_analysis.secret_scanning.status, "enabled")
