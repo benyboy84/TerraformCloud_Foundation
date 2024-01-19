@@ -69,7 +69,7 @@ module "tfc_platform_workspaces" {
 
   for_each = local.tfc_platform_workspaces
 
-  name         = each.value.name
+  name         = each.key
   organization = data.tfe_organization.this.name
   project_id   = tfe_project.tfc_platform_project.id
 
@@ -102,7 +102,7 @@ module "tfc_platform_teams" {
 
   for_each = local.tfc_platform_teams
 
-  name                    = each.value.name
+  name                    = each.key
   organization            = data.tfe_organization.this.name
   visibility              = try(each.value.visibility, "organization")
   sso_team_id             = try(each.value.sso_team_id, null)
