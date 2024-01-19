@@ -131,6 +131,15 @@ locals {
     #   }
     #   workspaces = {
     #     "workspace_name" = {
+    #       description       = ""
+    #       github_repository = {
+    #         secrets = [
+    #           {
+    #             secret_name     = ""
+    #             plaintext_value = ""
+    #           }
+    #         ]
+    #       }
     #       notifications = {
     #         "notification_name" = {
     #           destination_type = "generic", "email", "email", or "microsoft-teams"
@@ -138,6 +147,7 @@ locals {
     #           url              = "Url
     #         }
     #       }
+    #       tag_names = [""]
     #       teams = {
     #         "team_name" = {
     #           workspace_permission = {
@@ -156,6 +166,7 @@ locals {
     #           visibility             = "secret" or "organization"
     #         }
     #       }
+    #       trigger_patterns = [""]
     #       variables = {
     #         "variable_name" = {
     #           value     = ""
@@ -163,25 +174,10 @@ locals {
     #           sensitive = true or false
     #         }
     #       }
-    #       variable_set = {
-    #         "variable_set_name" = {
-    #           description = ""
-    #           global      = false *Cannot be set to true.*
-    #           variables = {
-    #             "variable_name" = {
-    #               value     = ""
-    #               category  = "terraform" or "env"
-    #               sensitive = true or false
-    #             }
-    #           }
-    #         }
     #       vcs_repo = {
     #         identifier     = "GitHub repository"
     #         oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
-    #       }  
-    #     }
-    #     "workspace_name" = {
-    #       execution_mode = "local"
+    #       }
     #     }
     #   }
     # }
@@ -189,6 +185,7 @@ locals {
       agent_pools = ["azure"]
       workspaces = {
         "Azure-OIDC-TerraformCloud" = {
+          description               = "Repository to provision and manage Azure OIDC configuration through Terraform code (IaC)."
           remote_state_consumer_ids = ["TerraformCloud-Foundation"]
           notifications = {
             "Microsoft Teams" = {
@@ -248,6 +245,7 @@ locals {
     "AWS Landing Zone" = {
       workspaces = {
         "AWS-OIDC-TerraformCloud" = {
+          description               = "Repository to provision and manage AWS OIDC configuration through Terraform code (IaC)."
           remote_state_consumer_ids = ["TerraformCloud-Foundation"]
           notifications = {
             "Microsoft Teams" = {
@@ -308,6 +306,7 @@ locals {
       }
       workspaces = {
         "AWS_S3" = {
+          description = "Repository to provision and manage AWS S3 configuration through Terraform code (IaC)."
           notifications = {
             "Microsoft Teams" = {
               destination_type = "microsoft-teams"
@@ -322,6 +321,7 @@ locals {
     "Terraform Cloud" = {
       workspaces = {
         "TerraformCloud-ModulesRegistry" = {
+          description = "Repository to provision and manage Terraform Cloud modules registry using Terraform code (IaC)."
           notifications = {
             "Microsoft Teams" = {
               destination_type = "microsoft-teams"
@@ -343,10 +343,6 @@ locals {
             }
           }
           trigger_patterns = ["*.tf"]
-          vcs_repo = {
-            identifier     = "benyboy84/TerraformCloud-ModulesRegistry"
-            oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
-          }
           variables = {
             "TFE_TOKEN" = {
               value     = "terraformcloud-modulesregistry-manage-modules"
@@ -354,8 +350,21 @@ locals {
               sensitive = true
             }
           }
+          vcs_repo = {
+            identifier     = "benyboy84/TerraformCloud-ModulesRegistry"
+            oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
+          }
         }
         "TerraformCloud-Policies" = {
+          description = "Repository to provision and manage Terraform Cloud policies using Terraform code (IaC)."
+          github_repository = {
+            secrets = [
+              {
+                secret_name     = "Test"
+                plaintext_value = "terraformcloud-policies-manage-policies"
+              }
+            ]
+          }
           notifications = {
             "Microsoft Teams" = {
               destination_type = "microsoft-teams"
@@ -377,16 +386,16 @@ locals {
             }
           }
           trigger_patterns = ["*.tf", "*.sentinel"]
-          vcs_repo = {
-            identifier     = "benyboy84/TerraformCloud-Policies"
-            oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
-          }
           variables = {
             "TFE_TOKEN" = {
               value     = "terraformcloud-policies-manage-policies"
               category  = "env"
               sensitive = true
             }
+          }
+          vcs_repo = {
+            identifier     = "benyboy84/TerraformCloud-Policies"
+            oauth_token_id = data.tfe_oauth_client.client.oauth_token_id
           }
         }
       }
