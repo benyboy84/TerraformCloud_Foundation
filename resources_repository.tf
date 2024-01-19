@@ -68,7 +68,7 @@ module "repository" {
 
   secrets = try(each.value.github_repository.secrets, [])
 
-  allowed_actions = try(each.value.github_repository.allowed_actions, "all")
+  allowed_actions = try(each.value.github_repository.allowed_actions, "selected")
   enabled         = try(each.value.github_repository.enabled, true)
   allowed_actions_config =  {
     github_owned_allowed = try(each.value.github_repository.allowed_actions_config.github_owned_allowed, true)
