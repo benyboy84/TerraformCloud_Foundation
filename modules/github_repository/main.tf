@@ -81,21 +81,23 @@ resource "github_repository" "this" {
       condition     = var.squash_merge_commit_title != null ? var.allow_squash_merge ? true : false : true
       error_message = "`squash_merge_commit_title` is only applicable if `allow_squash_merge` is true."
     }
-
     precondition {
       condition     = var.squash_merge_commit_message != null ? var.allow_squash_merge ? true : false : true
       error_message = "`squash_merge_commit_message` is only applicable if `allow_squash_merge` is true."
     }
-
     precondition {
       condition     = var.merge_commit_title != null ? var.allow_merge_commit ? true : false : true
       error_message = "`merge_commit_title` is only applicable if `allow_merge_commit` is true."
     }
-
     precondition {
       condition     = var.merge_commit_message != null ? var.allow_merge_commit ? true : false : true
       error_message = "`merge_commit_message` is only applicable if `allow_merge_commit` is true."
     }
+    ignore_changes = [
+      # Ignore changes to somes properties because they are always updated.
+      allow_merge_commit, allow_rebase_merge, allow_squash_merge, delete_branch_on_merge,
+      merge_commit_message, merge_commit_title, squash_merge_commit_message, squash_merge_commit_title
+    ]
   }
 
 }
