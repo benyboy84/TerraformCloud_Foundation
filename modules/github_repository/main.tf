@@ -100,7 +100,7 @@ resource "github_repository" "this" {
 
 }
 
-resource "github_branch_default" "default"{
+resource "github_branch_default" "default" {
   count      = var.default_branch != null ? 1 : 0
   repository = github_repository.this.name
   branch     = var.default_branch
