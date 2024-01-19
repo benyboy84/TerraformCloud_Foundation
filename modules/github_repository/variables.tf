@@ -408,10 +408,10 @@ variable "allowed_actions_config" {
     patterns_allowed     : (Optional) Specifies a list of string-matching patterns to allow specific action(s). Wildcards, tags, and SHAs are allowed. For example, monalisa/octocat@, monalisa/octocat@v2, monalisa/."
     verified_allowed     : (Optional) Whether actions in GitHub Marketplace from verified creators are allowed. Set to `true` to allow all GitHub Marketplace actions by verified creators.
   EOT
-  type        = object({
+  type = object({
     github_owned_allowed = bool
     patterns_allowed     = optional(list(string), null)
     verified_allowed     = optional(bool, false)
   })
-  default     = null
+  default = null
 }
