@@ -81,21 +81,23 @@ resource "github_repository" "this" {
       condition     = var.squash_merge_commit_title != null ? var.allow_squash_merge ? true : false : true
       error_message = "`squash_merge_commit_title` is only applicable if `allow_squash_merge` is true."
     }
-
     precondition {
       condition     = var.squash_merge_commit_message != null ? var.allow_squash_merge ? true : false : true
       error_message = "`squash_merge_commit_message` is only applicable if `allow_squash_merge` is true."
     }
-
     precondition {
       condition     = var.merge_commit_title != null ? var.allow_merge_commit ? true : false : true
       error_message = "`merge_commit_title` is only applicable if `allow_merge_commit` is true."
     }
-
     precondition {
       condition     = var.merge_commit_message != null ? var.allow_merge_commit ? true : false : true
       error_message = "`merge_commit_message` is only applicable if `allow_merge_commit` is true."
     }
+    ignore_changes = [
+      # Ignore changes to somes properties because they are always updated.
+      allow_merge_commit, allow_rebase_merge, allow_squash_merge, delete_branch_on_merge,
+      merge_commit_message, merge_commit_title, squash_merge_commit_message, squash_merge_commit_title
+    ]
   }
 
 }
@@ -142,4 +144,24 @@ resource "github_actions_secret" "this" {
   repository      = github_repository.this.name
   secret_name     = each.value.secret_name
   plaintext_value = each.value.plaintext_value
+}
+
+resource "github_actions_repository_permissions" "this" {
+  repository      = github_repository.this.name
+  allowed_actions = var.allowed_actions
+  enabled         = var.enabled
+  dynamic "allowed_actions_config" {
+    for_each = var.allowed_actions_config != null ? [true] : []
+    content {
+      github_owned_allowed = var.allowed_actions_config.github_owned_allowed
+      patterns_allowed     = var.allowed_actions_config.patterns_allowed
+      verified_allowed     = var.allowed_actions_config.verified_allowed
+    }
+  }
+  lifecycle {
+    precondition {
+      condition     = var.allowed_actions_config != null ? var.allowed_actions == "selected" ? true : false : true
+      error_message = "`allowed_actions_config` is only available  if `allowed_actions` is set to `selected`."
+    }
+  }
 }
