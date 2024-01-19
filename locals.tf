@@ -307,6 +307,14 @@ locals {
       workspaces = {
         "AWS_S3" = {
           description = "Repository to provision and manage AWS S3 configuration through Terraform code (IaC)."
+          github_repository = {
+            secrets = [
+              {
+                secret_name     = "TFC_API_TOKEN"
+                plaintext_value = "aws-workloads-plan"
+              }
+            ]
+          }
           notifications = {
             "Microsoft Teams" = {
               destination_type = "microsoft-teams"
@@ -357,14 +365,6 @@ locals {
         }
         "TerraformCloud-Policies" = {
           description = "Repository to provision and manage Terraform Cloud policies using Terraform code (IaC)."
-          github_repository = {
-            secrets = [
-              {
-                secret_name     = "TFC_API_TOKEN"
-                plaintext_value = "terraformcloud-policies-manage-policies"
-              }
-            ]
-          }
           notifications = {
             "Microsoft Teams" = {
               destination_type = "microsoft-teams"
