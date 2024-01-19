@@ -100,13 +100,6 @@ resource "github_repository" "this" {
 
 }
 
-resource "github_branch_default" "default" {
-  count      = var.default_branch != null ? 1 : 0
-  repository = github_repository.this.name
-  branch     = var.default_branch
-  rename     = true
-}
-
 resource "github_branch_protection" "this" {
   repository_id                   = github_repository.this.name
   pattern                         = var.pattern
