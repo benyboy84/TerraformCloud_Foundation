@@ -100,51 +100,62 @@ resource "github_repository" "this" {
 
 }
 
-resource "github_branch_protection_v3" "this" {
-  repository                      = github_repository.this.name
-  branch                          = var.branch
-  enforce_admins                  = var.enforce_admins
-  require_signed_commits          = var.require_signed_commits
-  require_conversation_resolution = var.require_conversation_resolution
+resource "github_branch_protection" "this" {
+  repository_id = github_repository.this.name
+  # also accepts repository name
+  # repository_id  = github_repository.example.name
 
-  dynamic "required_status_checks" {
-    for_each = var.required_status_checks != null ? [true] : []
-    content {
-      strict = var.required_status_checks.strict
-      checks = var.required_status_checks.checks
-    }
-  }
-
-  dynamic "required_pull_request_reviews" {
-    for_each = var.required_pull_request_reviews != null ? [true] : []
-    content {
-      dismiss_stale_reviews           = var.required_pull_request_reviews.dismiss_stale_reviews
-      dismissal_users                 = var.required_pull_request_reviews.dismissal_users
-      dismissal_teams                 = var.required_pull_request_reviews.dismissal_teams
-      dismissal_apps                  = var.required_pull_request_reviews.dismissal_apps
-      require_code_owner_reviews      = var.required_pull_request_reviews.require_code_owner_reviews
-      required_approving_review_count = var.required_pull_request_reviews.required_approving_review_count
-      dynamic "bypass_pull_request_allowances" {
-        for_each = var.required_pull_request_reviews.bypass_pull_request_allowances != null ? [true] : []
-        content {
-          users = var.required_pull_request_reviews.bypass_pull_request_allowances.users
-          teams = var.required_pull_request_reviews.bypass_pull_request_allowances.teams
-          apps  = var.required_pull_request_reviews.bypass_pull_request_allowances.apps
-        }
-      }
-    }
-  }
-
-  dynamic "restrictions" {
-    for_each = var.restrictions != null ? [true] : []
-    content {
-      users = var.restrictions.users
-      teams = var.restrictions.teams
-      apps  = var.restrictions.apps
-    }
-  }
+  pattern          = "main"
+  enforce_admins   = true
+  allows_deletions = true
 
 }
+
+# resource "github_branch_protection_v3" "this" {
+#   repository                      = github_repository.this.name
+#   branch                          = var.branch
+#   enforce_admins                  = var.enforce_admins
+#   require_signed_commits          = var.require_signed_commits
+#   require_conversation_resolution = var.require_conversation_resolution
+
+#   dynamic "required_status_checks" {
+#     for_each = var.required_status_checks != null ? [true] : []
+#     content {
+#       strict = var.required_status_checks.strict
+#       checks = var.required_status_checks.checks
+#     }
+#   }
+
+#   dynamic "required_pull_request_reviews" {
+#     for_each = var.required_pull_request_reviews != null ? [true] : []
+#     content {
+#       dismiss_stale_reviews           = var.required_pull_request_reviews.dismiss_stale_reviews
+#       dismissal_users                 = var.required_pull_request_reviews.dismissal_users
+#       dismissal_teams                 = var.required_pull_request_reviews.dismissal_teams
+#       dismissal_apps                  = var.required_pull_request_reviews.dismissal_apps
+#       require_code_owner_reviews      = var.required_pull_request_reviews.require_code_owner_reviews
+#       required_approving_review_count = var.required_pull_request_reviews.required_approving_review_count
+#       dynamic "bypass_pull_request_allowances" {
+#         for_each = var.required_pull_request_reviews.bypass_pull_request_allowances != null ? [true] : []
+#         content {
+#           users = var.required_pull_request_reviews.bypass_pull_request_allowances.users
+#           teams = var.required_pull_request_reviews.bypass_pull_request_allowances.teams
+#           apps  = var.required_pull_request_reviews.bypass_pull_request_allowances.apps
+#         }
+#       }
+#     }
+#   }
+
+#   dynamic "restrictions" {
+#     for_each = var.restrictions != null ? [true] : []
+#     content {
+#       users = var.restrictions.users
+#       teams = var.restrictions.teams
+#       apps  = var.restrictions.apps
+#     }
+#   }
+
+# }
 
 resource "github_actions_secret" "this" {
   for_each        = { for secret in var.secrets : secret.secret_name => secret }
