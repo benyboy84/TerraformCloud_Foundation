@@ -97,7 +97,7 @@ module "tfc_platform_workspaces" {
 }
 
 # The following resource block is used to create team resources.
-module "teams" {
+module "tfc_platform_teams" {
   source = "./modules/tfe_team"
 
   for_each = local.tfc_platform_teams
