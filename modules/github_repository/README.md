@@ -128,6 +128,33 @@ Type: `bool`
 
 Default: `true`
 
+### <a name="input_allowed_actions"></a> [allowed\_actions](#input\_allowed\_actions)
+
+Description: (Optional) The permissions policy that controls the actions that are allowed to run. Can be one of: all, local\_only, or selected.
+
+Type: `string`
+
+Default: `"all"`
+
+### <a name="input_allowed_actions_config"></a> [allowed\_actions\_config](#input\_allowed\_actions\_config)
+
+Description:   (Optional) The allowed\_actions\_config block supports the following:  
+    github\_owned\_allowed : (Required) Whether GitHub-owned actions are allowed in the repository.  
+    patterns\_allowed     : (Optional) Specifies a list of string-matching patterns to allow specific action(s). Wildcards, tags, and SHAs are allowed. For example, monalisa/octocat@, monalisa/octocat@v2, monalisa/."  
+    verified\_allowed     : (Optional) Whether actions in GitHub Marketplace from verified creators are allowed. Set to `true` to allow all GitHub Marketplace actions by verified creators.
+
+Type:
+
+```hcl
+object({
+    github_owned_allowed = bool
+    patterns_allowed     = optional(list(string), null)
+    verified_allowed     = optional(bool, false)
+  })
+```
+
+Default: `null`
+
 ### <a name="input_allows_deletions"></a> [allows\_deletions](#input\_allows\_deletions)
 
 Description: (Optional) Boolean, setting this to `true` to allow the branch to be deleted.
@@ -191,6 +218,14 @@ Description: (Optional) A description of the repository.
 Type: `string`
 
 Default: `null`
+
+### <a name="input_enabled"></a> [enabled](#input\_enabled)
+
+Description: (Optional) Should GitHub actions be enabled on this repository?
+
+Type: `bool`
+
+Default: `true`
 
 ### <a name="input_enforce_admins"></a> [enforce\_admins](#input\_enforce\_admins)
 
