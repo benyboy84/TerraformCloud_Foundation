@@ -109,12 +109,6 @@ resource "github_branch_protection" "this" {
   enforce_admins   = true
   allows_deletions = true
 
-
-  required_pull_request_reviews {
-    dismiss_stale_reviews  = true
-    restrict_dismissals    = true
-  }
-
 }
 
 # resource "github_branch_protection_v3" "this" {
