@@ -71,7 +71,6 @@ No modules.
 The following resources are used by this module:
 
 - [github_actions_secret.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/actions_secret) (resource)
-- [github_branch_default.default](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/branch_default) (resource)
 - [github_branch_protection.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/branch_protection) (resource)
 - [github_repository.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/repository) (resource)
 
@@ -176,14 +175,6 @@ Description: (Optional) Boolean, setting this to `true` to block creating the br
 Type: `bool`
 
 Default: `false`
-
-### <a name="input_default_branch"></a> [default\_branch](#input\_default\_branch)
-
-Description: (Optional) The default branch name (e.g. main).
-
-Type: `string`
-
-Default: `null`
 
 ### <a name="input_delete_branch_on_merge"></a> [delete\_branch\_on\_merge](#input\_delete\_branch\_on\_merge)
 

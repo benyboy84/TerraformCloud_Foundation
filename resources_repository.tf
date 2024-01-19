@@ -44,8 +44,6 @@ module "repository" {
   ignore_vulnerability_alerts_during_read = try(each.value.github_repository.ignore_vulnerability_alerts_during_read, false)
   allow_update_branch                     = try(each.value.github_repository.allow_update_branch, false)
 
-  default_branch = try(each.value.github_repository.default_branch, "master")
-
   pattern                         = try(each.value.github_repository.pattern, "main")
   enforce_admins                  = try(each.value.github_repository.enforce_admins, true)
   require_signed_commits          = try(each.value.github_repository.require_signed_commits, false)

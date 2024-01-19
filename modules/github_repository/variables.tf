@@ -263,14 +263,6 @@ variable "allow_update_branch" {
   default     = true
 }
 
-# The following variables are used to rename the default branch (`github_branch_default`).
-
-variable "default_branch" {
-  description = "(Optional) The default branch name (e.g. main)."
-  type        = string
-  default     = null
-}
-
 # The following variables are used to create branch protection resources (`github_branch_protection`).
 
 variable "pattern" {
