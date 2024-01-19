@@ -59,7 +59,7 @@ module "repository" {
     required_approving_review_count = try(each.value.github_repository.required_pull_request_reviews.required_approving_review_count, "0")
     require_last_push_approval      = try(each.value.github_repository.required_pull_request_reviews.require_last_push_approval, true)
   }
-  push_restrictions    = try(each.value.github_repository.push_restrictions, false)
+  push_restrictions    = try(each.value.github_repository.push_restrictions, null)
   force_push_bypassers = try(each.value.github_repository.force_push_bypassers, null)
   allows_deletions     = try(each.value.github_repository.allows_deletions, false)
   allows_force_pushes  = try(each.value.github_repository.allows_force_pushes, false)
