@@ -85,7 +85,7 @@ variable "allow_auto_merge" {
 variable "squash_merge_commit_title" {
   description = "(Optional) Can be PR_TITLE or COMMIT_OR_PR_TITLE for a default squash merge commit title. Applicable only if allow_squash_merge is true."
   type        = string
-  default     = null
+  default     = "COMMIT_OR_PR_TITLE"
 
   validation {
     condition     = var.squash_merge_commit_title != null ? contains(["PR_TITLE", "COMMIT_OR_PR_TITLE", ""], var.squash_merge_commit_title) ? true : false : true
@@ -96,7 +96,7 @@ variable "squash_merge_commit_title" {
 variable "squash_merge_commit_message" {
   description = "(Optional) Can be PR_BODY, COMMIT_MESSAGES, or BLANK for a default squash merge commit message. Applicable only if allow_squash_merge is true."
   type        = string
-  default     = null
+  default     = "COMMIT_MESSAGES"
 
   validation {
     condition     = var.squash_merge_commit_message != null ? contains(["PR_BODY", "COMMIT_MESSAGES", "BLANK", ""], var.squash_merge_commit_message) ? true : false : true
@@ -107,7 +107,7 @@ variable "squash_merge_commit_message" {
 variable "merge_commit_title" {
   description = "Can be PR_TITLE or MERGE_MESSAGE for a default merge commit title. Applicable only if allow_merge_commit is true."
   type        = string
-  default     = null
+  default     = "MERGE_MESSAGE"
 
   validation {
     condition     = var.merge_commit_title != null ? contains(["PR_TITLE", "MERGE_MESSAGE", ""], var.merge_commit_title) ? true : false : true
@@ -118,7 +118,7 @@ variable "merge_commit_title" {
 variable "merge_commit_message" {
   description = "Can be PR_BODY, PR_TITLE, or BLANK for a default merge commit message. Applicable only if allow_merge_commit is true."
   type        = string
-  default     = null
+  default     = "PR_TITLE"
 
   validation {
     condition     = var.merge_commit_message != null ? contains(["PR_BODY", "PR_TITLE", "BLANK", ""], var.merge_commit_message) ? true : false : true
