@@ -104,6 +104,12 @@ Source: ./modules/tfe_team
 
 Version:
 
+### <a name="module_tfc_platform_teams"></a> [tfc\_platform\_teams](#module\_tfc\_platform\_teams)
+
+Source: ./modules/tfe_team
+
+Version:
+
 ### <a name="module_tfc_platform_workspaces"></a> [tfc\_platform\_workspaces](#module\_tfc\_platform\_workspaces)
 
 Source: ./modules/tfe_workspace
