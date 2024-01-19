@@ -104,18 +104,6 @@ Source: ./modules/tfe_team
 
 Version:
 
-### <a name="module_tfc_platform_teams"></a> [tfc\_platform\_teams](#module\_tfc\_platform\_teams)
-
-Source: ./modules/tfe_team
-
-Version:
-
-### <a name="module_tfc_platform_workspaces"></a> [tfc\_platform\_workspaces](#module\_tfc\_platform\_workspaces)
-
-Source: ./modules/tfe_workspace
-
-Version:
-
 ### <a name="module_workspaces"></a> [workspaces](#module\_workspaces)
 
 Source: ./modules/tfe_workspace
@@ -135,7 +123,6 @@ No optional inputs.
 The following resources are used by this module:
 
 - [tfe_project.project](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/resources/project) (resource)
-- [tfe_project.tfc_platform_project](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/resources/project) (resource)
 - [tfe_project_variable_set.this](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/resources/project_variable_set) (resource)
 - [tfe_variable.variable_set](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/resources/variable) (resource)
 - [tfe_variable.variable_set_tfe_token](https://registry.terraform.io/providers/hashicorp/tfe/0.48.0/docs/resources/variable) (resource)
