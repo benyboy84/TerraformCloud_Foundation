@@ -70,9 +70,6 @@ module "repository" {
     {
       secret_name     = secret.secret_name
       plaintext_value = secret.secret_name == "TFC_API_TOKEN" ? try(module.teams[secret.plaintext_value].token, null) : secret.plaintext_value
-      #plaintext_value = "${secret.secret_name == "TFC_API_TOKEN" ? try(module.teams[secret.plaintext_value].token, null), secret.plaintext_value}"
-      # secret_name     = "blabla"
-      # plaintext_value = "test"
     }
   ]
 
