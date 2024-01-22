@@ -185,7 +185,7 @@ Default: `false`
 
 ### <a name="input_branch_protections"></a> [branch\_protections](#input\_branch\_protections)
 
-Description:     pattern                           : (Optional) Identifies the protection rule pattern.  
+Description:     pattern                           : (Required) Identifies the protection rule pattern.  
     enforce\_admins                    : (Optional) Boolean, setting this to `true` enforces status checks for repository administrators.  
     require\_signed\_commits            : (Optional) Boolean, setting this to `true` requires all commits to be signed with GPG.  
     required\_linear\_history           : (Optional) Boolean, setting this to true enforces a linear commit Git history, which prevents anyone from pushing merge commits to a branch.  

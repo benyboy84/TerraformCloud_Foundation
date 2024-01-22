@@ -267,7 +267,7 @@ variable "allow_update_branch" {
 
 variable "branch_protections" {
   description = <<EOT
-    pattern                           : (Optional) Identifies the protection rule pattern.
+    pattern                           : (Required) Identifies the protection rule pattern.
     enforce_admins                    : (Optional) Boolean, setting this to `true` enforces status checks for repository administrators.
     require_signed_commits            : (Optional) Boolean, setting this to `true` requires all commits to be signed with GPG.
     required_linear_history           : (Optional) Boolean, setting this to true enforces a linear commit Git history, which prevents anyone from pushing merge commits to a branch.
