@@ -19,6 +19,15 @@ locals {
     arm_client_secret = {
       project = "Azure"
     }
+    github_app_id = {
+      project = "GitHub"
+    }
+    github_app_installation_id = {
+      project = "GitHub"
+    }
+    github_app_pem_file = {
+      project = "GitHub"
+    }
   }
 
   # This local is used to define teams at the organization level.
@@ -354,6 +363,21 @@ locals {
           variables = {
             "TFE_TOKEN" = {
               value     = "terraformcloud-modulesregistry-manage-modules"
+              category  = "env"
+              sensitive = true
+            }
+            "GITHUB_APP_ID" = {
+              value     = data.hcp_vault_secrets_secret.this["github_app_id"].secret_value
+              category  = "env"
+              sensitive = true
+            }
+            "GITHUB_APP_INSTALLATION_ID" = {
+              value     = data.hcp_vault_secrets_secret.this["github_app_installation_id"].secret_value
+              category  = "env"
+              sensitive = true
+            }
+            "GITHUB_APP_PEM_FILE" = {
+              value     = data.hcp_vault_secrets_secret.this["github_app_pem_file"].secret_value
               category  = "env"
               sensitive = true
             }

@@ -28,7 +28,7 @@ variable "sso_team_id" {
 }
 
 variable "organization_access" {
-  description = <<DESCRIPTION
+  description = <<EOT
   (Optional) Settings for the team's organization access.
     read_projects           : (Optional) Allow members to view all projects within the organization. Requires read_workspaces to be set to true.
     manage_projects         : (Optional) Allow members to create and administrate all projects within the organization.
@@ -41,7 +41,7 @@ variable "organization_access" {
     manage_membership       : (Optional) Allow members to add/remove users from the organization, and to add/remove users from visible teams.
     manage_modules          : (Optional) Allow members to publish and delete modules in the organization's private registry.
     manage_providers        : (Optional) Allow members to publish and delete providers in the organization's private registry.
-  DESCRIPTION
+  EOT
   type = object({
     read_projects           = optional(bool, false)
     manage_projects         = optional(bool, false)
@@ -137,11 +137,11 @@ variable "project_access" {
 }
 
 variable "custom_project_access" {
-  description = <<DESCRIPTION
+  description = <<EOT
   (Optional) Settings for the team's project access.
     settings : (Optional) The permission to grant for the project's settings. Valid strings: `read`, `update`, or `delete`.
     teams	   : (Optional) The permission to grant for the project's teams. Valid strings: `none`, `read`, or `manage`.
-  DESCRIPTION
+  EOT
   type = object({
     settings = optional(string, "read")
     teams    = optional(string, "none")
@@ -160,7 +160,7 @@ variable "custom_project_access" {
 }
 
 variable "custom_workspace_access" {
-  description = <<DESCRIPTION
+  description = <<EOT
     runs	         : (Optional) The permission to grant project's workspaces' runs. Valid strings: `read`, `plan`, or `apply`.
     sentinel_mocks : (Optional) The permission to grant project's workspaces' Sentinel mocks. Valid strings: `none`, or `read`.
     state_versions : (Optional) The permission to grant project's workspaces' state versions. Valid strings: `none`, `read-outputs`, `read`, or `write`.
@@ -170,7 +170,7 @@ variable "custom_workspace_access" {
     delete	       : (Optional) The permission to delete the project's workspaces.
     move           : (Optional) This permission to move workspaces into and out of the project. The team must also have permissions to the project(s) receiving the the workspace(s).
     run_tasks      : (Optional) The permission to manage run tasks within the project's workspaces.
-  DESCRIPTION
+  EOT
   type = object({
     runs           = optional(string, "read")
     sentinel_mocks = optional(string, "none")
@@ -231,7 +231,7 @@ variable "workspace_access" {
 }
 
 variable "workspace_permission" {
-  description = <<DESCRIPTION
+  description = <<EOT
   (Optional) Settings for the team's workspace access.
       runs              : (Optional) The permission to grant the team on the workspace's runs. Valid values are `read`, `plan`, or `apply`.
       variables         : (Optional) The permission to grant the team on the workspace's variables. Valid values are `none`, `read`, or `write`.
@@ -239,7 +239,7 @@ variable "workspace_permission" {
       sentinel_mocks    : (Optional) The permission to grant the team on the workspace's generated Sentinel mocks, Valid values are `none` or `read`.
       workspace_locking : (Optional) Boolean determining whether or not to grant the team permission to manually lock/unlock the workspace.
       run_tasks         : (Optional) Boolean determining whether or not to grant the team permission to manage workspace run tasks.
-  DESCRIPTION
+  EOT
   type = object({
     runs              = optional(string, "read")
     variables         = optional(string, "none")
