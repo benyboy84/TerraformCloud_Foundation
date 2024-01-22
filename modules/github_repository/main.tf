@@ -168,7 +168,7 @@ resource "github_actions_repository_permissions" "this" {
 }
 
 resource "github_branch" "this" {
-  for_each      = var.branches
+  for_each      = { for branch in var.branches : branch.branch => branch }
   repository    = github_repository.this.name
   branch        = each.value.branch
   source_branch = each.value.source_branch
