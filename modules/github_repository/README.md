@@ -95,8 +95,8 @@ The following input variables are optional (have default values):
 ### <a name="input_actions_secrets"></a> [actions\_secrets](#input\_actions\_secrets)
 
 Description:   (Optional) The actions\_secrets block supports the following:  
-    secret\_name     : (Optional) Name of the secret.  
-    plaintext\_value : (Optional) Plaintext value of the secret to be encrypted.
+    secret\_name     : (Required) Name of the secret.  
+    plaintext\_value : (Required) Plaintext value of the secret to be encrypted.
 
 Type:
 
@@ -256,7 +256,7 @@ list(object({
   }))
 ```
 
-Default: `null`
+Default: `[]`
 
 ### <a name="input_branches"></a> [branches](#input\_branches)
 
@@ -273,7 +273,7 @@ object({
   })
 ```
 
-Default: `null`
+Default: `[]`
 
 ### <a name="input_delete_branch_on_merge"></a> [delete\_branch\_on\_merge](#input\_delete\_branch\_on\_merge)
 
@@ -458,9 +458,9 @@ Default: `"COMMIT_OR_PR_TITLE"`
 ### <a name="input_template"></a> [template](#input\_template)
 
 Description:   (Optional) The template block supports the following:  
-    owner                : The GitHub organization or user the template repository is owned by.  
-    repository           : The name of the template repository.  
-    include\_all\_branches : Whether the new repository should include all the branches from the template repository (defaults to false, which includes only the default branch from the template).
+    owner                : (Required) The GitHub organization or user the template repository is owned by.  
+    repository           : (Required) The name of the template repository.  
+    include\_all\_branches : (Optional) Whether the new repository should include all the branches from the template repository (defaults to false, which includes only the default branch from the template).
 
 Type:
 

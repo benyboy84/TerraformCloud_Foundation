@@ -233,9 +233,9 @@ variable "topics" {
 variable "template" {
   description = <<EOT
   (Optional) The template block supports the following:
-    owner                : The GitHub organization or user the template repository is owned by.
-    repository           : The name of the template repository.
-    include_all_branches : Whether the new repository should include all the branches from the template repository (defaults to false, which includes only the default branch from the template).
+    owner                : (Required) The GitHub organization or user the template repository is owned by.
+    repository           : (Required) The name of the template repository.
+    include_all_branches : (Optional) Whether the new repository should include all the branches from the template repository (defaults to false, which includes only the default branch from the template).
   EOT
   type = object({
     owner                = string
@@ -316,7 +316,7 @@ variable "branch_protections" {
     blocks_creations     = optional(bool, false)
     lock_branch          = optional(bool, false)
   }))
-  default = null
+  default = []
 }
 
 # The following variables are used to create actions secret resources (`github_actions_secret`).
@@ -324,8 +324,8 @@ variable "branch_protections" {
 variable "actions_secrets" {
   description = <<EOT
   (Optional) The actions_secrets block supports the following:
-    secret_name     : (Optional) Name of the secret.
-    plaintext_value : (Optional) Plaintext value of the secret to be encrypted.
+    secret_name     : (Required) Name of the secret.
+    plaintext_value : (Required) Plaintext value of the secret to be encrypted.
   EOT
   type = list(object({
     secret_name     = string
@@ -380,5 +380,5 @@ variable "branches" {
     branch        = string
     source_branch = optional(string, "main")
   })
-  default = null
+  default = []
 }

@@ -108,4 +108,11 @@ module "repository" {
     patterns_allowed     = try(each.value.github_repository.allowed_actions_config.patterns_allowed, ["terraform-docs/gh-actions@*", "super-linter/super-linter@*", "rymndhng/release-on-push-action@*", "hashicorp/*"])
     verified_allowed     = try(each.value.github_repository.allowed_actions_config.verified_allowed, false)
   }
+
+  branches = [for branch in try(each.value.github_repository.branches, []) :
+    {
+      branch        = branch.branch
+      source_branch = try(branch.source_branch, "main")
+    }
+  ]
 }
