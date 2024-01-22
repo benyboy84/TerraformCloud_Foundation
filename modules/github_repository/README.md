@@ -70,7 +70,9 @@ No modules.
 
 The following resources are used by this module:
 
+- [github_actions_repository_permissions.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/actions_repository_permissions) (resource)
 - [github_actions_secret.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/actions_secret) (resource)
+- [github_branch.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/branch) (resource)
 - [github_branch_protection.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/branch_protection) (resource)
 - [github_repository.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/repository) (resource)
 
@@ -202,6 +204,23 @@ Description: (Optional) Boolean, setting this to `true` to block creating the br
 Type: `bool`
 
 Default: `false`
+
+### <a name="input_branches"></a> [branches](#input\_branches)
+
+Description:   (Optional) The branches block supports the following:  
+    branch        : (Required) The repository branch to create.  
+    source\_branch : (Optional) The branch name to start from.
+
+Type:
+
+```hcl
+object ({
+    branch        = string
+    source_branch = optional(string, "main")
+  })
+```
+
+Default: `null`
 
 ### <a name="input_delete_branch_on_merge"></a> [delete\_branch\_on\_merge](#input\_delete\_branch\_on\_merge)
 
@@ -555,6 +574,22 @@ Default: `false`
 
 The following outputs are exported:
 
+### <a name="output_actions_secret"></a> [actions\_secret](#output\_actions\_secret)
+
+Description: GitHub Actions secrets within your GitHub repository.
+
+### <a name="output_branch_protection"></a> [branch\_protection](#output\_branch\_protection)
+
+Description: GitHub branch protection within your GitHub repository.
+
+### <a name="output_created_at"></a> [created\_at](#output\_created\_at)
+
+Description: Date of actions\_secret creation.
+
+### <a name="output_etag"></a> [etag](#output\_etag)
+
+Description: An etag representing the Branch object.
+
 ### <a name="output_full_name"></a> [full\_name](#output\_full\_name)
 
 Description: A string of the form "orgname/reponame".
@@ -562,6 +597,14 @@ Description: A string of the form "orgname/reponame".
 ### <a name="output_git_clone_url"></a> [git\_clone\_url](#output\_git\_clone\_url)
 
 Description: URL that can be provided to git clone to clone the repository anonymously via the git protocol.
+
+### <a name="output_github_actions_repository_permissions"></a> [github\_actions\_repository\_permissions](#output\_github\_actions\_repository\_permissions)
+
+Description: GitHub Actions permissions for your repository.
+
+### <a name="output_github_branch"></a> [github\_branch](#output\_github\_branch)
+
+Description: Branches within your repository.
 
 ### <a name="output_github_repository"></a> [github\_repository](#output\_github\_repository)
 
@@ -590,9 +633,21 @@ Description:   The block consisting of the repository's GitHub Pages configurati
 
 Description: The primary language used in the repository.
 
+### <a name="output_ref"></a> [ref](#output\_ref)
+
+Description: A string representing a branch reference, in the form of refs/heads/<branch>.
+
 ### <a name="output_repo_id"></a> [repo\_id](#output\_repo\_id)
 
 Description: GitHub ID for the repository.
+
+### <a name="output_sha"></a> [sha](#output\_sha)
+
+Description: A string storing the reference's HEAD commit's SHA1.
+
+### <a name="output_source_sha"></a> [source\_sha](#output\_source\_sha)
+
+Description: A string storing the commit this branch was started from. Not populated when imported.
 
 ### <a name="output_ssh_clone_url"></a> [ssh\_clone\_url](#output\_ssh\_clone\_url)
 
@@ -601,4 +656,8 @@ Description: URL that can be provided to git clone to clone the repository via S
 ### <a name="output_svn_url"></a> [svn\_url](#output\_svn\_url)
 
 Description: URL that can be provided to svn checkout to check out the repository via GitHub's Subversion protocol emulation.
+
+### <a name="output_updated_at"></a> [updated\_at](#output\_updated\_at)
+
+Description: Date of actions\_secret update.
 <!-- END_TF_DOCS -->
