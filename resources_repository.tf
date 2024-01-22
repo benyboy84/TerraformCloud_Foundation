@@ -46,27 +46,27 @@ module "repository" {
 
   branch_protections = [for branch_protection in try(each.value.github_repository.branch_protections, [
     {
-      pattern                         = try(branch_protection.pattern, "main")
-      enforce_admins                  = try(branch_protection.enforce_admins, true)
-      require_signed_commits          = try(branch_protection.require_signed_commits, false)
-      required_linear_history         = try(branch_protection.required_linear_history, false)
-      require_conversation_resolution = try(branch_protection.require_conversation_resolution, true)
-      required_status_checks          = try(branch_protection.required_status_checks, null)
+      pattern                         = "main"
+      enforce_admins                  = true
+      require_signed_commits          = false
+      required_linear_history         = false
+      require_conversation_resolution = true
+      required_status_checks          = null
       required_pull_request_reviews = {
-        dismiss_stale_reviews           = try(branch_protection.required_pull_request_reviews.dismiss_stale_reviews, true)
-        restrict_dismissals             = try(branch_protection.required_pull_request_reviews.restrict_dismissals, null)
-        dismissal_restrictions          = try(branch_protection.required_pull_request_reviews.dismissal_restrictions, null)
-        pull_request_bypassers          = try(branch_protection.required_pull_request_reviews.pull_request_bypassers, null)
-        require_code_owner_reviews      = try(branch_protection.required_pull_request_reviews.require_code_owner_reviews, true)
-        required_approving_review_count = try(branch_protection.required_pull_request_reviews.required_approving_review_count, "0")
-        require_last_push_approval      = try(branch_protection.required_pull_request_reviews.require_last_push_approval, false)
+        dismiss_stale_reviews           = true
+        restrict_dismissals             = null
+        dismissal_restrictions          = null
+        pull_request_bypassers          = null
+        require_code_owner_reviews      = true
+        required_approving_review_count = "0"
+        require_last_push_approval      = false
       }
-      push_restrictions    = try(branch_protection.push_restrictions, null)
-      force_push_bypassers = try(branch_protection.force_push_bypassers, null)
-      allows_deletions     = try(branch_protection.allows_deletions, false)
-      allows_force_pushes  = try(branch_protection.allows_force_pushes, false)
-      blocks_creations     = try(branch_protection.blocks_creations, false)
-      lock_branch          = try(branch_protection.lock_branch, false)
+      push_restrictions    = null
+      force_push_bypassers = null
+      allows_deletions     = false
+      allows_force_pushes  = false
+      blocks_creations     = false
+      lock_branch          = false
     }
     ]) :
     {
