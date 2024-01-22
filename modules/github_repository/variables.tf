@@ -296,8 +296,8 @@ variable "branch_protections" {
     require_signed_commits          = optional(bool, false)
     required_linear_history         = optional(bool, false)
     require_conversation_resolution = optional(bool, false)
-    required_status_checks          = optional(object({
-      strict = optional(bool, false)
+    required_status_checks = optional(object({
+      strict   = optional(bool, false)
       contexts = optional(list(string), [])
     }), null)
     required_pull_request_reviews = optional(object({
@@ -376,7 +376,7 @@ variable "branches" {
     branch        : (Required) The repository branch to create.
     source_branch : (Optional) The branch name to start from.
   EOT
-  type = object ({
+  type = object({
     branch        = string
     source_branch = optional(string, "main")
   })

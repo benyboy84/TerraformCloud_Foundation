@@ -68,7 +68,7 @@ module "repository" {
       blocks_creations     = try(branch_protection.blocks_creations, false)
       lock_branch          = try(branch_protection.lock_branch, false)
     }
-  ]) :
+    ]) :
     {
       pattern                         = branch_protection.pattern
       enforce_admins                  = try(branch_protection.enforce_admins, true)

@@ -94,7 +94,7 @@ output "github_branch" {
 
 output "source_sha" {
   description = "A string storing the commit this branch was started from. Not populated when imported."
-  value       =  { for source_sha in github_branch.this : github_branch.this.name => source_sha }
+  value       = { for source_sha in github_branch.this : github_branch.this.name => source_sha }
 }
 
 output "etag" {
