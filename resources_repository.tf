@@ -94,7 +94,7 @@ module "repository" {
     }
   ]
 
-  secrets = [for secret in try(each.value.github_repository.secrets, []) :
+  secrets = [for secret in try(each.value.github_repository.actions_secrets, []) :
     {
       secret_name     = secret.secret_name
       plaintext_value = secret.secret_name == "TF_API_TOKEN" ? try(module.teams[secret.plaintext_value].token, null) : secret.plaintext_value

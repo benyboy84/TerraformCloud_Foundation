@@ -321,9 +321,9 @@ variable "branch_protections" {
 
 # The following variables are used to create actions secret resources (`github_actions_secret`).
 
-variable "secrets" {
+variable "actions_secrets" {
   description = <<EOT
-  (Optional) The secrets block supports the following:
+  (Optional) The actions_secrets block supports the following:
     secret_name     : (Optional) Name of the secret.
     plaintext_value : (Optional) Plaintext value of the secret to be encrypted.
   EOT

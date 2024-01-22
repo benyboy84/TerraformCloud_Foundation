@@ -133,7 +133,7 @@ locals {
     #     "workspace_name" = {
     #       description       = ""
     #       github_repository = {
-    #         secrets = [
+    #         actions_secrets = [
     #           {
     #             secret_name     = ""
     #             plaintext_value = ""
@@ -308,7 +308,7 @@ locals {
         "AWS_S3" = {
           description = "Repository to provision and manage AWS S3 configuration through Terraform code (IaC)."
           github_repository = {
-            secrets = [
+            actions_secrets = [
               {
                 secret_name     = "TF_API_TOKEN"
                 plaintext_value = "aws workloads-plan"

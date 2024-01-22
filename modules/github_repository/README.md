@@ -92,6 +92,23 @@ Type: `string`
 
 The following input variables are optional (have default values):
 
+### <a name="input_actions_secrets"></a> [actions\_secrets](#input\_actions\_secrets)
+
+Description:   (Optional) The actions\_secrets block supports the following:  
+    secret\_name     : (Optional) Name of the secret.  
+    plaintext\_value : (Optional) Plaintext value of the secret to be encrypted.
+
+Type:
+
+```hcl
+list(object({
+    secret_name     = string
+    plaintext_value = string
+  }))
+```
+
+Default: `[]`
+
 ### <a name="input_allow_auto_merge"></a> [allow\_auto\_merge](#input\_allow\_auto\_merge)
 
 Description: (Optional) Set to true to allow auto-merging pull requests on the repository.
@@ -217,8 +234,8 @@ list(object({
     require_signed_commits          = optional(bool, false)
     required_linear_history         = optional(bool, false)
     require_conversation_resolution = optional(bool, false)
-    required_status_checks          = optional(object({
-      strict = optional(bool, false)
+    required_status_checks = optional(object({
+      strict   = optional(bool, false)
       contexts = optional(list(string), [])
     }), null)
     required_pull_request_reviews = optional(object({
@@ -250,7 +267,7 @@ Description:   (Optional) The branches block supports the following:
 Type:
 
 ```hcl
-object ({
+object({
     branch        = string
     source_branch = optional(string, "main")
   })
@@ -393,23 +410,6 @@ object({
 ```
 
 Default: `null`
-
-### <a name="input_secrets"></a> [secrets](#input\_secrets)
-
-Description:   (Optional) The secrets block supports the following:  
-    secret\_name     : (Optional) Name of the secret.  
-    plaintext\_value : (Optional) Plaintext value of the secret to be encrypted.
-
-Type:
-
-```hcl
-list(object({
-    secret_name     = string
-    plaintext_value = string
-  }))
-```
-
-Default: `[]`
 
 ### <a name="input_security_and_analysis"></a> [security\_and\_analysis](#input\_security\_and\_analysis)
 
