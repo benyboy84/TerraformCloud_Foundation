@@ -46,8 +46,31 @@ GITHUB_APP_INSTALLATION_ID and GITHUB_APP_PEM_FILE environment variables to auth
 module "repository" {
   source = "./modules/github_repository"
 
-  name             = "Repository Name"
-  destination_type = This is a description for the GitHub repository."
+  name               = "Repository Name"
+  destination_type   = "This is a description for the GitHub repository."
+  branch_protections = [
+    {
+      pattern                         = "main"
+      enforce_admins                  = true
+      require_conversation_resolution = true
+      required_pull_request_reviews = {
+        dismiss_stale_reviews           = true
+        require_code_owner_reviews      = true
+        required_approving_review_count = "1"
+      }
+    }
+  ]
+  actions_secrets = [
+    {
+      secret_name     = "Secret Name"
+      plaintext_value = "Secret Value"
+    }
+  ]
+  allowed_actions = "selected"
+  allowed_actions_config = {
+    github_owned_allowed = true
+    patterns_allowed     = ["terraform-docs/gh-actions@*", "hashicorp/*"]
+  }
 }
 ```
 
