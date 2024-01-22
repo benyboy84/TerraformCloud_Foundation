@@ -310,7 +310,7 @@ locals {
           github_repository = {
             secrets = [
               {
-                secret_name     = "TFC_API_TOKEN"
+                secret_name     = "TF_API_TOKEN"
                 plaintext_value = "aws workloads-plan"
               }
             ]
