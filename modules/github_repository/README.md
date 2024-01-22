@@ -38,6 +38,8 @@ GITHUB_APP_INSTALLATION_ID and GITHUB_APP_PEM_FILE environment variables to auth
 - Create and manage GitHub repositories.
 - Create and manage GitHub branches protection.
 - Create and manage GitHub repository secrets.
+- Create and manage GitHub actions repository permissions.
+- Create and manage GitHub branches.
 
 ## Usage example
 ```hcl
