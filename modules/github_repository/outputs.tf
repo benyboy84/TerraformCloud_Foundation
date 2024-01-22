@@ -64,7 +64,7 @@ EOT
 
 output "branch_protection" {
   description = "GitHub branch protection within your GitHub repository."
-  value       = github_branch_protection.this
+  value       = { for branch_protection in github_branch_protection.this : branch_protection.pattern => branch_protection }
 }
 
 output "actions_secret" {
@@ -89,25 +89,25 @@ output "github_actions_repository_permissions" {
 
 output "github_branch" {
   description = "Branches within your repository."
-  value       = { for github_branch in github_branch.this : github_branch.this.name => github_branch }
+  value       = { for github_branch in github_branch.this : github_branch.name => github_branch }
 }
 
 output "source_sha" {
   description = "A string storing the commit this branch was started from. Not populated when imported."
-  value       = { for source_sha in github_branch.this : github_branch.this.name => source_sha }
+  value       = { for github_branch in github_branch.this : github_branch.name => github_branch.source_sha }
 }
 
 output "etag" {
   description = "An etag representing the Branch object."
-  value       = { for etag in github_branch.this : github_branch.this.name => etag }
+  value       = { for github_branch in github_branch.this : github_branch.name => github_branch.etag }
 }
 
 output "ref" {
   description = "A string representing a branch reference, in the form of refs/heads/<branch>."
-  value       = { for ref in github_branch.this : github_branch.this.name => ref }
+  value       = { for github_branch in github_branch.this : github_branch.name => github_branch.ref }
 }
 
 output "sha" {
   description = "A string storing the reference's HEAD commit's SHA1."
-  value       = { for sha in github_branch.this : github_branch.this.name => sha }
+  value       = { for github_branch in github_branch.this : github_branch.name => github_branch.sha }
 }
