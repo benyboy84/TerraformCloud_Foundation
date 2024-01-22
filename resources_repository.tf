@@ -66,13 +66,18 @@ module "repository" {
   blocks_creations     = try(each.value.github_repository.blocks_creations, false)
   lock_branch          = try(each.value.github_repository.lock_branch, false)
 
-  secrets = try(each.value.github_repository.secrets, null) != null ? each.value.github_repository.secrets == "TCP_API_TOKEN" ? try(module.teams[each.value.github_repository.secrets].token, each.value.github_repository.secrets) : each.value.github_repository.secrets : []
+  secrets = [for secret in try(each.value.github_repository.secrets, []) :
+    {
+      secret_name     = secret.secret_name
+      plaintext_value = secret.secret_name == "TFC_API_TOKEN" ? try(module.teams[secret.plaintext_value].token, null) : secret.plaintext_value
+    }
+  ]
 
   allowed_actions = try(each.value.github_repository.allowed_actions, "selected")
   enabled         = try(each.value.github_repository.enabled, true)
   allowed_actions_config = {
     github_owned_allowed = try(each.value.github_repository.allowed_actions_config.github_owned_allowed, true)
-    patterns_allowed     = try(each.value.github_repository.allowed_actions_config.patterns_allowed, ["terraform-docs/gh-actions@*", "super-linter/super-linter@*", "rymndhng/release-on-push-action@*", "hashicorp/setup-terraform@*"])
+    patterns_allowed     = try(each.value.github_repository.allowed_actions_config.patterns_allowed, ["terraform-docs/gh-actions@*", "super-linter/super-linter@*", "rymndhng/release-on-push-action@*", "hashicorp/*"])
     verified_allowed     = try(each.value.github_repository.allowed_actions_config.verified_allowed, false)
   }
 }

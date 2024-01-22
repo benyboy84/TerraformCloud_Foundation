@@ -311,7 +311,7 @@ locals {
             secrets = [
               {
                 secret_name     = "TFC_API_TOKEN"
-                plaintext_value = "aws-workloads-plan"
+                plaintext_value = "aws workloads-plan"
               }
             ]
           }
