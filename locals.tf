@@ -19,13 +19,13 @@ locals {
     arm_client_secret = {
       project = "Azure"
     }
-    GITHUB_APP_ID = {
+    github_app_id = {
       project = "GitHub"
     }
-    GITHUB_APP_INSTALLATION_ID = {
+    github_app_installation_id = {
       project = "GitHub"
     }
-    GITHUB_APP_PEM_FILE = {
+    github_app_pem_file = {
       project = "GitHub"
     }
   }
