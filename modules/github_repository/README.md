@@ -5,11 +5,8 @@ of all your GitHub repository configuration.
 
 ## Permissions
 
-To manage the GitHub resources, provide a user token from an account or a GitHub App with 
-appropriate permissions. This user should have `owner` permission on the organization.
-
-Otherwise, it should have `repository creation` and `create teams` permission on the organization.
-Once the repository is created, `admin` permission will be granted to the user who created that repository.
+To manage the GitHub resources, provide a token from an account or a GitHub App with 
+appropriate permissions. It should have `repository creation` and `manage actions repository secrets`.
 
 ## Authentication
 
@@ -511,7 +508,7 @@ Description: (Optional) Can be public or private. If your organization is associ
 
 Type: `string`
 
-Default: `"internal"`
+Default: `"public"`
 
 ### <a name="input_vulnerability_alerts"></a> [vulnerability\_alerts](#input\_vulnerability\_alerts)
 
