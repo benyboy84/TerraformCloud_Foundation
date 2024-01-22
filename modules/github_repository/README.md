@@ -159,22 +159,6 @@ object({
 
 Default: `null`
 
-### <a name="input_allows_deletions"></a> [allows\_deletions](#input\_allows\_deletions)
-
-Description: (Optional) Boolean, setting this to `true` to allow the branch to be deleted.
-
-Type: `bool`
-
-Default: `false`
-
-### <a name="input_allows_force_pushes"></a> [allows\_force\_pushes](#input\_allows\_force\_pushes)
-
-Description: (Optional) Boolean, setting this to `true` to allow force pushes on the branch.
-
-Type: `bool`
-
-Default: `false`
-
 ### <a name="input_archive_on_destroy"></a> [archive\_on\_destroy](#input\_archive\_on\_destroy)
 
 Description: (Optional) Set to true to archive the repository instead of deleting on destroy.
@@ -199,13 +183,63 @@ Type: `bool`
 
 Default: `false`
 
-### <a name="input_blocks_creations"></a> [blocks\_creations](#input\_blocks\_creations)
+### <a name="input_branch_protections"></a> [branch\_protections](#input\_branch\_protections)
 
-Description: (Optional) Boolean, setting this to `true` to block creating the branch.
+Description:     pattern                           : (Optional) Identifies the protection rule pattern.  
+    enforce\_admins                    : (Optional) Boolean, setting this to `true` enforces status checks for repository administrators.  
+    require\_signed\_commits            : (Optional) Boolean, setting this to `true` requires all commits to be signed with GPG.  
+    required\_linear\_history           : (Optional) Boolean, setting this to true enforces a linear commit Git history, which prevents anyone from pushing merge commits to a branch.  
+    require\_conversation\_resolution   : (Optional) Boolean, setting this to true requires all conversations on code must be resolved before a pull request can be merged.  
+    required\_status\_checks            : (Optional) The required\_status\_checks block supports the following:  
+      strict                          : (Optional) Require branches to be up to date before merging.  
+      contexts                        : (Optional) The list of status checks to require in order to merge into this branch. No status checks are required by default.  
+    required\_pull\_request\_reviews     : (Optional) The required\_pull\_request\_reviews block supports the following:  
+      dismiss\_stale\_reviews           : (Optional) Dismiss approved reviews automatically when a new commit is pushed.  
+      restrict\_dismissals             : (Optional) Restrict pull request review dismissals.  
+      dismissal\_restrictions          : (Optional) The list of actor Names/IDs with dismissal access. If not empty, restrict\_dismissals is ignored. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
+      pull\_request\_bypassers          : (Optional) The list of actor Names/IDs that are allowed to bypass pull request requirements. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
+      require\_code\_owner\_reviews      : (Optional) Require an approved review in pull requests including files with a designated code owner.  
+      required\_approving\_review\_count : (Optional) Require x number of approvals to satisfy branch protection requirements. If this is specified it must be a number between 0-6.  
+      require\_last\_push\_approval      : (Optional) Require that The most recent push must be approved by someone other than the last pusher.  
+    push\_restrictions                 : (Optional) The list of actor Names/IDs that may push to the branch. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
+    force\_push\_bypassers              : (Optional) The list of actor Names/IDs that are allowed to bypass force push restrictions. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
+    allows\_deletions                  : (Optional) Boolean, setting this to `true` to allow the branch to be deleted.  
+    allows\_force\_pushes               : (Optional) Boolean, setting this to `true` to allow force pushes on the branch.  
+    blocks\_creations                  : (Optional) Boolean, setting this to `true` to block creating the branch.  
+    lock\_branch                       : (Optional) Boolean, Setting this to `true` will make the branch read-only and preventing any pushes to it.
 
-Type: `bool`
+Type:
 
-Default: `false`
+```hcl
+list(object({
+    pattern                         = string
+    enforce_admins                  = optional(bool, false)
+    require_signed_commits          = optional(bool, false)
+    required_linear_history         = optional(bool, false)
+    require_conversation_resolution = optional(bool, false)
+    required_status_checks          = optional(object({
+      strict = optional(bool, false)
+      contexts = optional(list(string), [])
+    }), null)
+    required_pull_request_reviews = optional(object({
+      dismiss_stale_reviews           = optional(bool, false)
+      restrict_dismissals             = optional(bool, false)
+      dismissal_restrictions          = optional(list(string), [])
+      pull_request_bypassers          = optional(list(string), [])
+      require_code_owner_reviews      = optional(bool, false)
+      required_approving_review_count = optional(string, null)
+      require_last_push_approval      = optional(bool, false)
+    }), null)
+    push_restrictions    = optional(list(string), [])
+    force_push_bypassers = optional(list(string), [])
+    allows_deletions     = optional(bool, false)
+    allows_force_pushes  = optional(bool, false)
+    blocks_creations     = optional(bool, false)
+    lock_branch          = optional(bool, false)
+  }))
+```
+
+Default: `null`
 
 ### <a name="input_branches"></a> [branches](#input\_branches)
 
@@ -247,22 +281,6 @@ Description: (Optional) Should GitHub actions be enabled on this repository?
 Type: `bool`
 
 Default: `true`
-
-### <a name="input_enforce_admins"></a> [enforce\_admins](#input\_enforce\_admins)
-
-Description: (Optional) Boolean, setting this to `true` enforces status checks for repository administrators.
-
-Type: `bool`
-
-Default: `false`
-
-### <a name="input_force_push_bypassers"></a> [force\_push\_bypassers](#input\_force\_push\_bypassers)
-
-Description: (Optional) The list of actor Names/IDs that are allowed to bypass force push restrictions. Actor names must either begin with a "/" for users or the organization name followed by a "/" for teams.
-
-Type: `list(string)`
-
-Default: `null`
 
 ### <a name="input_gitignore_template"></a> [gitignore\_template](#input\_gitignore\_template)
 
@@ -336,14 +354,6 @@ Type: `string`
 
 Default: `null`
 
-### <a name="input_lock_branch"></a> [lock\_branch](#input\_lock\_branch)
-
-Description: (Optional) Boolean, Setting this to `true` will make the branch read-only and preventing any pushes to it.
-
-Type: `bool`
-
-Default: `false`
-
 ### <a name="input_merge_commit_message"></a> [merge\_commit\_message](#input\_merge\_commit\_message)
 
 Description: Can be PR\_BODY, PR\_TITLE, or BLANK for a default merge commit message. Applicable only if allow\_merge\_commit is true.
@@ -379,90 +389,6 @@ object({
     }))
     build_type = optional(string, null)
     cname      = optional(string, null)
-  })
-```
-
-Default: `null`
-
-### <a name="input_pattern"></a> [pattern](#input\_pattern)
-
-Description: (optional) Identifies the protection rule pattern.
-
-Type: `string`
-
-Default: `null`
-
-### <a name="input_push_restrictions"></a> [push\_restrictions](#input\_push\_restrictions)
-
-Description: (Optional) The list of actor Names/IDs that may push to the branch. Actor names must either begin with a "/" for users or the organization name followed by a "/" for teams.
-
-Type: `list(string)`
-
-Default: `null`
-
-### <a name="input_require_conversation_resolution"></a> [require\_conversation\_resolution](#input\_require\_conversation\_resolution)
-
-Description: (Optional) Boolean, setting this to true requires all conversations on code must be resolved before a pull request can be merged.
-
-Type: `bool`
-
-Default: `false`
-
-### <a name="input_require_signed_commits"></a> [require\_signed\_commits](#input\_require\_signed\_commits)
-
-Description: (Optional) Boolean, setting this to `true` requires all commits to be signed with GPG.
-
-Type: `bool`
-
-Default: `false`
-
-### <a name="input_required_linear_history"></a> [required\_linear\_history](#input\_required\_linear\_history)
-
-Description: (Optional) Boolean, setting this to true enforces a linear commit Git history, which prevents anyone from pushing merge commits to a branch.
-
-Type: `bool`
-
-Default: `false`
-
-### <a name="input_required_pull_request_reviews"></a> [required\_pull\_request\_reviews](#input\_required\_pull\_request\_reviews)
-
-Description:   (Optional) The required\_pull\_request\_reviews block supports the following:  
-    dismiss\_stale\_reviews           : (Optional) Dismiss approved reviews automatically when a new commit is pushed.  
-    restrict\_dismissals             : (Optional) Restrict pull request review dismissals.  
-    dismissal\_restrictions          : (Optional) The list of actor Names/IDs with dismissal access. If not empty, restrict\_dismissals is ignored. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
-    pull\_request\_bypassers          : (Optional) The list of actor Names/IDs that are allowed to bypass pull request requirements. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
-    require\_code\_owner\_reviews      : (Optional) Require an approved review in pull requests including files with a designated code owner.  
-    required\_approving\_review\_count : (Optional) Require x number of approvals to satisfy branch protection requirements. If this is specified it must be a number between 0-6.  
-    require\_last\_push\_approval      : (Optional) Require that The most recent push must be approved by someone other than the last pusher.
-
-Type:
-
-```hcl
-object({
-    dismiss_stale_reviews           = optional(bool, false)
-    restrict_dismissals             = optional(bool, false)
-    dismissal_restrictions          = optional(list(string), [])
-    pull_request_bypassers          = optional(list(string), [])
-    require_code_owner_reviews      = optional(bool, false)
-    required_approving_review_count = optional(string, null)
-    require_last_push_approval      = optional(bool, false)
-  })
-```
-
-Default: `null`
-
-### <a name="input_required_status_checks"></a> [required\_status\_checks](#input\_required\_status\_checks)
-
-Description:   (Optional) The required\_status\_checks block supports the following:  
-    strict   : (Optional) Require branches to be up to date before merging.  
-    contexts : (Optional) The list of status checks to require in order to merge into this branch. No status checks are required by default.
-
-Type:
-
-```hcl
-object({
-    strict   = optional(bool, false)
-    contexts = optional(list(string), [])
   })
 ```
 

@@ -1,4 +1,4 @@
-# The following variables are used to create repository resources (`github_repository`).
+# The following variables are used to create and manage repository (`github_repository`).
 
 variable "name" {
   description = "(Required) The name of the repository."
@@ -263,108 +263,60 @@ variable "allow_update_branch" {
   default     = true
 }
 
-# The following variables are used to create branch protection resources (`github_branch_protection`).
+# The following variable is used to configure branch protection for repository. (`github_branch_protection`).
 
-variable "pattern" {
-  description = "(optional) Identifies the protection rule pattern."
-  type        = string
-  default     = null
-}
-
-variable "enforce_admins" {
-  description = "(Optional) Boolean, setting this to `true` enforces status checks for repository administrators."
-  type        = bool
-  default     = false
-}
-
-variable "require_signed_commits" {
-  description = "(Optional) Boolean, setting this to `true` requires all commits to be signed with GPG."
-  type        = bool
-  default     = false
-}
-
-variable "required_linear_history" {
-  description = "(Optional) Boolean, setting this to true enforces a linear commit Git history, which prevents anyone from pushing merge commits to a branch."
-  type        = bool
-  default     = false
-}
-
-variable "require_conversation_resolution" {
-  description = "(Optional) Boolean, setting this to true requires all conversations on code must be resolved before a pull request can be merged."
-  type        = bool
-  default     = false
-}
-
-variable "required_status_checks" {
+variable "branch_protections" {
   description = <<EOT
-  (Optional) The required_status_checks block supports the following:
-    strict   : (Optional) Require branches to be up to date before merging.
-    contexts : (Optional) The list of status checks to require in order to merge into this branch. No status checks are required by default.
+    pattern                           : (Optional) Identifies the protection rule pattern.
+    enforce_admins                    : (Optional) Boolean, setting this to `true` enforces status checks for repository administrators.
+    require_signed_commits            : (Optional) Boolean, setting this to `true` requires all commits to be signed with GPG.
+    required_linear_history           : (Optional) Boolean, setting this to true enforces a linear commit Git history, which prevents anyone from pushing merge commits to a branch.
+    require_conversation_resolution   : (Optional) Boolean, setting this to true requires all conversations on code must be resolved before a pull request can be merged.
+    required_status_checks            : (Optional) The required_status_checks block supports the following:
+      strict                          : (Optional) Require branches to be up to date before merging.
+      contexts                        : (Optional) The list of status checks to require in order to merge into this branch. No status checks are required by default.
+    required_pull_request_reviews     : (Optional) The required_pull_request_reviews block supports the following:
+      dismiss_stale_reviews           : (Optional) Dismiss approved reviews automatically when a new commit is pushed.
+      restrict_dismissals             : (Optional) Restrict pull request review dismissals.
+      dismissal_restrictions          : (Optional) The list of actor Names/IDs with dismissal access. If not empty, restrict_dismissals is ignored. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.
+      pull_request_bypassers          : (Optional) The list of actor Names/IDs that are allowed to bypass pull request requirements. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.
+      require_code_owner_reviews      : (Optional) Require an approved review in pull requests including files with a designated code owner.
+      required_approving_review_count : (Optional) Require x number of approvals to satisfy branch protection requirements. If this is specified it must be a number between 0-6.
+      require_last_push_approval      : (Optional) Require that The most recent push must be approved by someone other than the last pusher.
+    push_restrictions                 : (Optional) The list of actor Names/IDs that may push to the branch. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.
+    force_push_bypassers              : (Optional) The list of actor Names/IDs that are allowed to bypass force push restrictions. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.
+    allows_deletions                  : (Optional) Boolean, setting this to `true` to allow the branch to be deleted.
+    allows_force_pushes               : (Optional) Boolean, setting this to `true` to allow force pushes on the branch.
+    blocks_creations                  : (Optional) Boolean, setting this to `true` to block creating the branch.
+    lock_branch                       : (Optional) Boolean, Setting this to `true` will make the branch read-only and preventing any pushes to it.
   EOT
-  type = object({
-    strict   = optional(bool, false)
-    contexts = optional(list(string), [])
-  })
+  type = list(object({
+    pattern                         = string
+    enforce_admins                  = optional(bool, false)
+    require_signed_commits          = optional(bool, false)
+    required_linear_history         = optional(bool, false)
+    require_conversation_resolution = optional(bool, false)
+    required_status_checks          = optional(object({
+      strict = optional(bool, false)
+      contexts = optional(list(string), [])
+    }), null)
+    required_pull_request_reviews = optional(object({
+      dismiss_stale_reviews           = optional(bool, false)
+      restrict_dismissals             = optional(bool, false)
+      dismissal_restrictions          = optional(list(string), [])
+      pull_request_bypassers          = optional(list(string), [])
+      require_code_owner_reviews      = optional(bool, false)
+      required_approving_review_count = optional(string, null)
+      require_last_push_approval      = optional(bool, false)
+    }), null)
+    push_restrictions    = optional(list(string), [])
+    force_push_bypassers = optional(list(string), [])
+    allows_deletions     = optional(bool, false)
+    allows_force_pushes  = optional(bool, false)
+    blocks_creations     = optional(bool, false)
+    lock_branch          = optional(bool, false)
+  }))
   default = null
-}
-
-variable "required_pull_request_reviews" {
-  description = <<EOT
-  (Optional) The required_pull_request_reviews block supports the following:
-    dismiss_stale_reviews           : (Optional) Dismiss approved reviews automatically when a new commit is pushed.
-    restrict_dismissals             : (Optional) Restrict pull request review dismissals.
-    dismissal_restrictions          : (Optional) The list of actor Names/IDs with dismissal access. If not empty, restrict_dismissals is ignored. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.
-    pull_request_bypassers          : (Optional) The list of actor Names/IDs that are allowed to bypass pull request requirements. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.
-    require_code_owner_reviews      : (Optional) Require an approved review in pull requests including files with a designated code owner.
-    required_approving_review_count : (Optional) Require x number of approvals to satisfy branch protection requirements. If this is specified it must be a number between 0-6.
-    require_last_push_approval      : (Optional) Require that The most recent push must be approved by someone other than the last pusher.
-  EOT
-  type = object({
-    dismiss_stale_reviews           = optional(bool, false)
-    restrict_dismissals             = optional(bool, false)
-    dismissal_restrictions          = optional(list(string), [])
-    pull_request_bypassers          = optional(list(string), [])
-    require_code_owner_reviews      = optional(bool, false)
-    required_approving_review_count = optional(string, null)
-    require_last_push_approval      = optional(bool, false)
-  })
-  default = null
-}
-
-variable "push_restrictions" {
-  description = "(Optional) The list of actor Names/IDs that may push to the branch. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams."
-  type        = list(string)
-  default     = null
-}
-
-variable "force_push_bypassers" {
-  description = "(Optional) The list of actor Names/IDs that are allowed to bypass force push restrictions. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams."
-  type        = list(string)
-  default     = null
-}
-
-variable "allows_deletions" {
-  description = "(Optional) Boolean, setting this to `true` to allow the branch to be deleted."
-  type        = bool
-  default     = false
-}
-
-variable "allows_force_pushes" {
-  description = "(Optional) Boolean, setting this to `true` to allow force pushes on the branch."
-  type        = bool
-  default     = false
-}
-
-variable "blocks_creations" {
-  description = "(Optional) Boolean, setting this to `true` to block creating the branch."
-  type        = bool
-  default     = false
-}
-
-variable "lock_branch" {
-  description = "(Optional) Boolean, Setting this to `true` will make the branch read-only and preventing any pushes to it."
-  type        = bool
-  default     = false
 }
 
 # The following variables are used to create actions secret resources (`github_actions_secret`).
