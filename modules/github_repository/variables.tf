@@ -376,9 +376,9 @@ variable "branches" {
     branch        : (Required) The repository branch to create.
     source_branch : (Optional) The branch name to start from.
   EOT
-  type = object({
+  type = list(object({
     branch        = string
     source_branch = optional(string, "main")
-  })
+  }))
   default = []
 }

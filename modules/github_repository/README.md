@@ -267,10 +267,10 @@ Description:   (Optional) The branches block supports the following:
 Type:
 
 ```hcl
-object({
+list(object({
     branch        = string
     source_branch = optional(string, "main")
-  })
+  }))
 ```
 
 Default: `[]`
