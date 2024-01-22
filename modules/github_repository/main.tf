@@ -103,44 +103,45 @@ resource "github_repository" "this" {
 }
 
 resource "github_branch_protection" "this" {
+  for_each                        = { for branch_protection in var.branch_protections : branch_protection.pattern => branch_protection }
   repository_id                   = github_repository.this.name
-  pattern                         = var.pattern
-  enforce_admins                  = var.enforce_admins
-  require_signed_commits          = var.require_signed_commits
-  required_linear_history         = var.required_linear_history
-  require_conversation_resolution = var.require_conversation_resolution
+  pattern                         = each.value.pattern
+  enforce_admins                  = each.value.enforce_admins
+  require_signed_commits          = each.value.require_signed_commits
+  required_linear_history         = each.value.required_linear_history
+  require_conversation_resolution = each.value.require_conversation_resolution
 
   dynamic "required_status_checks" {
-    for_each = var.required_status_checks != null ? [true] : []
+    for_each = each.value.required_status_checks != null ? [true] : []
     content {
-      strict   = var.required_status_checks.strict
-      contexts = var.required_status_checks.contexts
+      strict   = each.value.required_status_checks.strict
+      contexts = each.value.required_status_checks.contexts
     }
   }
 
   dynamic "required_pull_request_reviews" {
-    for_each = var.required_pull_request_reviews != null ? [true] : []
+    for_each = each.value.required_pull_request_reviews != null ? [true] : []
     content {
-      dismiss_stale_reviews           = var.required_pull_request_reviews.dismiss_stale_reviews
-      restrict_dismissals             = var.required_pull_request_reviews.restrict_dismissals
-      dismissal_restrictions          = var.required_pull_request_reviews.dismissal_restrictions
-      pull_request_bypassers          = var.required_pull_request_reviews.pull_request_bypassers
-      require_code_owner_reviews      = var.required_pull_request_reviews.require_code_owner_reviews
-      required_approving_review_count = var.required_pull_request_reviews.required_approving_review_count
-      require_last_push_approval      = var.required_pull_request_reviews.require_last_push_approval
+      dismiss_stale_reviews           = each.value.required_pull_request_reviews.dismiss_stale_reviews
+      restrict_dismissals             = each.value.required_pull_request_reviews.restrict_dismissals
+      dismissal_restrictions          = each.value.required_pull_request_reviews.dismissal_restrictions
+      pull_request_bypassers          = each.value.required_pull_request_reviews.pull_request_bypassers
+      require_code_owner_reviews      = each.value.required_pull_request_reviews.require_code_owner_reviews
+      required_approving_review_count = each.value.required_pull_request_reviews.required_approving_review_count
+      require_last_push_approval      = each.value.required_pull_request_reviews.require_last_push_approval
     }
   }
 
-  push_restrictions    = var.push_restrictions
-  force_push_bypassers = var.force_push_bypassers
-  allows_deletions     = var.allows_deletions
-  allows_force_pushes  = var.allows_force_pushes
-  blocks_creations     = var.blocks_creations
-  lock_branch          = var.lock_branch
+  push_restrictions    = each.value.push_restrictions
+  force_push_bypassers = each.value.force_push_bypassers
+  allows_deletions     = each.value.allows_deletions
+  allows_force_pushes  = each.value.allows_force_pushes
+  blocks_creations     = each.value.blocks_creations
+  lock_branch          = each.value.lock_branch
 }
 
 resource "github_actions_secret" "this" {
-  for_each        = { for secret in var.secrets : secret.secret_name => secret }
+  for_each        = { for secret in var.actions_secrets : secret.secret_name => secret }
   repository      = github_repository.this.name
   secret_name     = each.value.secret_name
   plaintext_value = each.value.plaintext_value
@@ -164,4 +165,11 @@ resource "github_actions_repository_permissions" "this" {
       error_message = "`allowed_actions_config` is only available  if `allowed_actions` is set to `selected`."
     }
   }
+}
+
+resource "github_branch" "this" {
+  for_each      = { for branch in var.branches : branch.branch => branch }
+  repository    = github_repository.this.name
+  branch        = each.value.branch
+  source_branch = each.value.source_branch
 }

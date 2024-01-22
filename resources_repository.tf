@@ -44,29 +44,57 @@ module "repository" {
   ignore_vulnerability_alerts_during_read = try(each.value.github_repository.ignore_vulnerability_alerts_during_read, false)
   allow_update_branch                     = try(each.value.github_repository.allow_update_branch, false)
 
-  pattern                         = try(each.value.github_repository.pattern, "main")
-  enforce_admins                  = try(each.value.github_repository.enforce_admins, true)
-  require_signed_commits          = try(each.value.github_repository.require_signed_commits, false)
-  required_linear_history         = try(each.value.github_repository.required_linear_history, false)
-  require_conversation_resolution = try(each.value.github_repository.require_conversation_resolution, true)
-  required_status_checks          = try(each.value.github_repository.required_status_checks, null)
-  required_pull_request_reviews = {
-    dismiss_stale_reviews           = try(each.value.github_repository.required_pull_request_reviews.dismiss_stale_reviews, true)
-    restrict_dismissals             = try(each.value.github_repository.required_pull_request_reviews.restrict_dismissals, null)
-    dismissal_restrictions          = try(each.value.github_repository.required_pull_request_reviews.dismissal_restrictions, null)
-    pull_request_bypassers          = try(each.value.github_repository.required_pull_request_reviews.pull_request_bypassers, null)
-    require_code_owner_reviews      = try(each.value.github_repository.required_pull_request_reviews.require_code_owner_reviews, true)
-    required_approving_review_count = try(each.value.github_repository.required_pull_request_reviews.required_approving_review_count, "0")
-    require_last_push_approval      = try(each.value.github_repository.required_pull_request_reviews.require_last_push_approval, false)
-  }
-  push_restrictions    = try(each.value.github_repository.push_restrictions, null)
-  force_push_bypassers = try(each.value.github_repository.force_push_bypassers, null)
-  allows_deletions     = try(each.value.github_repository.allows_deletions, false)
-  allows_force_pushes  = try(each.value.github_repository.allows_force_pushes, false)
-  blocks_creations     = try(each.value.github_repository.blocks_creations, false)
-  lock_branch          = try(each.value.github_repository.lock_branch, false)
+  branch_protections = [for branch_protection in try(each.value.github_repository.branch_protections, [
+    {
+      pattern                         = "main"
+      enforce_admins                  = true
+      require_signed_commits          = false
+      required_linear_history         = false
+      require_conversation_resolution = true
+      required_status_checks          = null
+      required_pull_request_reviews = {
+        dismiss_stale_reviews           = true
+        restrict_dismissals             = null
+        dismissal_restrictions          = null
+        pull_request_bypassers          = null
+        require_code_owner_reviews      = true
+        required_approving_review_count = "0"
+        require_last_push_approval      = false
+      }
+      push_restrictions    = null
+      force_push_bypassers = null
+      allows_deletions     = false
+      allows_force_pushes  = false
+      blocks_creations     = false
+      lock_branch          = false
+    }
+    ]) :
+    {
+      pattern                         = branch_protection.pattern
+      enforce_admins                  = try(branch_protection.enforce_admins, true)
+      require_signed_commits          = try(branch_protection.require_signed_commits, false)
+      required_linear_history         = try(branch_protection.required_linear_history, false)
+      require_conversation_resolution = try(branch_protection.require_conversation_resolution, true)
+      required_status_checks          = try(branch_protection.required_status_checks, null)
+      required_pull_request_reviews = {
+        dismiss_stale_reviews           = try(branch_protection.required_pull_request_reviews.dismiss_stale_reviews, true)
+        restrict_dismissals             = try(branch_protection.required_pull_request_reviews.restrict_dismissals, null)
+        dismissal_restrictions          = try(branch_protection.required_pull_request_reviews.dismissal_restrictions, null)
+        pull_request_bypassers          = try(branch_protection.required_pull_request_reviews.pull_request_bypassers, null)
+        require_code_owner_reviews      = try(branch_protection.required_pull_request_reviews.require_code_owner_reviews, true)
+        required_approving_review_count = try(branch_protection.required_pull_request_reviews.required_approving_review_count, "0")
+        require_last_push_approval      = try(branch_protection.required_pull_request_reviews.require_last_push_approval, false)
+      }
+      push_restrictions    = try(branch_protection.push_restrictions, null)
+      force_push_bypassers = try(branch_protection.force_push_bypassers, null)
+      allows_deletions     = try(branch_protection.allows_deletions, false)
+      allows_force_pushes  = try(branch_protection.allows_force_pushes, false)
+      blocks_creations     = try(branch_protection.blocks_creations, false)
+      lock_branch          = try(branch_protection.lock_branch, false)
+    }
+  ]
 
-  secrets = [for secret in try(each.value.github_repository.secrets, []) :
+  actions_secrets = [for secret in try(each.value.github_repository.actions_secrets, []) :
     {
       secret_name     = secret.secret_name
       plaintext_value = secret.secret_name == "TF_API_TOKEN" ? try(module.teams[secret.plaintext_value].token, null) : secret.plaintext_value
@@ -80,4 +108,11 @@ module "repository" {
     patterns_allowed     = try(each.value.github_repository.allowed_actions_config.patterns_allowed, ["terraform-docs/gh-actions@*", "super-linter/super-linter@*", "rymndhng/release-on-push-action@*", "hashicorp/*"])
     verified_allowed     = try(each.value.github_repository.allowed_actions_config.verified_allowed, false)
   }
+
+  branches = [for branch in try(each.value.github_repository.branches, []) :
+    {
+      branch        = branch.branch
+      source_branch = try(branch.source_branch, "main")
+    }
+  ]
 }

@@ -38,14 +38,39 @@ GITHUB_APP_INSTALLATION_ID and GITHUB_APP_PEM_FILE environment variables to auth
 - Create and manage GitHub repositories.
 - Create and manage GitHub branches protection.
 - Create and manage GitHub repository secrets.
+- Create and manage GitHub actions repository permissions.
+- Create and manage GitHub branches.
 
 ## Usage example
 ```hcl
 module "repository" {
   source = "./modules/github_repository"
 
-  name             = "Repository Name"
-  destination_type = This is a description for the GitHub repository."
+  name               = "Repository Name"
+  destination_type   = "This is a description for the GitHub repository."
+  branch_protections = [
+    {
+      pattern                         = "main"
+      enforce_admins                  = true
+      require_conversation_resolution = true
+      required_pull_request_reviews = {
+        dismiss_stale_reviews           = true
+        require_code_owner_reviews      = true
+        required_approving_review_count = "1"
+      }
+    }
+  ]
+  actions_secrets = [
+    {
+      secret_name     = "Secret Name"
+      plaintext_value = "Secret Value"
+    }
+  ]
+  allowed_actions = "selected"
+  allowed_actions_config = {
+    github_owned_allowed = true
+    patterns_allowed     = ["terraform-docs/gh-actions@*", "hashicorp/*"]
+  }
 }
 ```
 
@@ -70,7 +95,9 @@ No modules.
 
 The following resources are used by this module:
 
+- [github_actions_repository_permissions.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/actions_repository_permissions) (resource)
 - [github_actions_secret.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/actions_secret) (resource)
+- [github_branch.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/branch) (resource)
 - [github_branch_protection.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/branch_protection) (resource)
 - [github_repository.this](https://registry.terraform.io/providers/integrations/github/5.44.0/docs/resources/repository) (resource)
 
@@ -87,6 +114,23 @@ Type: `string`
 ## Optional Inputs
 
 The following input variables are optional (have default values):
+
+### <a name="input_actions_secrets"></a> [actions\_secrets](#input\_actions\_secrets)
+
+Description:   (Optional) The actions\_secrets block supports the following:  
+    secret\_name     : (Required) Name of the secret.  
+    plaintext\_value : (Required) Plaintext value of the secret to be encrypted.
+
+Type:
+
+```hcl
+list(object({
+    secret_name     = string
+    plaintext_value = string
+  }))
+```
+
+Default: `[]`
 
 ### <a name="input_allow_auto_merge"></a> [allow\_auto\_merge](#input\_allow\_auto\_merge)
 
@@ -155,22 +199,6 @@ object({
 
 Default: `null`
 
-### <a name="input_allows_deletions"></a> [allows\_deletions](#input\_allows\_deletions)
-
-Description: (Optional) Boolean, setting this to `true` to allow the branch to be deleted.
-
-Type: `bool`
-
-Default: `false`
-
-### <a name="input_allows_force_pushes"></a> [allows\_force\_pushes](#input\_allows\_force\_pushes)
-
-Description: (Optional) Boolean, setting this to `true` to allow force pushes on the branch.
-
-Type: `bool`
-
-Default: `false`
-
 ### <a name="input_archive_on_destroy"></a> [archive\_on\_destroy](#input\_archive\_on\_destroy)
 
 Description: (Optional) Set to true to archive the repository instead of deleting on destroy.
@@ -195,13 +223,80 @@ Type: `bool`
 
 Default: `false`
 
-### <a name="input_blocks_creations"></a> [blocks\_creations](#input\_blocks\_creations)
+### <a name="input_branch_protections"></a> [branch\_protections](#input\_branch\_protections)
 
-Description: (Optional) Boolean, setting this to `true` to block creating the branch.
+Description:     pattern                           : (Required) Identifies the protection rule pattern.  
+    enforce\_admins                    : (Optional) Boolean, setting this to `true` enforces status checks for repository administrators.  
+    require\_signed\_commits            : (Optional) Boolean, setting this to `true` requires all commits to be signed with GPG.  
+    required\_linear\_history           : (Optional) Boolean, setting this to true enforces a linear commit Git history, which prevents anyone from pushing merge commits to a branch.  
+    require\_conversation\_resolution   : (Optional) Boolean, setting this to true requires all conversations on code must be resolved before a pull request can be merged.  
+    required\_status\_checks            : (Optional) The required\_status\_checks block supports the following:  
+      strict                          : (Optional) Require branches to be up to date before merging.  
+      contexts                        : (Optional) The list of status checks to require in order to merge into this branch. No status checks are required by default.  
+    required\_pull\_request\_reviews     : (Optional) The required\_pull\_request\_reviews block supports the following:  
+      dismiss\_stale\_reviews           : (Optional) Dismiss approved reviews automatically when a new commit is pushed.  
+      restrict\_dismissals             : (Optional) Restrict pull request review dismissals.  
+      dismissal\_restrictions          : (Optional) The list of actor Names/IDs with dismissal access. If not empty, restrict\_dismissals is ignored. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
+      pull\_request\_bypassers          : (Optional) The list of actor Names/IDs that are allowed to bypass pull request requirements. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
+      require\_code\_owner\_reviews      : (Optional) Require an approved review in pull requests including files with a designated code owner.  
+      required\_approving\_review\_count : (Optional) Require x number of approvals to satisfy branch protection requirements. If this is specified it must be a number between 0-6.  
+      require\_last\_push\_approval      : (Optional) Require that The most recent push must be approved by someone other than the last pusher.  
+    push\_restrictions                 : (Optional) The list of actor Names/IDs that may push to the branch. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
+    force\_push\_bypassers              : (Optional) The list of actor Names/IDs that are allowed to bypass force push restrictions. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
+    allows\_deletions                  : (Optional) Boolean, setting this to `true` to allow the branch to be deleted.  
+    allows\_force\_pushes               : (Optional) Boolean, setting this to `true` to allow force pushes on the branch.  
+    blocks\_creations                  : (Optional) Boolean, setting this to `true` to block creating the branch.  
+    lock\_branch                       : (Optional) Boolean, Setting this to `true` will make the branch read-only and preventing any pushes to it.
 
-Type: `bool`
+Type:
 
-Default: `false`
+```hcl
+list(object({
+    pattern                         = string
+    enforce_admins                  = optional(bool, false)
+    require_signed_commits          = optional(bool, false)
+    required_linear_history         = optional(bool, false)
+    require_conversation_resolution = optional(bool, false)
+    required_status_checks = optional(object({
+      strict   = optional(bool, false)
+      contexts = optional(list(string), [])
+    }), null)
+    required_pull_request_reviews = optional(object({
+      dismiss_stale_reviews           = optional(bool, false)
+      restrict_dismissals             = optional(bool, false)
+      dismissal_restrictions          = optional(list(string), [])
+      pull_request_bypassers          = optional(list(string), [])
+      require_code_owner_reviews      = optional(bool, false)
+      required_approving_review_count = optional(string, null)
+      require_last_push_approval      = optional(bool, false)
+    }), null)
+    push_restrictions    = optional(list(string), [])
+    force_push_bypassers = optional(list(string), [])
+    allows_deletions     = optional(bool, false)
+    allows_force_pushes  = optional(bool, false)
+    blocks_creations     = optional(bool, false)
+    lock_branch          = optional(bool, false)
+  }))
+```
+
+Default: `[]`
+
+### <a name="input_branches"></a> [branches](#input\_branches)
+
+Description:   (Optional) The branches block supports the following:  
+    branch        : (Required) The repository branch to create.  
+    source\_branch : (Optional) The branch name to start from.
+
+Type:
+
+```hcl
+list(object({
+    branch        = string
+    source_branch = optional(string, "main")
+  }))
+```
+
+Default: `[]`
 
 ### <a name="input_delete_branch_on_merge"></a> [delete\_branch\_on\_merge](#input\_delete\_branch\_on\_merge)
 
@@ -226,22 +321,6 @@ Description: (Optional) Should GitHub actions be enabled on this repository?
 Type: `bool`
 
 Default: `true`
-
-### <a name="input_enforce_admins"></a> [enforce\_admins](#input\_enforce\_admins)
-
-Description: (Optional) Boolean, setting this to `true` enforces status checks for repository administrators.
-
-Type: `bool`
-
-Default: `false`
-
-### <a name="input_force_push_bypassers"></a> [force\_push\_bypassers](#input\_force\_push\_bypassers)
-
-Description: (Optional) The list of actor Names/IDs that are allowed to bypass force push restrictions. Actor names must either begin with a "/" for users or the organization name followed by a "/" for teams.
-
-Type: `list(string)`
-
-Default: `null`
 
 ### <a name="input_gitignore_template"></a> [gitignore\_template](#input\_gitignore\_template)
 
@@ -315,14 +394,6 @@ Type: `string`
 
 Default: `null`
 
-### <a name="input_lock_branch"></a> [lock\_branch](#input\_lock\_branch)
-
-Description: (Optional) Boolean, Setting this to `true` will make the branch read-only and preventing any pushes to it.
-
-Type: `bool`
-
-Default: `false`
-
 ### <a name="input_merge_commit_message"></a> [merge\_commit\_message](#input\_merge\_commit\_message)
 
 Description: Can be PR\_BODY, PR\_TITLE, or BLANK for a default merge commit message. Applicable only if allow\_merge\_commit is true.
@@ -362,107 +433,6 @@ object({
 ```
 
 Default: `null`
-
-### <a name="input_pattern"></a> [pattern](#input\_pattern)
-
-Description: (optional) Identifies the protection rule pattern.
-
-Type: `string`
-
-Default: `null`
-
-### <a name="input_push_restrictions"></a> [push\_restrictions](#input\_push\_restrictions)
-
-Description: (Optional) The list of actor Names/IDs that may push to the branch. Actor names must either begin with a "/" for users or the organization name followed by a "/" for teams.
-
-Type: `list(string)`
-
-Default: `null`
-
-### <a name="input_require_conversation_resolution"></a> [require\_conversation\_resolution](#input\_require\_conversation\_resolution)
-
-Description: (Optional) Boolean, setting this to true requires all conversations on code must be resolved before a pull request can be merged.
-
-Type: `bool`
-
-Default: `false`
-
-### <a name="input_require_signed_commits"></a> [require\_signed\_commits](#input\_require\_signed\_commits)
-
-Description: (Optional) Boolean, setting this to `true` requires all commits to be signed with GPG.
-
-Type: `bool`
-
-Default: `false`
-
-### <a name="input_required_linear_history"></a> [required\_linear\_history](#input\_required\_linear\_history)
-
-Description: (Optional) Boolean, setting this to true enforces a linear commit Git history, which prevents anyone from pushing merge commits to a branch.
-
-Type: `bool`
-
-Default: `false`
-
-### <a name="input_required_pull_request_reviews"></a> [required\_pull\_request\_reviews](#input\_required\_pull\_request\_reviews)
-
-Description:   (Optional) The required\_pull\_request\_reviews block supports the following:  
-    dismiss\_stale\_reviews           : (Optional) Dismiss approved reviews automatically when a new commit is pushed.  
-    restrict\_dismissals             : (Optional) Restrict pull request review dismissals.  
-    dismissal\_restrictions          : (Optional) The list of actor Names/IDs with dismissal access. If not empty, restrict\_dismissals is ignored. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
-    pull\_request\_bypassers          : (Optional) The list of actor Names/IDs that are allowed to bypass pull request requirements. Actor names must either begin with a \"/\" for users or the organization name followed by a \"/\" for teams.  
-    require\_code\_owner\_reviews      : (Optional) Require an approved review in pull requests including files with a designated code owner.  
-    required\_approving\_review\_count : (Optional) Require x number of approvals to satisfy branch protection requirements. If this is specified it must be a number between 0-6.  
-    require\_last\_push\_approval      : (Optional) Require that The most recent push must be approved by someone other than the last pusher.
-
-Type:
-
-```hcl
-object({
-    dismiss_stale_reviews           = optional(bool, false)
-    restrict_dismissals             = optional(bool, false)
-    dismissal_restrictions          = optional(list(string), [])
-    pull_request_bypassers          = optional(list(string), [])
-    require_code_owner_reviews      = optional(bool, false)
-    required_approving_review_count = optional(string, null)
-    require_last_push_approval      = optional(bool, false)
-  })
-```
-
-Default: `null`
-
-### <a name="input_required_status_checks"></a> [required\_status\_checks](#input\_required\_status\_checks)
-
-Description:   (Optional) The required\_status\_checks block supports the following:  
-    strict   : (Optional) Require branches to be up to date before merging.  
-    contexts : (Optional) The list of status checks to require in order to merge into this branch. No status checks are required by default.
-
-Type:
-
-```hcl
-object({
-    strict   = optional(bool, false)
-    contexts = optional(list(string), [])
-  })
-```
-
-Default: `null`
-
-### <a name="input_secrets"></a> [secrets](#input\_secrets)
-
-Description:   (Optional) The secrets block supports the following:  
-    secret\_name     : (Optional) Name of the secret.  
-    plaintext\_value : (Optional) Plaintext value of the secret to be encrypted.
-
-Type:
-
-```hcl
-list(object({
-    secret_name     = string
-    plaintext_value = string
-  }))
-```
-
-Default: `[]`
 
 ### <a name="input_security_and_analysis"></a> [security\_and\_analysis](#input\_security\_and\_analysis)
 
@@ -511,9 +481,9 @@ Default: `"COMMIT_OR_PR_TITLE"`
 ### <a name="input_template"></a> [template](#input\_template)
 
 Description:   (Optional) The template block supports the following:  
-    owner                : The GitHub organization or user the template repository is owned by.  
-    repository           : The name of the template repository.  
-    include\_all\_branches : Whether the new repository should include all the branches from the template repository (defaults to false, which includes only the default branch from the template).
+    owner                : (Required) The GitHub organization or user the template repository is owned by.  
+    repository           : (Required) The name of the template repository.  
+    include\_all\_branches : (Optional) Whether the new repository should include all the branches from the template repository (defaults to false, which includes only the default branch from the template).
 
 Type:
 
@@ -555,6 +525,22 @@ Default: `false`
 
 The following outputs are exported:
 
+### <a name="output_actions_secret"></a> [actions\_secret](#output\_actions\_secret)
+
+Description: GitHub Actions secrets within your GitHub repository.
+
+### <a name="output_branch_protection"></a> [branch\_protection](#output\_branch\_protection)
+
+Description: GitHub branch protection within your GitHub repository.
+
+### <a name="output_created_at"></a> [created\_at](#output\_created\_at)
+
+Description: Date of actions\_secret creation.
+
+### <a name="output_etag"></a> [etag](#output\_etag)
+
+Description: An etag representing the Branch object.
+
 ### <a name="output_full_name"></a> [full\_name](#output\_full\_name)
 
 Description: A string of the form "orgname/reponame".
@@ -562,6 +548,14 @@ Description: A string of the form "orgname/reponame".
 ### <a name="output_git_clone_url"></a> [git\_clone\_url](#output\_git\_clone\_url)
 
 Description: URL that can be provided to git clone to clone the repository anonymously via the git protocol.
+
+### <a name="output_github_actions_repository_permissions"></a> [github\_actions\_repository\_permissions](#output\_github\_actions\_repository\_permissions)
+
+Description: GitHub Actions permissions for your repository.
+
+### <a name="output_github_branch"></a> [github\_branch](#output\_github\_branch)
+
+Description: Branches within your repository.
 
 ### <a name="output_github_repository"></a> [github\_repository](#output\_github\_repository)
 
@@ -590,9 +584,21 @@ Description:   The block consisting of the repository's GitHub Pages configurati
 
 Description: The primary language used in the repository.
 
+### <a name="output_ref"></a> [ref](#output\_ref)
+
+Description: A string representing a branch reference, in the form of refs/heads/<branch>.
+
 ### <a name="output_repo_id"></a> [repo\_id](#output\_repo\_id)
 
 Description: GitHub ID for the repository.
+
+### <a name="output_sha"></a> [sha](#output\_sha)
+
+Description: A string storing the reference's HEAD commit's SHA1.
+
+### <a name="output_source_sha"></a> [source\_sha](#output\_source\_sha)
+
+Description: A string storing the commit this branch was started from. Not populated when imported.
 
 ### <a name="output_ssh_clone_url"></a> [ssh\_clone\_url](#output\_ssh\_clone\_url)
 
@@ -601,4 +607,8 @@ Description: URL that can be provided to git clone to clone the repository via S
 ### <a name="output_svn_url"></a> [svn\_url](#output\_svn\_url)
 
 Description: URL that can be provided to svn checkout to check out the repository via GitHub's Subversion protocol emulation.
+
+### <a name="output_updated_at"></a> [updated\_at](#output\_updated\_at)
+
+Description: Date of actions\_secret update.
 <!-- END_TF_DOCS -->
