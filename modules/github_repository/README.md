@@ -6,7 +6,12 @@ of all your GitHub repository configuration.
 ## Permissions
 
 To manage the GitHub resources, provide a token from an account or a GitHub App with 
-appropriate permissions. It should have `repository creation` and `manage actions repository secrets`.
+appropriate permissions. It should have:
+  *  `Administration`: Read and write
+  *  `Content`: Read and write</br>
+    *Required, otherwise, allow_merge_commit, allow_rebase_merge, and allow squash merge attributes will be ignored, causing confusing diffs.*
+  *  `Metadata`: Read-only
+  *  `Secrets`: Read and write
 
 ## Authentication
 
@@ -32,11 +37,12 @@ GITHUB_APP_INSTALLATION_ID and GITHUB_APP_PEM_FILE environment variables to auth
 
 ## Features
 
-- Create and manage GitHub repositories.
-- Create and manage GitHub branches protection.
-- Create and manage GitHub repository secrets.
-- Create and manage GitHub actions repository permissions.
-- Create and manage GitHub branches.
+- Create and manage repositories within your GitHub organization or personal account.
+- Configure branch protection for repositories in your organization or personal account.
+- Create and manage GitHub Actions secrets within your GitHub repositories.
+- Enable and manage GitHub Actions permissions for your GitHub repository.
+- Create and manage branches within your repository.
+- create and manage files within a GitHub repository.
 
 ## Usage example
 ```hcl
